@@ -1,0 +1,20 @@
+{
+  "abstentions": 1,
+  "answered_accuracy": 0.75,
+  "authority_boundary": "DatabaseAuthority (also exposed through MCP)",
+  "disclosure": "5-example held-out development slice; not a benchmark claim.",
+  "end_to_end_accuracy": 0.6,
+  "examples": 5,
+  "execution_correct": 3,
+  "failure_stages": {
+    "intent_parser": 1,
+    "result_mismatch": 1
+  },
+  "generated_sql": 4,
+  "mean_completed_pipeline_latency_ms": 54985.288865002076,
+  "mean_observed_end_to_end_latency_ms": 67988.23109200166,
+  "repair_attempts": 0,
+  "reported_model_tokens_for_completed_pipelines": 142809,
+  "retriever": "fastembed/BAAI/bge-small-en-v1.5",
+  "token_accounting_disclosure": "Token total includes only completed parser-plus-assembler pipelines; the timed-out parser did not return usage."
+}

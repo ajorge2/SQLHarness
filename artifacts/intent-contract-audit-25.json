@@ -1,0 +1,472 @@
+{
+  "sample_version": 1,
+  "purpose": "Stress-test the intent-graph contract; not a model evaluation split.",
+  "examples": [
+    {
+      "example_id": "27",
+      "db_id": "california_schools",
+      "question": "What is the average score in writing for the schools that were opened after 1991 or closed before 2000? List the school names along with the score. Also, list the communication number of the schools if there is any.",
+      "evidence": "Communication number refers to phone number.",
+      "gold_sql": "SELECT T2.School, T1.AvgScrWrite, T2.Phone FROM schools AS T2 LEFT JOIN satscores AS T1 ON T2.CDSCode = T1.cds WHERE strftime('%Y', T2.OpenDate) > '1991' OR strftime('%Y', T2.ClosedDate) < '2000'",
+      "difficulty": "moderate",
+      "sql_features": [
+        "comparison",
+        "filter",
+        "join",
+        "outer_join",
+        "projection"
+      ]
+    },
+    {
+      "example_id": "1323",
+      "db_id": "student_club",
+      "question": "List all the names of events that had an attendance of over 20 students but were not fundraisers.",
+      "evidence": "name of events refers to event_name; attendance of over 20 students COUNT(event_id) > 20.",
+      "gold_sql": "SELECT T1.event_name FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event GROUP BY T1.event_id HAVING COUNT(T2.link_to_event) > 20 EXCEPT SELECT T1.event_name FROM event AS T1  WHERE T1.type = 'Fundraiser'",
+      "difficulty": "moderate",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "count",
+        "filter",
+        "grouping",
+        "having",
+        "join",
+        "projection",
+        "set_operation"
+      ]
+    },
+    {
+      "example_id": "1014",
+      "db_id": "formula_1",
+      "question": "Please list the lap records for the circuits in Italy.",
+      "evidence": "lap record means the fastest time recorded which refers to time",
+      "gold_sql": "WITH fastest_lap_times AS (SELECT T1.raceId, T1.FastestLapTime, (CAST(SUBSTR(T1.FastestLapTime, 1, INSTR(T1.FastestLapTime, ':') - 1) AS REAL) * 60) + (CAST(SUBSTR(T1.FastestLapTime, INSTR(T1.FastestLapTime, ':') + 1, INSTR(T1.FastestLapTime, '.') - INSTR(T1.FastestLapTime, ':') - 1) AS REAL)) + (CAST(SUBSTR(T1.FastestLapTime, INSTR(T1.FastestLapTime, '.') + 1) AS REAL) / 1000) as time_in_seconds FROM results AS T1 WHERE T1.FastestLapTime IS NOT NULL ) SELECT T1.FastestLapTime as lap_record FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN circuits AS T3 on T2.circuitId = T3.circuitId INNER JOIN (SELECT MIN(fastest_lap_times.time_in_seconds) as min_time_in_seconds FROM fastest_lap_times INNER JOIN races AS T2 on fastest_lap_times.raceId = T2.raceId INNER JOIN circuits AS T3 on T2.circuitId = T3.circuitId WHERE T3.country = 'Italy' ) AS T4 ON (CAST(SUBSTR(T1.FastestLapTime, 1, INSTR(T1.FastestLapTime, ':') - 1) AS REAL) * 60) + (CAST(SUBSTR(T1.FastestLapTime, INSTR(T1.FastestLapTime, ':') + 1, INSTR(T1.FastestLapTime, '.') - INSTR(T1.FastestLapTime, ':') - 1) AS REAL)) + (CAST(SUBSTR(T1.FastestLapTime, INSTR(T1.FastestLapTime, '.') + 1) AS REAL) / 1000) = T4.min_time_in_seconds LIMIT 1",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "comparison",
+        "cte",
+        "filter",
+        "join",
+        "multi_join",
+        "null_check",
+        "numeric_aggregation",
+        "projection",
+        "ratio",
+        "subquery",
+        "temporal_or_string_transform",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "1116",
+      "db_id": "european_football_2",
+      "question": "List down most tallest players' name.",
+      "evidence": "tallest refers to rank based on the height in descending order; Most tallest players refers to rank = 1",
+      "gold_sql": "SELECT player_name FROM (SELECT player_name, height, DENSE_RANK() OVER (ORDER BY height DESC) as rank FROM Player) WHERE rank = 1",
+      "difficulty": "simple",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "filter",
+        "ordering",
+        "projection",
+        "subquery",
+        "window"
+      ]
+    },
+    {
+      "example_id": "529",
+      "db_id": "card_games",
+      "question": "Find and list the names of sets which doesn't have Japanese translation but have Korean translation.",
+      "evidence": "names of sets refers to name; doesn't have Japanese translation refers to language not like '%Japanese%'; have Korean translation refers to language = 'Korean'",
+      "gold_sql": "SELECT name FROM sets WHERE code IN ( SELECT setCode FROM set_translations WHERE language = 'Korean' AND language NOT LIKE '%Japanese%' )",
+      "difficulty": "moderate",
+      "sql_features": [
+        "comparison",
+        "filter",
+        "membership",
+        "pattern_match",
+        "projection",
+        "subquery"
+      ]
+    },
+    {
+      "example_id": "760",
+      "db_id": "superhero",
+      "question": "In superheroes with height between 150 to 180, what is the percentage of heroes published by Marvel Comics?",
+      "evidence": "height between 150 to 180 refers to height_cm BETWEEN 150 AND 180; heroes published by Marvel Comics refers to publisher_name = 'Marvel Comics'; calculation = MULTIPLY(DIVIDE(SUM(publisher.id = 13)), COUNT(publisher.id), 100)",
+      "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id WHERE T1.height_cm BETWEEN 150 AND 180",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "between",
+        "case",
+        "comparison",
+        "conditional_aggregation",
+        "count",
+        "filter",
+        "join",
+        "projection",
+        "ratio"
+      ]
+    },
+    {
+      "example_id": "220",
+      "db_id": "toxicology",
+      "question": "Please list top three elements of the toxicology of the molecule TR000 in alphabetical order.",
+      "evidence": "TR000 is the molecule id;",
+      "gold_sql": "SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR000' ORDER BY T.element LIMIT 3",
+      "difficulty": "challenging",
+      "sql_features": [
+        "comparison",
+        "distinct",
+        "filter",
+        "ordering",
+        "projection",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "117",
+      "db_id": "financial",
+      "question": "What is the percentage of loan amount that has been fully paid with no issue.",
+      "evidence": "Loan paid with no issue means contract finished, no problems; status = 'A' means contract finished, no problems; Percentage of accounts by condition = [(total(amount) & condition) / (total amount)] * 100%",
+      "gold_sql": "SELECT (CAST(SUM(CASE WHEN status = 'A' THEN amount ELSE 0 END) AS REAL) * 100) / SUM(amount) FROM loan",
+      "difficulty": "moderate",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "case",
+        "comparison",
+        "conditional_aggregation",
+        "numeric_aggregation",
+        "projection",
+        "ratio"
+      ]
+    },
+    {
+      "example_id": "707",
+      "db_id": "codebase_community",
+      "question": "Among the posts with views ranging from 100 to 150, what is the comment with the highest score?",
+      "evidence": "views ranging from 100 to 150 refers to ViewCount BETWEEN 100 and 150; comment with the highest score refers to Text where MAX(Score);",
+      "gold_sql": "SELECT Text FROM comments WHERE PostId IN ( SELECT Id FROM posts WHERE ViewCount BETWEEN 100 AND 150 ) ORDER BY Score DESC LIMIT 1",
+      "difficulty": "moderate",
+      "sql_features": [
+        "between",
+        "filter",
+        "membership",
+        "ordering",
+        "projection",
+        "subquery",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "1239",
+      "db_id": "thrombosis_prediction",
+      "question": "Name the ID and age of patient with two or more laboratory examinations which show their hematoclit level exceeded the normal range.",
+      "evidence": "age = SUBTRACT(year(current_timestamp), year(Birthday)); patient with two or more laboratory examinations refers to COUNT(ID) > 2; hematoclit level exceeded the normal range refers to HCT > = 52;",
+      "gold_sql": "SELECT DISTINCT T1.ID, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.ID IN ( SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2 )",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "comparison",
+        "count",
+        "distinct",
+        "filter",
+        "grouping",
+        "having",
+        "join",
+        "membership",
+        "projection",
+        "subquery"
+      ]
+    },
+    {
+      "example_id": "1498",
+      "db_id": "debit_card_specializing",
+      "question": "What is the highest monthly consumption in the year 2012?",
+      "evidence": "The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+      "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTR(Date, 1, 4) = '2012' GROUP BY SUBSTR(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+      "difficulty": "simple",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "filter",
+        "grouping",
+        "numeric_aggregation",
+        "ordering",
+        "projection",
+        "temporal_or_string_transform",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "955",
+      "db_id": "formula_1",
+      "question": "What is the average time in seconds of champion for each year, before year 1975?",
+      "evidence": "only champion's finished time is represented by 'HH:MM:SS.mmm'; finished the game refers to time is not null; before year 1975 refers to year < 1975;",
+      "gold_sql": "WITH time_in_seconds AS ( SELECT T2.year, T2.raceId, T1.positionOrder, CASE WHEN T1.positionOrder = 1 THEN (CAST(SUBSTR(T1.time, 1, 1) AS REAL) * 3600) + (CAST(SUBSTR(T1.time, 3, 2) AS REAL) * 60) + CAST(SUBSTR(T1.time, 6,2) AS REAL )   + CAST(SUBSTR(T1.time, 9) AS REAL)/1000 ELSE 0 END AS time_seconds FROM results AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId WHERE T1.time IS NOT NULL ), champion_time AS ( SELECT year, raceId, time_seconds FROM time_in_seconds WHERE positionOrder = 1 ) SELECT year, AVG(time_seconds) FROM champion_time WHERE year < 1975 GROUP BY year HAVING AVG(time_seconds) IS NOT NULL",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "case",
+        "comparison",
+        "cte",
+        "filter",
+        "grouping",
+        "having",
+        "join",
+        "null_check",
+        "numeric_aggregation",
+        "projection",
+        "ratio",
+        "temporal_or_string_transform"
+      ]
+    },
+    {
+      "example_id": "129",
+      "db_id": "financial",
+      "question": "Which are the top ten withdrawals (non-credit card) by district names for the month of January 1996?",
+      "evidence": "Non-credit card withdraws refers to type = 'VYDAJ'; January 1996 can be found by date LIKE '1996-01%' in the database; A2 means district names",
+      "gold_sql": "SELECT DISTINCT T1.A2 FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T3.type = 'VYDAJ' AND T3.date LIKE '1996-01%' ORDER BY A2 ASC LIMIT 10",
+      "difficulty": "moderate",
+      "sql_features": [
+        "comparison",
+        "distinct",
+        "filter",
+        "join",
+        "multi_join",
+        "ordering",
+        "pattern_match",
+        "projection",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "788",
+      "db_id": "superhero",
+      "question": "How many percent of female heroes were published by Marvel Comics?",
+      "evidence": "percent = MULTIPLY(DIVIDE(SUM(gender = 'Female' WHERE publisher_name = 'Marvel Comics'), COUNT(publisher_name = 'Marvel Comics')), 100); female heroes refers to gender = 'Female'; Marvel Comics refers to publisher_name = 'Marvel Comics';",
+      "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.gender = 'Female' AND T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) * 100 FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN gender AS T3 ON T1.gender_id = T3.id",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "case",
+        "comparison",
+        "conditional_aggregation",
+        "count",
+        "join",
+        "multi_join",
+        "projection",
+        "ratio"
+      ]
+    },
+    {
+      "example_id": "17",
+      "db_id": "california_schools",
+      "question": "Rank schools by their average score in Writing where the score is greater than 499, showing their charter numbers.",
+      "evidence": "Valid charter number means the number is not null",
+      "gold_sql": "SELECT CharterNum, AvgScrWrite, RANK() OVER (ORDER BY AvgScrWrite DESC) AS WritingScoreRank FROM schools AS T1  INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrWrite > 499 AND CharterNum is not null",
+      "difficulty": "simple",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "filter",
+        "join",
+        "null_check",
+        "ordering",
+        "projection",
+        "window"
+      ]
+    },
+    {
+      "example_id": "1435",
+      "db_id": "student_club",
+      "question": "List the names of closed event as \"game\" that was closed from 3/15/2019 to 3/20/2020.",
+      "evidence": "name of events refers event_name; game event that was closed refers to type = 'Game' where status = 'Closed'; event_date BETWEEN '2019-03-15' and '2020-03-20';",
+      "gold_sql": "SELECT DISTINCT event_name FROM event WHERE type = 'Game' AND date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20' AND status = 'Closed'",
+      "difficulty": "moderate",
+      "sql_features": [
+        "between",
+        "comparison",
+        "distinct",
+        "filter",
+        "projection",
+        "temporal_or_string_transform"
+      ]
+    },
+    {
+      "example_id": "1058",
+      "db_id": "european_football_2",
+      "question": "Who has the highest average finishing rate between the highest and shortest football player?",
+      "evidence": "finishing rate refers to finishing; highest average finishing rate = MAX(AVG(finishing)); highest football player refers to MAX(height); shortest football player refers to MIN(height);",
+      "gold_sql": "SELECT A FROM ( SELECT AVG(finishing) result, 'Max' A FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.height = ( SELECT MAX(height) FROM Player ) UNION SELECT AVG(finishing) result, 'Min' A FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.height = ( SELECT MIN(height) FROM Player ) ) ORDER BY result DESC LIMIT 1",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "filter",
+        "join",
+        "multi_join",
+        "numeric_aggregation",
+        "ordering",
+        "projection",
+        "set_operation",
+        "subquery",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "282",
+      "db_id": "toxicology",
+      "question": "What is the ratio of Hydrogen elements in molecule ID TR006? List the ratio with its label.",
+      "evidence": "hydrogen refers to element = 'h'; ratio = DIVIDE(SUM(element = 'h'), count(element)) where molecule_id = 'TR006' ; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic",
+      "gold_sql": "WITH SubQuery AS (SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006') SELECT CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) / (CASE WHEN COUNT(atom_id) = 0 THEN NULL ELSE COUNT(atom_id) END) AS ratio, label FROM SubQuery GROUP BY label",
+      "difficulty": "challenging",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "case",
+        "comparison",
+        "conditional_aggregation",
+        "count",
+        "cte",
+        "distinct",
+        "filter",
+        "grouping",
+        "join",
+        "projection",
+        "ratio"
+      ]
+    },
+    {
+      "example_id": "408",
+      "db_id": "card_games",
+      "question": "How many unknown power cards contain info about the triggered ability",
+      "evidence": "unknown power cards refers to power is null or power = '*';contain info about the triggered ability refers to text contains 'triggered ability'",
+      "gold_sql": "SELECT Count(DISTINCT T1.id) FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE (T1.power IS NULL OR T1.power = '*') AND T2.text LIKE '%triggered ability%'",
+      "difficulty": "moderate",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "count",
+        "filter",
+        "join",
+        "null_check",
+        "pattern_match",
+        "projection"
+      ]
+    },
+    {
+      "example_id": "604",
+      "db_id": "codebase_community",
+      "question": "What is the average of the up votes and the average user age for users creating more than 10 posts?",
+      "evidence": "creating more than 10 post refers to Count (UserId) > 10; average of the up votes = Divide (Sum(UpVotes), Count (UserId)); average age = Divide (Sum(Age), Count(UserId))",
+      "gold_sql": "SELECT AVG(T1.UpVotes), AVG(T1.Age) FROM users AS T1 INNER JOIN ( SELECT OwnerUserId, COUNT(*) AS post_count FROM posts GROUP BY OwnerUserId HAVING post_count > 10) AS T2 ON T1.Id = T2.OwnerUserId",
+      "difficulty": "moderate",
+      "sql_features": [
+        "aggregation",
+        "comparison",
+        "count",
+        "grouping",
+        "having",
+        "join",
+        "numeric_aggregation",
+        "projection",
+        "subquery"
+      ]
+    },
+    {
+      "example_id": "1252",
+      "db_id": "thrombosis_prediction",
+      "question": "Among the patients with a normal Ig G level, how many of them have symptoms?",
+      "evidence": "normal Ig G level refers to IGG > 900 and IGG < 2000; have symptoms refers to Symptoms IS NOT NULL;",
+      "gold_sql": "SELECT COUNT(T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG BETWEEN 900 AND 2000 AND T3.Symptoms IS NOT NULL",
+      "difficulty": "moderate",
+      "sql_features": [
+        "aggregation",
+        "between",
+        "comparison",
+        "count",
+        "filter",
+        "join",
+        "multi_join",
+        "null_check",
+        "projection"
+      ]
+    },
+    {
+      "example_id": "1471",
+      "db_id": "debit_card_specializing",
+      "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+      "evidence": "ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+      "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+      "difficulty": "simple",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "comparison",
+        "numeric_aggregation",
+        "projection",
+        "ratio"
+      ]
+    },
+    {
+      "example_id": "1078",
+      "db_id": "european_football_2",
+      "question": "Which player is older, Aaron Lennon or Abdelaziz Barrada?",
+      "evidence": "The larger the birthday value, the younger the person is, and vice versa;",
+      "gold_sql": "SELECT player_name FROM Player WHERE player_name IN ('Aaron Lennon', 'Abdelaziz Barrada') ORDER BY birthday ASC LIMIT 1",
+      "difficulty": "simple",
+      "sql_features": [
+        "filter",
+        "membership",
+        "ordering",
+        "projection",
+        "top_k"
+      ]
+    },
+    {
+      "example_id": "368",
+      "db_id": "card_games",
+      "question": "What is the percentage of borderless cards?",
+      "evidence": "borderless card refers to borderColor = 'borderless'; percentage = Divide(Count (id) where borderColor = 'borderless', Count(id)) *100",
+      "gold_sql": "SELECT CAST(SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+      "difficulty": "simple",
+      "sql_features": [
+        "aggregation",
+        "arithmetic",
+        "case",
+        "comparison",
+        "conditional_aggregation",
+        "count",
+        "numeric_aggregation",
+        "projection",
+        "ratio"
+      ]
+    },
+    {
+      "example_id": "1392",
+      "db_id": "student_club",
+      "question": "Indicate the top source of funds received in September 2019 based on their amount.",
+      "evidence": "top source funds refers to MAX(source); September 2019 means date_received BETWEEN '2019-09-01' and '2019-09-30'",
+      "gold_sql": "SELECT source FROM income WHERE date_received BETWEEN '2019-09-01' and '2019-09-30' ORDER BY source DESC LIMIT 1",
+      "difficulty": "simple",
+      "sql_features": [
+        "between",
+        "filter",
+        "ordering",
+        "projection",
+        "top_k"
+      ]
+    }
+  ]
+}

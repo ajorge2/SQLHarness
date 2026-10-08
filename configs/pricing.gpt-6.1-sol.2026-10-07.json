@@ -1,0 +1,8 @@
+{
+  "model": "gpt-6.1-sol",
+  "input_usd_per_million": 2.0,
+  "cached_input_usd_per_million": 0.1,
+  "output_usd_per_million": 10.0,
+  "captured_at": "2026-10-07",
+  "source_url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+}

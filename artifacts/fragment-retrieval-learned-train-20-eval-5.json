@@ -1,0 +1,1308 @@
+[
+  {
+    "catalog_covered_kinds": [
+      "aggregate",
+      "filter",
+      "join",
+      "projection"
+    ],
+    "catalog_covered_signatures": [
+      "aggregate|count({column_1})",
+      "join|{column_1} = {column_2}"
+    ],
+    "catalog_kind_coverage": 1.0,
+    "catalog_signature_coverage": 0.5,
+    "db_id": "thrombosis_prediction",
+    "example_id": "1252",
+    "first_relevant_rank": 1,
+    "gold_kinds": [
+      "aggregate",
+      "filter",
+      "join",
+      "projection"
+    ],
+    "gold_signatures": [
+      "aggregate|count({column_1})",
+      "filter|{column_1} between {value_1} and {value_2} and not {column_2} is null",
+      "join|{column_1} = {column_2}",
+      "projection|count({column_1})"
+    ],
+    "graph_available": true,
+    "graph_valid": true,
+    "intent_fragments": [
+      {
+        "node_id": "out",
+        "node_kind": "output",
+        "text": "output | Number of patients with normal Ig G levels who have symptoms | returns | count patients"
+      },
+      {
+        "node_id": "patient_labs",
+        "node_kind": "relation",
+        "text": "relation | patient has laboratory measurements | Patient.ID | Laboratory.ID | source | patients | Patient | target | laboratory measurements | Laboratory | incoming joined_by | patients with normal Ig G levels"
+      },
+      {
+        "node_id": "patient_exams",
+        "node_kind": "relation",
+        "text": "relation | patient has examinations | Patient.ID | Examination.ID | source | patients | Patient | target | examinations | Examination | incoming joined_by | count patients"
+      },
+      {
+        "node_id": "lower",
+        "node_kind": "condition",
+        "text": "condition | Ig G exceeds lower normal bound | IGG > 900 | compare | Ig G level | Laboratory.IGG | value | 900 | incoming operand | and"
+      },
+      {
+        "node_id": "upper",
+        "node_kind": "condition",
+        "text": "condition | Ig G is below upper normal bound | IGG < 2000 | compare | Ig G level | Laboratory.IGG | value | 2000 | incoming operand | and"
+      },
+      {
+        "node_id": "normal",
+        "node_kind": "logic",
+        "text": "logic | and | and | normal Ig G level | operand | Ig G exceeds lower normal bound | operand | Ig G is below upper normal bound | incoming filter | patients with normal Ig G levels"
+      },
+      {
+        "node_id": "normal_population",
+        "node_kind": "scope",
+        "text": "scope | patients with normal Ig G levels | filter | and | joined_by | patient has laboratory measurements | Patient.ID | Laboratory.ID | theme | patients | Patient | incoming scoped_to | count patients"
+      },
+      {
+        "node_id": "has_symptoms",
+        "node_kind": "condition",
+        "text": "condition | symptoms are not null | Symptoms IS NOT NULL | compare | symptoms | Examination.Symptoms | incoming filter | count patients"
+      },
+      {
+        "node_id": "count",
+        "node_kind": "operation",
+        "text": "operation | count patients | how many | filter | symptoms are not null | joined_by | patient has examinations | Patient.ID | Examination.ID | measure | patient identity | Patient.ID | scoped_to | patients with normal Ig G levels | incoming returns | Number of patients with normal Ig G levels who have symptoms"
+      }
+    ],
+    "recall": {
+      "1": {
+        "catalog_conditional_kind_recall": 0.25,
+        "catalog_conditional_signature_recall": 0.5,
+        "kind_recall": 0.25,
+        "matched_kinds": [
+          "join"
+        ],
+        "matched_signatures": [
+          "join|{column_1} = {column_2}"
+        ],
+        "retrieved": 1,
+        "signature_recall": 0.25
+      },
+      "10": {
+        "catalog_conditional_kind_recall": 0.75,
+        "catalog_conditional_signature_recall": 0.5,
+        "kind_recall": 0.75,
+        "matched_kinds": [
+          "filter",
+          "join",
+          "projection"
+        ],
+        "matched_signatures": [
+          "join|{column_1} = {column_2}"
+        ],
+        "retrieved": 10,
+        "signature_recall": 0.25
+      },
+      "12": {
+        "catalog_conditional_kind_recall": 0.75,
+        "catalog_conditional_signature_recall": 0.5,
+        "kind_recall": 0.75,
+        "matched_kinds": [
+          "filter",
+          "join",
+          "projection"
+        ],
+        "matched_signatures": [
+          "join|{column_1} = {column_2}"
+        ],
+        "retrieved": 11,
+        "signature_recall": 0.25
+      },
+      "3": {
+        "catalog_conditional_kind_recall": 0.5,
+        "catalog_conditional_signature_recall": 0.5,
+        "kind_recall": 0.5,
+        "matched_kinds": [
+          "filter",
+          "join"
+        ],
+        "matched_signatures": [
+          "join|{column_1} = {column_2}"
+        ],
+        "retrieved": 3,
+        "signature_recall": 0.25
+      },
+      "5": {
+        "catalog_conditional_kind_recall": 0.75,
+        "catalog_conditional_signature_recall": 0.5,
+        "kind_recall": 0.75,
+        "matched_kinds": [
+          "filter",
+          "join",
+          "projection"
+        ],
+        "matched_signatures": [
+          "join|{column_1} = {column_2}"
+        ],
+        "retrieved": 5,
+        "signature_recall": 0.25
+      }
+    },
+    "retrieval_hits": [
+      {
+        "fragment": {
+          "columns": [
+            "T1.gender_id",
+            "T3.id"
+          ],
+          "concrete_sql": "T1.gender_id = T3.id",
+          "db_id": "superhero",
+          "example_id": "788",
+          "fragment_id": "788:select_0:join:2",
+          "kind": "join",
+          "scope_id": "select_0",
+          "semantic_text": "join t1 gender id t3 id {column 1} {column 2}",
+          "tables": [],
+          "template_sql": "{column_1} = {column_2}"
+        },
+        "query_node_id": "patient_exams",
+        "score": 2.027024,
+        "signature": "join|{column_1} = {column_2}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "CharterNum",
+            "T2.AvgScrWrite"
+          ],
+          "concrete_sql": "T2.AvgScrWrite > 499 AND NOT CharterNum IS NULL",
+          "db_id": "california_schools",
+          "example_id": "17",
+          "fragment_id": "17:select_0:filter:4",
+          "kind": "filter",
+          "scope_id": "select_0",
+          "semantic_text": "filter t2 avg scr write 499 and not charter num is null {column 1} {value 1} and not {column 2} is null",
+          "tables": [],
+          "template_sql": "{column_1} > {value_1} AND NOT {column_2} IS NULL"
+        },
+        "query_node_id": "upper",
+        "score": 1.815587,
+        "signature": "filter|{column_1} > {value_1} and not {column_2} is null"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "time_seconds"
+          ],
+          "concrete_sql": "NOT AVG(time_seconds) IS NULL",
+          "db_id": "formula_1",
+          "example_id": "955",
+          "fragment_id": "955:select_0:having:4",
+          "kind": "having",
+          "scope_id": "select_0",
+          "semantic_text": "having not avg time seconds is null not avg {column 1} is null",
+          "tables": [],
+          "template_sql": "NOT AVG({column_1}) IS NULL"
+        },
+        "query_node_id": "has_symptoms",
+        "score": 1.781562,
+        "signature": "having|not avg({column_1}) is null"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.Age"
+          ],
+          "concrete_sql": "AVG(T1.Age)",
+          "db_id": "codebase_community",
+          "example_id": "604",
+          "fragment_id": "604:select_0:projection:1",
+          "kind": "projection",
+          "scope_id": "select_0",
+          "semantic_text": "projection avg t1 age avg {column 1}",
+          "tables": [],
+          "template_sql": "AVG({column_1})"
+        },
+        "query_node_id": "out",
+        "score": 1.615207,
+        "signature": "projection|avg({column_1})"
+      },
+      {
+        "fragment": {
+          "columns": [],
+          "concrete_sql": "champion_time",
+          "db_id": "formula_1",
+          "example_id": "955",
+          "fragment_id": "955:root:scope:1",
+          "kind": "scope",
+          "scope_id": "root",
+          "semantic_text": "named intermediate scope champion_time",
+          "tables": [],
+          "template_sql": "{named_scope}"
+        },
+        "query_node_id": "normal_population",
+        "score": 1.606728,
+        "signature": "scope|{named_scope}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.height_cm"
+          ],
+          "concrete_sql": "T1.height_cm BETWEEN 150 AND 180",
+          "db_id": "superhero",
+          "example_id": "760",
+          "fragment_id": "760:select_0:filter:2",
+          "kind": "filter",
+          "scope_id": "select_0",
+          "semantic_text": "filter t1 height cm between 150 and 180 {column 1} between {value 1} and {value 2}",
+          "tables": [],
+          "template_sql": "{column_1} BETWEEN {value_1} AND {value_2}"
+        },
+        "query_node_id": "upper",
+        "score": 1.598738,
+        "signature": "filter|{column_1} between {value_1} and {value_2}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.AvgScrWrite"
+          ],
+          "concrete_sql": "T1.AvgScrWrite",
+          "db_id": "california_schools",
+          "example_id": "27",
+          "fragment_id": "27:select_0:projection:1",
+          "kind": "projection",
+          "scope_id": "select_0",
+          "semantic_text": "projection t1 avg scr write {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "out",
+        "score": 1.533551,
+        "signature": "projection|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "HCT",
+            "ID",
+            "T1.ID"
+          ],
+          "concrete_sql": "T1.ID IN (SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2)",
+          "db_id": "thrombosis_prediction",
+          "example_id": "1239",
+          "fragment_id": "1239:select_0:filter:3",
+          "kind": "filter",
+          "scope_id": "select_0",
+          "semantic_text": "filter t1 id in select id from laboratory where hct 52 group by id having count id 2 {column 1} in select {column 2} from {table 1} where {column 3} {value 1} group by {column 2} having count {column 2} {value 2}",
+          "tables": [
+            "Laboratory"
+          ],
+          "template_sql": "{column_1} IN (SELECT {column_2} FROM {table_1} WHERE {column_3} >= {value_1} GROUP BY {column_2} HAVING COUNT({column_2}) >= {value_2})"
+        },
+        "query_node_id": "lower",
+        "score": 1.531566,
+        "signature": "filter|{column_1} in (select {column_2} from {table_1} where {column_3} >= {value_1} group by {column_2} having count({column_2}) >= {value_2})"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.time"
+          ],
+          "concrete_sql": "NOT T1.time IS NULL",
+          "db_id": "formula_1",
+          "example_id": "955",
+          "fragment_id": "955:select_1:filter:5",
+          "kind": "filter",
+          "scope_id": "select_1",
+          "semantic_text": "filter not t1 time is null not {column 1} is null",
+          "tables": [],
+          "template_sql": "NOT {column_1} IS NULL"
+        },
+        "query_node_id": "has_symptoms",
+        "score": 1.501107,
+        "signature": "filter|not {column_1} is null"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "ID"
+          ],
+          "concrete_sql": "ID",
+          "db_id": "thrombosis_prediction",
+          "example_id": "1239",
+          "fragment_id": "1239:select_1:group:2",
+          "kind": "group",
+          "scope_id": "select_1",
+          "semantic_text": "group id {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "count",
+        "score": 1.32071,
+        "signature": "group|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "post_count"
+          ],
+          "concrete_sql": "post_count > 10",
+          "db_id": "codebase_community",
+          "example_id": "604",
+          "fragment_id": "604:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having post count 10 {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "{column_1} > {value_1}"
+        },
+        "query_node_id": "normal",
+        "score": 1.299796,
+        "signature": "having|{column_1} > {value_1}"
+      }
+    ]
+  },
+  {
+    "catalog_covered_kinds": [
+      "aggregate",
+      "projection"
+    ],
+    "catalog_covered_signatures": [],
+    "catalog_kind_coverage": 1.0,
+    "catalog_signature_coverage": 0.0,
+    "db_id": "debit_card_specializing",
+    "example_id": "1471",
+    "first_relevant_rank": null,
+    "gold_kinds": [
+      "aggregate",
+      "projection"
+    ],
+    "gold_signatures": [
+      "aggregate|sum(iif({column_1} = {value_3}, {value_1}, {value_2}))",
+      "projection|cast(sum(iif({column_1} = {value_4}, {value_1}, {value_2})) as real) / sum(iif({column_1} = {value_3}, {value_1}, {value_2})) as ratio"
+    ],
+    "graph_available": true,
+    "graph_valid": true,
+    "intent_fragments": [
+      {
+        "node_id": "output",
+        "node_kind": "output",
+        "text": "output | customer currency ratio | returns | ratio"
+      },
+      {
+        "node_id": "ratio",
+        "node_kind": "operation",
+        "text": "operation | ratio | ratio | denominator | count customers paying in CZK | numerator | count customers paying in EUR | incoming returns | customer currency ratio"
+      },
+      {
+        "node_id": "eur_population",
+        "node_kind": "scope",
+        "text": "scope | customers who pay in EUR | filter | payment currency equals EUR | theme | customers | customers | incoming scoped_to | count customers paying in EUR"
+      },
+      {
+        "node_id": "czk_population",
+        "node_kind": "scope",
+        "text": "scope | customers who pay in CZK | filter | payment currency equals CZK | theme | customers | customers | incoming scoped_to | count customers paying in CZK"
+      },
+      {
+        "node_id": "eur_condition",
+        "node_kind": "condition",
+        "text": "condition | payment currency equals EUR | who pay in EUR | compare | payment currency | customers.Currency | value | EUR | incoming filter | customers who pay in EUR"
+      },
+      {
+        "node_id": "czk_condition",
+        "node_kind": "condition",
+        "text": "condition | payment currency equals CZK | who pay in CZK | compare | payment currency | customers.Currency | value | CZK | incoming filter | customers who pay in CZK"
+      },
+      {
+        "node_id": "eur_count",
+        "node_kind": "operation",
+        "text": "operation | count customers paying in EUR | count | measure | payment currency | customers.Currency | scoped_to | customers who pay in EUR | incoming numerator | ratio"
+      },
+      {
+        "node_id": "czk_count",
+        "node_kind": "operation",
+        "text": "operation | count customers paying in CZK | count | measure | payment currency | customers.Currency | scoped_to | customers who pay in CZK | incoming denominator | ratio"
+      }
+    ],
+    "recall": {
+      "1": {
+        "catalog_conditional_kind_recall": 0.5,
+        "catalog_conditional_signature_recall": null,
+        "kind_recall": 0.5,
+        "matched_kinds": [
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 1,
+        "signature_recall": 0.0
+      },
+      "10": {
+        "catalog_conditional_kind_recall": 1.0,
+        "catalog_conditional_signature_recall": null,
+        "kind_recall": 1.0,
+        "matched_kinds": [
+          "aggregate",
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 10,
+        "signature_recall": 0.0
+      },
+      "12": {
+        "catalog_conditional_kind_recall": 1.0,
+        "catalog_conditional_signature_recall": null,
+        "kind_recall": 1.0,
+        "matched_kinds": [
+          "aggregate",
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 10,
+        "signature_recall": 0.0
+      },
+      "3": {
+        "catalog_conditional_kind_recall": 0.5,
+        "catalog_conditional_signature_recall": null,
+        "kind_recall": 0.5,
+        "matched_kinds": [
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 3,
+        "signature_recall": 0.0
+      },
+      "5": {
+        "catalog_conditional_kind_recall": 1.0,
+        "catalog_conditional_signature_recall": null,
+        "kind_recall": 1.0,
+        "matched_kinds": [
+          "aggregate",
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 5,
+        "signature_recall": 0.0
+      }
+    },
+    "retrieval_hits": [
+      {
+        "fragment": {
+          "columns": [
+            "Consumption"
+          ],
+          "concrete_sql": "SUM(Consumption)",
+          "db_id": "debit_card_specializing",
+          "example_id": "1498",
+          "fragment_id": "1498:select_0:projection:0",
+          "kind": "projection",
+          "scope_id": "select_0",
+          "semantic_text": "projection sum consumption sum {column 1}",
+          "tables": [],
+          "template_sql": "SUM({column_1})"
+        },
+        "query_node_id": "output",
+        "score": 1.584289,
+        "signature": "projection|sum({column_1})"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.AvgScrWrite"
+          ],
+          "concrete_sql": "T1.AvgScrWrite",
+          "db_id": "california_schools",
+          "example_id": "27",
+          "fragment_id": "27:select_0:projection:1",
+          "kind": "projection",
+          "scope_id": "select_0",
+          "semantic_text": "projection t1 avg scr write {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "output",
+        "score": 1.526584,
+        "signature": "projection|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [],
+          "concrete_sql": "time_in_seconds",
+          "db_id": "formula_1",
+          "example_id": "955",
+          "fragment_id": "955:root:scope:0",
+          "kind": "scope",
+          "scope_id": "root",
+          "semantic_text": "named intermediate scope time_in_seconds",
+          "tables": [],
+          "template_sql": "{named_scope}"
+        },
+        "query_node_id": "eur_population",
+        "score": 1.497653,
+        "signature": "scope|{named_scope}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "Consumption"
+          ],
+          "concrete_sql": "SUM(Consumption) DESC",
+          "db_id": "debit_card_specializing",
+          "example_id": "1498",
+          "fragment_id": "1498:select_0:order:3",
+          "kind": "order",
+          "scope_id": "select_0",
+          "semantic_text": "order sum consumption desc sum {column 1} desc",
+          "tables": [],
+          "template_sql": "SUM({column_1}) DESC"
+        },
+        "query_node_id": "czk_count",
+        "score": 1.409779,
+        "signature": "order|sum({column_1}) desc"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "Consumption"
+          ],
+          "concrete_sql": "SUM(Consumption)",
+          "db_id": "debit_card_specializing",
+          "example_id": "1498",
+          "fragment_id": "1498:select_0:aggregate:5",
+          "kind": "aggregate",
+          "scope_id": "select_0",
+          "semantic_text": "aggregate sum consumption sum {column 1}",
+          "tables": [],
+          "template_sql": "SUM({column_1})"
+        },
+        "query_node_id": "czk_count",
+        "score": 1.391329,
+        "signature": "aggregate|sum({column_1})"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "amount",
+            "status"
+          ],
+          "concrete_sql": "SUM(CASE WHEN status = 'A' THEN amount ELSE 0 END)",
+          "db_id": "financial",
+          "example_id": "117",
+          "fragment_id": "117:select_0:aggregate:2",
+          "kind": "aggregate",
+          "scope_id": "select_0",
+          "semantic_text": "aggregate sum case when status a then amount else 0 end sum case when {column 2} {value 2} then {column 1} else {value 1} end",
+          "tables": [],
+          "template_sql": "SUM(CASE WHEN {column_2} = {value_2} THEN {column_1} ELSE {value_1} END)"
+        },
+        "query_node_id": "ratio",
+        "score": 1.38285,
+        "signature": "aggregate|sum(case when {column_2} = {value_2} then {column_1} else {value_1} end)"
+      },
+      {
+        "fragment": {
+          "columns": [],
+          "concrete_sql": "COUNT(*)",
+          "db_id": "codebase_community",
+          "example_id": "604",
+          "fragment_id": "604:select_1:aggregate:4",
+          "kind": "aggregate",
+          "scope_id": "select_1",
+          "semantic_text": "aggregate count count",
+          "tables": [],
+          "template_sql": "COUNT(*)"
+        },
+        "query_node_id": "eur_count",
+        "score": 1.306333,
+        "signature": "aggregate|count(*)"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "HCT",
+            "ID",
+            "T1.ID"
+          ],
+          "concrete_sql": "T1.ID IN (SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2)",
+          "db_id": "thrombosis_prediction",
+          "example_id": "1239",
+          "fragment_id": "1239:select_0:filter:3",
+          "kind": "filter",
+          "scope_id": "select_0",
+          "semantic_text": "filter t1 id in select id from laboratory where hct 52 group by id having count id 2 {column 1} in select {column 2} from {table 1} where {column 3} {value 1} group by {column 2} having count {column 2} {value 2}",
+          "tables": [
+            "Laboratory"
+          ],
+          "template_sql": "{column_1} IN (SELECT {column_2} FROM {table_1} WHERE {column_3} >= {value_1} GROUP BY {column_2} HAVING COUNT({column_2}) >= {value_2})"
+        },
+        "query_node_id": "czk_condition",
+        "score": 0.960631,
+        "signature": "filter|{column_1} in (select {column_2} from {table_1} where {column_3} >= {value_1} group by {column_2} having count({column_2}) >= {value_2})"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "post_count"
+          ],
+          "concrete_sql": "post_count > 10",
+          "db_id": "codebase_community",
+          "example_id": "604",
+          "fragment_id": "604:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having post count 10 {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "{column_1} > {value_1}"
+        },
+        "query_node_id": "eur_condition",
+        "score": 0.947837,
+        "signature": "having|{column_1} > {value_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "ID"
+          ],
+          "concrete_sql": "COUNT(ID) >= 2",
+          "db_id": "thrombosis_prediction",
+          "example_id": "1239",
+          "fragment_id": "1239:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having count id 2 count {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "COUNT({column_1}) >= {value_1}"
+        },
+        "query_node_id": "czk_condition",
+        "score": 0.946506,
+        "signature": "having|count({column_1}) >= {value_1}"
+      }
+    ]
+  },
+  {
+    "catalog_covered_kinds": [
+      "filter",
+      "limit",
+      "order",
+      "projection"
+    ],
+    "catalog_covered_signatures": [
+      "limit|{value_1}",
+      "order|{column_1} asc",
+      "projection|{column_1}"
+    ],
+    "catalog_kind_coverage": 1.0,
+    "catalog_signature_coverage": 0.75,
+    "db_id": "european_football_2",
+    "example_id": "1078",
+    "first_relevant_rank": 1,
+    "gold_kinds": [
+      "filter",
+      "limit",
+      "order",
+      "projection"
+    ],
+    "gold_signatures": [
+      "filter|{column_1} in ({value_1}, {value_2})",
+      "limit|{value_1}",
+      "order|{column_1} asc",
+      "projection|{column_1}"
+    ],
+    "graph_available": true,
+    "graph_valid": true,
+    "intent_fragments": [
+      {
+        "node_id": "output",
+        "node_kind": "output",
+        "text": "output | older player | returns | select player with earliest birthday"
+      },
+      {
+        "node_id": "older",
+        "node_kind": "operation",
+        "text": "operation | select player with earliest birthday | older | The larger the birthday value, the younger the person is, and vice versa; | measure | birthday | Player.birthday | scoped_to | players named Aaron Lennon or Abdelaziz Barrada | theme | player | Player | incoming returns | older player"
+      },
+      {
+        "node_id": "candidates",
+        "node_kind": "scope",
+        "text": "scope | players named Aaron Lennon or Abdelaziz Barrada | filter | or | theme | player | Player | incoming scoped_to | select player with earliest birthday"
+      },
+      {
+        "node_id": "either",
+        "node_kind": "logic",
+        "text": "logic | or | or | operand | player named Aaron Lennon | operand | player named Abdelaziz Barrada | incoming filter | players named Aaron Lennon or Abdelaziz Barrada"
+      },
+      {
+        "node_id": "aaron_condition",
+        "node_kind": "condition",
+        "text": "condition | player named Aaron Lennon | Aaron Lennon | compare | player name | Player.player_name | value | Aaron Lennon | incoming operand | or"
+      },
+      {
+        "node_id": "abdelaziz_condition",
+        "node_kind": "condition",
+        "text": "condition | player named Abdelaziz Barrada | Abdelaziz Barrada | compare | player name | Player.player_name | value | Abdelaziz Barrada | incoming operand | or"
+      }
+    ],
+    "recall": {
+      "1": {
+        "catalog_conditional_kind_recall": 0.25,
+        "catalog_conditional_signature_recall": 0.3333333333333333,
+        "kind_recall": 0.25,
+        "matched_kinds": [
+          "projection"
+        ],
+        "matched_signatures": [
+          "projection|{column_1}"
+        ],
+        "retrieved": 1,
+        "signature_recall": 0.25
+      },
+      "10": {
+        "catalog_conditional_kind_recall": 0.75,
+        "catalog_conditional_signature_recall": 0.3333333333333333,
+        "kind_recall": 0.75,
+        "matched_kinds": [
+          "filter",
+          "order",
+          "projection"
+        ],
+        "matched_signatures": [
+          "projection|{column_1}"
+        ],
+        "retrieved": 9,
+        "signature_recall": 0.25
+      },
+      "12": {
+        "catalog_conditional_kind_recall": 0.75,
+        "catalog_conditional_signature_recall": 0.3333333333333333,
+        "kind_recall": 0.75,
+        "matched_kinds": [
+          "filter",
+          "order",
+          "projection"
+        ],
+        "matched_signatures": [
+          "projection|{column_1}"
+        ],
+        "retrieved": 9,
+        "signature_recall": 0.25
+      },
+      "3": {
+        "catalog_conditional_kind_recall": 0.5,
+        "catalog_conditional_signature_recall": 0.3333333333333333,
+        "kind_recall": 0.5,
+        "matched_kinds": [
+          "filter",
+          "projection"
+        ],
+        "matched_signatures": [
+          "projection|{column_1}"
+        ],
+        "retrieved": 3,
+        "signature_recall": 0.25
+      },
+      "5": {
+        "catalog_conditional_kind_recall": 0.5,
+        "catalog_conditional_signature_recall": 0.3333333333333333,
+        "kind_recall": 0.5,
+        "matched_kinds": [
+          "filter",
+          "projection"
+        ],
+        "matched_signatures": [
+          "projection|{column_1}"
+        ],
+        "retrieved": 5,
+        "signature_recall": 0.25
+      }
+    },
+    "retrieval_hits": [
+      {
+        "fragment": {
+          "columns": [
+            "player_name"
+          ],
+          "concrete_sql": "player_name",
+          "db_id": "european_football_2",
+          "example_id": "1116",
+          "fragment_id": "1116:select_0:projection:0",
+          "kind": "projection",
+          "scope_id": "select_0",
+          "semantic_text": "projection player name {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "output",
+        "score": 2.213883,
+        "signature": "projection|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.power",
+            "T2.text"
+          ],
+          "concrete_sql": "(T1.power IS NULL OR T1.power = '*') AND T2.text LIKE '%triggered ability%'",
+          "db_id": "card_games",
+          "example_id": "408",
+          "fragment_id": "408:select_0:filter:2",
+          "kind": "filter",
+          "scope_id": "select_0",
+          "semantic_text": "filter t1 power is null or t1 power and t2 text like triggered ability {column 2} is null or {column 2} {value 2} and {column 1} like {value 1}",
+          "tables": [],
+          "template_sql": "({column_2} IS NULL OR {column_2} = {value_2}) AND {column_1} LIKE {value_1}"
+        },
+        "query_node_id": "abdelaziz_condition",
+        "score": 1.881682,
+        "signature": "filter|({column_2} is null or {column_2} = {value_2}) and {column_1} like {value_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.height",
+            "height"
+          ],
+          "concrete_sql": "T1.height = (SELECT MIN(height) FROM Player)",
+          "db_id": "european_football_2",
+          "example_id": "1058",
+          "fragment_id": "1058:select_2:filter:3",
+          "kind": "filter",
+          "scope_id": "select_2",
+          "semantic_text": "filter t1 height select min height from player {column 1} select min {column 2} from {table 1}",
+          "tables": [
+            "Player"
+          ],
+          "template_sql": "{column_1} = (SELECT MIN({column_2}) FROM {table_1})"
+        },
+        "query_node_id": "abdelaziz_condition",
+        "score": 1.852849,
+        "signature": "filter|{column_1} = (select min({column_2}) from {table_1})"
+      },
+      {
+        "fragment": {
+          "columns": [],
+          "concrete_sql": "champion_time",
+          "db_id": "formula_1",
+          "example_id": "955",
+          "fragment_id": "955:root:scope:1",
+          "kind": "scope",
+          "scope_id": "root",
+          "semantic_text": "named intermediate scope champion_time",
+          "tables": [],
+          "template_sql": "{named_scope}"
+        },
+        "query_node_id": "candidates",
+        "score": 1.703838,
+        "signature": "scope|{named_scope}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.height",
+            "height"
+          ],
+          "concrete_sql": "T1.height = (SELECT MAX(height) FROM Player)",
+          "db_id": "european_football_2",
+          "example_id": "1058",
+          "fragment_id": "1058:select_1:filter:3",
+          "kind": "filter",
+          "scope_id": "select_1",
+          "semantic_text": "filter t1 height select max height from player {column 1} select max {column 2} from {table 1}",
+          "tables": [
+            "Player"
+          ],
+          "template_sql": "{column_1} = (SELECT MAX({column_2}) FROM {table_1})"
+        },
+        "query_node_id": "aaron_condition",
+        "score": 1.588901,
+        "signature": "filter|{column_1} = (select max({column_2}) from {table_1})"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T.element"
+          ],
+          "concrete_sql": "T.element",
+          "db_id": "toxicology",
+          "example_id": "220",
+          "fragment_id": "220:select_0:order:2",
+          "kind": "order",
+          "scope_id": "select_0",
+          "semantic_text": "order t element {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "older",
+        "score": 1.483736,
+        "signature": "order|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.event_id"
+          ],
+          "concrete_sql": "T1.event_id",
+          "db_id": "student_club",
+          "example_id": "1323",
+          "fragment_id": "1323:select_0:group:2",
+          "kind": "group",
+          "scope_id": "select_0",
+          "semantic_text": "group t1 event id {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "older",
+        "score": 1.483418,
+        "signature": "group|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "post_count"
+          ],
+          "concrete_sql": "post_count > 10",
+          "db_id": "codebase_community",
+          "example_id": "604",
+          "fragment_id": "604:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having post count 10 {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "{column_1} > {value_1}"
+        },
+        "query_node_id": "either",
+        "score": 1.434142,
+        "signature": "having|{column_1} > {value_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "ID"
+          ],
+          "concrete_sql": "COUNT(ID) >= 2",
+          "db_id": "thrombosis_prediction",
+          "example_id": "1239",
+          "fragment_id": "1239:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having count id 2 count {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "COUNT({column_1}) >= {value_1}"
+        },
+        "query_node_id": "either",
+        "score": 1.301047,
+        "signature": "having|count({column_1}) >= {value_1}"
+      }
+    ]
+  },
+  {
+    "catalog_covered_kinds": [
+      "aggregate",
+      "projection"
+    ],
+    "catalog_covered_signatures": [
+      "aggregate|count({column_1})"
+    ],
+    "catalog_kind_coverage": 1.0,
+    "catalog_signature_coverage": 0.3333333333333333,
+    "db_id": "card_games",
+    "example_id": "368",
+    "first_relevant_rank": null,
+    "gold_kinds": [
+      "aggregate",
+      "projection"
+    ],
+    "gold_signatures": [
+      "aggregate|count({column_1})",
+      "aggregate|sum(case when {column_1} = {value_3} then {value_2} else {value_1} end)",
+      "projection|cast(sum(case when {column_2} = {value_4} then {value_3} else {value_2} end) as real) * {value_1} / count({column_1})"
+    ],
+    "graph_available": true,
+    "graph_valid": true,
+    "intent_fragments": [
+      {
+        "node_id": "output",
+        "node_kind": "output",
+        "text": "output | percentage of borderless cards | returns | percentage of borderless cards"
+      },
+      {
+        "node_id": "is_borderless",
+        "node_kind": "condition",
+        "text": "condition | border color equals borderless | borderless | borderColor = 'borderless' | compare | border color | cards.borderColor | value | borderless | incoming filter | borderless cards within all cards"
+      },
+      {
+        "node_id": "all_cards",
+        "node_kind": "scope",
+        "text": "scope | all cards | theme | cards | cards | incoming scoped_to | borderless cards within all cards | incoming scoped_to | count of all cards"
+      },
+      {
+        "node_id": "borderless_cards",
+        "node_kind": "scope",
+        "text": "scope | borderless cards within all cards | filter | border color equals borderless | scoped_to | all cards | incoming scoped_to | count of borderless cards"
+      },
+      {
+        "node_id": "borderless_count",
+        "node_kind": "operation",
+        "text": "operation | count of borderless cards | Count (id) | measure | card identifier | cards.id | scoped_to | borderless cards within all cards | incoming numerator | percentage of borderless cards"
+      },
+      {
+        "node_id": "total_count",
+        "node_kind": "operation",
+        "text": "operation | count of all cards | Count(id) | measure | card identifier | cards.id | scoped_to | all cards | incoming denominator | percentage of borderless cards"
+      },
+      {
+        "node_id": "percentage",
+        "node_kind": "operation",
+        "text": "operation | percentage of borderless cards | percentage | percentage = Divide(Count (id) where borderColor = 'borderless', Count(id)) *100 | denominator | count of all cards | numerator | count of borderless cards | incoming returns | percentage of borderless cards"
+      }
+    ],
+    "recall": {
+      "1": {
+        "catalog_conditional_kind_recall": 0.0,
+        "catalog_conditional_signature_recall": 0.0,
+        "kind_recall": 0.0,
+        "matched_kinds": [],
+        "matched_signatures": [],
+        "retrieved": 1,
+        "signature_recall": 0.0
+      },
+      "10": {
+        "catalog_conditional_kind_recall": 1.0,
+        "catalog_conditional_signature_recall": 0.0,
+        "kind_recall": 1.0,
+        "matched_kinds": [
+          "aggregate",
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 8,
+        "signature_recall": 0.0
+      },
+      "12": {
+        "catalog_conditional_kind_recall": 1.0,
+        "catalog_conditional_signature_recall": 0.0,
+        "kind_recall": 1.0,
+        "matched_kinds": [
+          "aggregate",
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 8,
+        "signature_recall": 0.0
+      },
+      "3": {
+        "catalog_conditional_kind_recall": 0.5,
+        "catalog_conditional_signature_recall": 0.0,
+        "kind_recall": 0.5,
+        "matched_kinds": [
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 3,
+        "signature_recall": 0.0
+      },
+      "5": {
+        "catalog_conditional_kind_recall": 1.0,
+        "catalog_conditional_signature_recall": 0.0,
+        "kind_recall": 1.0,
+        "matched_kinds": [
+          "aggregate",
+          "projection"
+        ],
+        "matched_signatures": [],
+        "retrieved": 5,
+        "signature_recall": 0.0
+      }
+    },
+    "retrieval_hits": [
+      {
+        "fragment": {
+          "columns": [],
+          "concrete_sql": "champion_time",
+          "db_id": "formula_1",
+          "example_id": "955",
+          "fragment_id": "955:root:scope:1",
+          "kind": "scope",
+          "scope_id": "root",
+          "semantic_text": "named intermediate scope champion_time",
+          "tables": [],
+          "template_sql": "{named_scope}"
+        },
+        "query_node_id": "all_cards",
+        "score": 1.994797,
+        "signature": "scope|{named_scope}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.event_id"
+          ],
+          "concrete_sql": "T1.event_id",
+          "db_id": "student_club",
+          "example_id": "1323",
+          "fragment_id": "1323:select_0:group:2",
+          "kind": "group",
+          "scope_id": "select_0",
+          "semantic_text": "group t1 event id {column 1}",
+          "tables": [],
+          "template_sql": "{column_1}"
+        },
+        "query_node_id": "total_count",
+        "score": 1.521905,
+        "signature": "group|{column_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "finishing"
+          ],
+          "concrete_sql": "AVG(finishing) AS result",
+          "db_id": "european_football_2",
+          "example_id": "1058",
+          "fragment_id": "1058:select_1:projection:0",
+          "kind": "projection",
+          "scope_id": "select_1",
+          "semantic_text": "projection avg finishing as result avg {column 1} as result",
+          "tables": [],
+          "template_sql": "AVG({column_1}) AS result"
+        },
+        "query_node_id": "output",
+        "score": 1.443271,
+        "signature": "projection|avg({column_1}) as result"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "Score"
+          ],
+          "concrete_sql": "Score DESC",
+          "db_id": "codebase_community",
+          "example_id": "707",
+          "fragment_id": "707:select_0:order:2",
+          "kind": "order",
+          "scope_id": "select_0",
+          "semantic_text": "order score desc {column 1} desc",
+          "tables": [],
+          "template_sql": "{column_1} DESC"
+        },
+        "query_node_id": "total_count",
+        "score": 1.413678,
+        "signature": "order|{column_1} desc"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "amount",
+            "status"
+          ],
+          "concrete_sql": "SUM(CASE WHEN status = 'A' THEN amount ELSE 0 END)",
+          "db_id": "financial",
+          "example_id": "117",
+          "fragment_id": "117:select_0:aggregate:2",
+          "kind": "aggregate",
+          "scope_id": "select_0",
+          "semantic_text": "aggregate sum case when status a then amount else 0 end sum case when {column 2} {value 2} then {column 1} else {value 1} end",
+          "tables": [],
+          "template_sql": "SUM(CASE WHEN {column_2} = {value_2} THEN {column_1} ELSE {value_1} END)"
+        },
+        "query_node_id": "percentage",
+        "score": 1.397707,
+        "signature": "aggregate|sum(case when {column_2} = {value_2} then {column_1} else {value_1} end)"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "T1.id"
+          ],
+          "concrete_sql": "COUNT(DISTINCT T1.id)",
+          "db_id": "card_games",
+          "example_id": "408",
+          "fragment_id": "408:select_0:aggregate:3",
+          "kind": "aggregate",
+          "scope_id": "select_0",
+          "semantic_text": "aggregate count distinct t1 id count distinct {column 1}",
+          "tables": [],
+          "template_sql": "COUNT(DISTINCT {column_1})"
+        },
+        "query_node_id": "borderless_count",
+        "score": 1.297887,
+        "signature": "aggregate|count(distinct {column_1})"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "post_count"
+          ],
+          "concrete_sql": "post_count > 10",
+          "db_id": "codebase_community",
+          "example_id": "604",
+          "fragment_id": "604:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having post count 10 {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "{column_1} > {value_1}"
+        },
+        "query_node_id": "is_borderless",
+        "score": 1.047795,
+        "signature": "having|{column_1} > {value_1}"
+      },
+      {
+        "fragment": {
+          "columns": [
+            "ID"
+          ],
+          "concrete_sql": "COUNT(ID) >= 2",
+          "db_id": "thrombosis_prediction",
+          "example_id": "1239",
+          "fragment_id": "1239:select_1:having:3",
+          "kind": "having",
+          "scope_id": "select_1",
+          "semantic_text": "having count id 2 count {column 1} {value 1}",
+          "tables": [],
+          "template_sql": "COUNT({column_1}) >= {value_1}"
+        },
+        "query_node_id": "is_borderless",
+        "score": 1.042766,
+        "signature": "having|count({column_1}) >= {value_1}"
+      }
+    ]
+  },
+  {
+    "catalog_covered_kinds": [
+      "filter",
+      "limit",
+      "order",
+      "projection"
+    ],
+    "catalog_covered_signatures": [
+      "filter|{column_1} between {value_1} and {value_2}",
+      "limit|{value_1}",
+      "order|{column_1} desc",
+      "projection|{column_1}"
+    ],
+    "catalog_kind_coverage": 1.0,
+    "catalog_signature_coverage": 1.0,
+    "db_id": "student_club",
+    "example_id": "1392",
+    "failure_stage": "intent_graph_unavailable",
+    "gold_kinds": [
+      "filter",
+      "limit",
+      "order",
+      "projection"
+    ],
+    "gold_signatures": [
+      "filter|{column_1} between {value_1} and {value_2}",
+      "limit|{value_1}",
+      "order|{column_1} desc",
+      "projection|{column_1}"
+    ],
+    "graph_available": false,
+    "graph_valid": false,
+    "recall": {}
+  }
+]

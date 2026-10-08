@@ -1,0 +1,23 @@
+{
+  "estimated_model_cost_usd": null,
+  "examples": 5,
+  "execution_accuracy": 0.8,
+  "execution_correct": 4,
+  "execution_success_rate": 1.0,
+  "execution_successes": 5,
+  "local_evaluation_coverage": 1.0,
+  "locally_evaluated_examples": 5,
+  "locally_unscored_examples": 0,
+  "mean_model_latency_ms": 5611.488516800455,
+  "model_cached_input_tokens": 0,
+  "model_input_tokens": 76933,
+  "model_output_tokens": 394,
+  "model_reasoning_tokens": 109,
+  "model_total_tokens": 77327,
+  "models": [
+    "codex-cli/gpt-6-astra"
+  ],
+  "pricing": null,
+  "validation_passes": 5,
+  "validation_rate": 1.0
+}

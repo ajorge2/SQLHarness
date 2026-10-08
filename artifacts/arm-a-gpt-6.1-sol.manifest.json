@@ -1,0 +1,142 @@
+{
+  "benchmark": {
+    "databases": [
+      {
+        "bytes": 11116544,
+        "db_id": "california_schools",
+        "path": "california_schools/california_schools.sqlite",
+        "sha256": "c0903eec662e63068fd1d14403d3d6c1d473287fc10c4356333ea58f878db983"
+      },
+      {
+        "bytes": 261820416,
+        "db_id": "card_games",
+        "path": "card_games/card_games.sqlite",
+        "sha256": "c98bdb57fe7474da798b407785544b9af0daaad5d61fd21e2a73309493bc1227"
+      },
+      {
+        "bytes": 481419264,
+        "db_id": "codebase_community",
+        "path": "codebase_community/codebase_community.sqlite",
+        "sha256": "92101be6d2a9f6adceea59d38f6d1c556087f9eea1432432a21268cb1348036d"
+      },
+      {
+        "bytes": 34635776,
+        "db_id": "debit_card_specializing",
+        "path": "debit_card_specializing/debit_card_specializing.sqlite",
+        "sha256": "b3d149ad05746dbbe5116e229e17e18f09c39db43cf117d9ef3441753608b691"
+      },
+      {
+        "bytes": 597754880,
+        "db_id": "european_football_2",
+        "path": "european_football_2/european_football_2.sqlite",
+        "sha256": "f72f5c9b990371417288a67b27a02e601ef904d45525c2c9f7931fb01001c536"
+      },
+      {
+        "bytes": 71294976,
+        "db_id": "financial",
+        "path": "financial/financial.sqlite",
+        "sha256": "d15d89cdb068a202b6f2b99342af44dffc1d52545b39ceaf62efdc0ba570101e"
+      },
+      {
+        "bytes": 22360064,
+        "db_id": "formula_1",
+        "path": "formula_1/formula_1.sqlite",
+        "sha256": "79770caf966707e35516fa566e24b40ae515c74ec1ec4631235245645b87b24d"
+      },
+      {
+        "bytes": 2641920,
+        "db_id": "student_club",
+        "path": "student_club/student_club.sqlite",
+        "sha256": "eb89bcfe97eefa386a27904ec5aa15159811a7eac894ec659a36e48fa9f76b77"
+      },
+      {
+        "bytes": 237568,
+        "db_id": "superhero",
+        "path": "superhero/superhero.sqlite",
+        "sha256": "75e94a2c3236ee3bb2c01fb97a1c4b4c1c269bcefd4eab1d04be323d2d0825b1"
+      },
+      {
+        "bytes": 7327744,
+        "db_id": "thrombosis_prediction",
+        "path": "thrombosis_prediction/thrombosis_prediction.sqlite",
+        "sha256": "87583183c3dc472fba04de702965560a9d7c0a548836613f242317e0eeb83f00"
+      },
+      {
+        "bytes": 2678784,
+        "db_id": "toxicology",
+        "path": "toxicology/toxicology.sqlite",
+        "sha256": "35ef27ae6bdfda530e125ed369666ac0abb8bc8c0bcc0ad09407f547ecb61a93"
+      }
+    ],
+    "dataset_path": "data/bird/mini_dev_sqlite.json",
+    "dataset_sha256": "88ceb0710163cae46a256ecea8f0a8c98286599530b60587fda5c3cfe57d45d2",
+    "dialect": "sqlite",
+    "gold_execution_audit": {
+      "attempted": 500,
+      "failed": 2,
+      "failures": [
+        {
+          "db_id": "codebase_community",
+          "error": "interrupted",
+          "example_id": "701"
+        },
+        {
+          "db_id": "card_games",
+          "error": "interrupted",
+          "example_id": "518"
+        }
+      ],
+      "ready": false,
+      "succeeded": 498,
+      "total_latency_ms": 74985.137,
+      "truncated": 0,
+      "truncated_example_ids": []
+    },
+    "name": "BIRD Mini-Dev",
+    "official_code_url": "https://github.com/bird-bench/mini_dev",
+    "official_evaluator_commit": "abd11b6db92a1c9f809b32f7564c7c71b34d67f0",
+    "omitted_non_readonly_or_unparseable": 0,
+    "selected_examples": 500,
+    "selection_limit": null,
+    "selection_offset": 0,
+    "selection_sha256": "1b8080310938a6a956292322d82bc54b52c4197dbfbfb9192f767ab69e38c55e",
+    "source_examples": 500,
+    "source_url": "https://huggingface.co/datasets/birdsql/bird_mini_dev",
+    "subset_policy": "single-statement SELECT-only gold queries"
+  },
+  "created_at": "2026-10-07T23:23:28.452210+00:00",
+  "environment": {
+    "packages": {
+      "openai": "3.26.0",
+      "sqlglot": "30.21.0"
+    },
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "python": "3.12.13",
+    "source_sha256": "4d208ff4607b70aa8120850a205d265a13c9d7a36e5d890a99ed30e0c717f4fa"
+  },
+  "execution": {
+    "database_mode": "read-only",
+    "max_rows": 100000,
+    "timeout_seconds": 30.0
+  },
+  "manifest_version": 1,
+  "model": {
+    "id": "gpt-6.1-sol",
+    "provider": "openai",
+    "reasoning_effort": "medium",
+    "store": false
+  },
+  "pricing": {
+    "cached_input_usd_per_million": 0.1,
+    "captured_at": "2026-10-07",
+    "input_usd_per_million": 2.0,
+    "model": "gpt-6.1-sol",
+    "output_usd_per_million": 10.0,
+    "source_url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+  },
+  "prompt": {
+    "system_prompt_sha256": "e7236ef5c501ce8e12a28a7c7f555af1e199bc4194e6ce2624cd19ade7eabc94",
+    "version": "direct-sql-v1"
+  },
+  "status": "preflight"
+}

@@ -1,0 +1,2179 @@
+[
+  {
+    "fragment_id": "27:select_0:projection:0",
+    "example_id": "27",
+    "db_id": "california_schools",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.School",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t2 school {column 1}",
+    "tables": [],
+    "columns": [
+      "T2.School"
+    ]
+  },
+  {
+    "fragment_id": "27:select_0:projection:1",
+    "example_id": "27",
+    "db_id": "california_schools",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.AvgScrWrite",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 avg scr write {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.AvgScrWrite"
+    ]
+  },
+  {
+    "fragment_id": "27:select_0:projection:2",
+    "example_id": "27",
+    "db_id": "california_schools",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.Phone",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t2 phone {column 1}",
+    "tables": [],
+    "columns": [
+      "T2.Phone"
+    ]
+  },
+  {
+    "fragment_id": "27:select_0:join:3",
+    "example_id": "27",
+    "db_id": "california_schools",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.CDSCode = T1.cds",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t2 cdscode t1 cds {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.cds",
+      "T2.CDSCode"
+    ]
+  },
+  {
+    "fragment_id": "27:select_0:filter:4",
+    "example_id": "27",
+    "db_id": "california_schools",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "STRFTIME('%Y', T2.OpenDate) > '1991' OR STRFTIME('%Y', T2.ClosedDate) < '2000'",
+    "template_sql": "STRFTIME({value_3}, {column_1}) > {value_1} OR STRFTIME({value_3}, {column_2}) < {value_2}",
+    "semantic_text": "filter strftime y t2 open date 1991 or strftime y t2 closed date 2000 strftime {value 3} {column 1} {value 1} or strftime {value 3} {column 2} {value 2}",
+    "tables": [],
+    "columns": [
+      "T2.ClosedDate",
+      "T2.OpenDate"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_0:projection:0",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.event_name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 event name {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.event_name"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_0:join:1",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.event_id = T2.link_to_event",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 event id t2 link to event {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.event_id",
+      "T2.link_to_event"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_0:group:2",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "group",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.event_id",
+    "template_sql": "{column_1}",
+    "semantic_text": "group t1 event id {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.event_id"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_0:having:3",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "having",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(T2.link_to_event) > 20",
+    "template_sql": "COUNT({column_1}) > {value_1}",
+    "semantic_text": "having count t2 link to event 20 count {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "T2.link_to_event"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_0:aggregate:4",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(T2.link_to_event)",
+    "template_sql": "COUNT({column_1})",
+    "semantic_text": "aggregate count t2 link to event count {column 1}",
+    "tables": [],
+    "columns": [
+      "T2.link_to_event"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_1:projection:0",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.event_name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 event name {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.event_name"
+    ]
+  },
+  {
+    "fragment_id": "1323:select_1:filter:1",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "filter",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.type = 'Fundraiser'",
+    "template_sql": "{column_1} = {value_1}",
+    "semantic_text": "filter t1 type fundraiser {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "T1.type"
+    ]
+  },
+  {
+    "fragment_id": "1323:root:set_operation:0",
+    "example_id": "1323",
+    "db_id": "student_club",
+    "kind": "set_operation",
+    "scope_id": "root",
+    "concrete_sql": "EXCEPT",
+    "template_sql": "EXCEPT",
+    "semantic_text": "set operation except",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1014:select_0:projection:0",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.FastestLapTime AS lap_record",
+    "template_sql": "{column_1} AS lap_record",
+    "semantic_text": "projection t1 fastest lap time as lap record {column 1} as lap record",
+    "tables": [],
+    "columns": [
+      "T1.FastestLapTime"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_0:join:1",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.raceId = T2.raceId",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 race id t2 race id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.raceId",
+      "T2.raceId"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_0:join:2",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.circuitId = T3.circuitId",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t2 circuit id t3 circuit id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T2.circuitId",
+      "T3.circuitId"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_0:join:3",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "(CAST(SUBSTRING(T1.FastestLapTime, 1, INSTR(T1.FastestLapTime, ':') - 1) AS REAL) * 60) + (CAST(SUBSTRING(T1.FastestLapTime, INSTR(T1.FastestLapTime, ':') + 1, INSTR(T1.FastestLapTime, '.') - INSTR(T1.FastestLapTime, ':') - 1) AS REAL)) + (CAST(SUBSTRING(T1.FastestLapTime, INSTR(T1.FastestLapTime, '.') + 1) AS REAL) / 1000) = T4.min_time_in_seconds",
+    "template_sql": "(CAST(SUBSTRING({column_2}, {value_3}, INSTR({column_2}, {value_4}) - {value_3}) AS REAL) * {value_2}) + (CAST(SUBSTRING({column_2}, INSTR({column_2}, {value_4}) + {value_3}, INSTR({column_2}, {value_5}) - INSTR({column_2}, {value_4}) - {value_3}) AS REAL)) + (CAST(SUBSTRING({column_2}, INSTR({column_2}, {value_5}) + {value_3}) AS REAL) / {value_1}) = {column_1}",
+    "semantic_text": "join cast substring t1 fastest lap time 1 instr t1 fastest lap time 1 as real 60 cast substring t1 fastest lap time instr t1 fastest lap time 1 instr t1 fastest lap time instr t1 fastest lap time 1 as real cast substring t1 fastest lap time instr t1 fastest lap time 1 as real 1000 t4 min time in seconds cast substring {column 2} {value 3} instr {column 2} {value 4} {value 3} as real {value 2} cast substring {column 2} instr {column 2} {value 4} {value 3} instr {column 2} {value 5} instr {column 2} {value 4} {value 3} as real cast substring {column 2} instr {column 2} {value 5} {value 3} as real {value 1} {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.FastestLapTime",
+      "T4.min_time_in_seconds"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_0:limit:4",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "1",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 1 {value 1}",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1014:select_1:projection:0",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "MIN(fastest_lap_times.time_in_seconds) AS min_time_in_seconds",
+    "template_sql": "MIN({column_1}) AS min_time_in_seconds",
+    "semantic_text": "projection min fastest lap times time in seconds as min time in seconds min {column 1} as min time in seconds",
+    "tables": [],
+    "columns": [
+      "fastest_lap_times.time_in_seconds"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_1:join:1",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "join",
+    "scope_id": "select_1",
+    "concrete_sql": "fastest_lap_times.raceId = T2.raceId",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join fastest lap times race id t2 race id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T2.raceId",
+      "fastest_lap_times.raceId"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_1:join:2",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "join",
+    "scope_id": "select_1",
+    "concrete_sql": "T2.circuitId = T3.circuitId",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t2 circuit id t3 circuit id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T2.circuitId",
+      "T3.circuitId"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_1:filter:3",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "filter",
+    "scope_id": "select_1",
+    "concrete_sql": "T3.country = 'Italy'",
+    "template_sql": "{column_1} = {value_1}",
+    "semantic_text": "filter t3 country italy {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "T3.country"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_1:aggregate:4",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "aggregate",
+    "scope_id": "select_1",
+    "concrete_sql": "MIN(fastest_lap_times.time_in_seconds)",
+    "template_sql": "MIN({column_1})",
+    "semantic_text": "aggregate min fastest lap times time in seconds min {column 1}",
+    "tables": [],
+    "columns": [
+      "fastest_lap_times.time_in_seconds"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_2:projection:0",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "T1.raceId",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 race id {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.raceId"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_2:projection:1",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "T1.FastestLapTime",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 fastest lap time {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.FastestLapTime"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_2:projection:2",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "(CAST(SUBSTRING(T1.FastestLapTime, 1, INSTR(T1.FastestLapTime, ':') - 1) AS REAL) * 60) + (CAST(SUBSTRING(T1.FastestLapTime, INSTR(T1.FastestLapTime, ':') + 1, INSTR(T1.FastestLapTime, '.') - INSTR(T1.FastestLapTime, ':') - 1) AS REAL)) + (CAST(SUBSTRING(T1.FastestLapTime, INSTR(T1.FastestLapTime, '.') + 1) AS REAL) / 1000) AS time_in_seconds",
+    "template_sql": "(CAST(SUBSTRING({column_1}, {value_3}, INSTR({column_1}, {value_4}) - {value_3}) AS REAL) * {value_2}) + (CAST(SUBSTRING({column_1}, INSTR({column_1}, {value_4}) + {value_3}, INSTR({column_1}, {value_5}) - INSTR({column_1}, {value_4}) - {value_3}) AS REAL)) + (CAST(SUBSTRING({column_1}, INSTR({column_1}, {value_5}) + {value_3}) AS REAL) / {value_1}) AS time_in_seconds",
+    "semantic_text": "projection cast substring t1 fastest lap time 1 instr t1 fastest lap time 1 as real 60 cast substring t1 fastest lap time instr t1 fastest lap time 1 instr t1 fastest lap time instr t1 fastest lap time 1 as real cast substring t1 fastest lap time instr t1 fastest lap time 1 as real 1000 as time in seconds cast substring {column 1} {value 3} instr {column 1} {value 4} {value 3} as real {value 2} cast substring {column 1} instr {column 1} {value 4} {value 3} instr {column 1} {value 5} instr {column 1} {value 4} {value 3} as real cast substring {column 1} instr {column 1} {value 5} {value 3} as real {value 1} as time in seconds",
+    "tables": [],
+    "columns": [
+      "T1.FastestLapTime"
+    ]
+  },
+  {
+    "fragment_id": "1014:select_2:filter:3",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "filter",
+    "scope_id": "select_2",
+    "concrete_sql": "NOT T1.FastestLapTime IS NULL",
+    "template_sql": "NOT {column_1} IS NULL",
+    "semantic_text": "filter not t1 fastest lap time is null not {column 1} is null",
+    "tables": [],
+    "columns": [
+      "T1.FastestLapTime"
+    ]
+  },
+  {
+    "fragment_id": "1014:root:scope:0",
+    "example_id": "1014",
+    "db_id": "formula_1",
+    "kind": "scope",
+    "scope_id": "root",
+    "concrete_sql": "fastest_lap_times",
+    "template_sql": "{named_scope}",
+    "semantic_text": "named intermediate scope fastest_lap_times",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1116:select_0:projection:0",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "player_name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection player name {column 1}",
+    "tables": [],
+    "columns": [
+      "player_name"
+    ]
+  },
+  {
+    "fragment_id": "1116:select_0:filter:1",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "rank = 1",
+    "template_sql": "{column_1} = {value_1}",
+    "semantic_text": "filter rank 1 {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "rank"
+    ]
+  },
+  {
+    "fragment_id": "1116:select_1:projection:0",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "player_name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection player name {column 1}",
+    "tables": [],
+    "columns": [
+      "player_name"
+    ]
+  },
+  {
+    "fragment_id": "1116:select_1:projection:1",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "height",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection height {column 1}",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1116:select_1:projection:2",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "DENSE_RANK() OVER (ORDER BY height DESC) AS rank",
+    "template_sql": "DENSE_RANK() OVER (ORDER BY {column_1} DESC) AS rank",
+    "semantic_text": "projection dense rank over order by height desc as rank dense rank over order by {column 1} desc as rank",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1116:select_1:aggregate:3",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "aggregate",
+    "scope_id": "select_1",
+    "concrete_sql": "DENSE_RANK()",
+    "template_sql": "DENSE_RANK()",
+    "semantic_text": "aggregate dense rank dense rank",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1116:select_1:window:4",
+    "example_id": "1116",
+    "db_id": "european_football_2",
+    "kind": "window",
+    "scope_id": "select_1",
+    "concrete_sql": "DENSE_RANK() OVER (ORDER BY height DESC)",
+    "template_sql": "DENSE_RANK() OVER (ORDER BY {column_1} DESC)",
+    "semantic_text": "window dense rank over order by height desc dense rank over order by {column 1} desc",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "529:select_0:projection:0",
+    "example_id": "529",
+    "db_id": "card_games",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection name {column 1}",
+    "tables": [],
+    "columns": [
+      "name"
+    ]
+  },
+  {
+    "fragment_id": "529:select_0:filter:1",
+    "example_id": "529",
+    "db_id": "card_games",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "code IN (SELECT setCode FROM set_translations WHERE language = 'Korean' AND language NOT LIKE '%Japanese%')",
+    "template_sql": "{column_1} IN (SELECT {column_2} FROM {table_1} WHERE {column_3} = {value_1} AND {column_3} NOT LIKE {value_2})",
+    "semantic_text": "filter code in select set code from set translations where language korean and language not like japanese {column 1} in select {column 2} from {table 1} where {column 3} {value 1} and {column 3} not like {value 2}",
+    "tables": [
+      "set_translations"
+    ],
+    "columns": [
+      "code",
+      "language",
+      "setCode"
+    ]
+  },
+  {
+    "fragment_id": "529:select_1:projection:0",
+    "example_id": "529",
+    "db_id": "card_games",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "setCode",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection set code {column 1}",
+    "tables": [],
+    "columns": [
+      "setCode"
+    ]
+  },
+  {
+    "fragment_id": "529:select_1:filter:1",
+    "example_id": "529",
+    "db_id": "card_games",
+    "kind": "filter",
+    "scope_id": "select_1",
+    "concrete_sql": "language = 'Korean' AND language NOT LIKE '%Japanese%'",
+    "template_sql": "{column_1} = {value_1} AND {column_1} NOT LIKE {value_2}",
+    "semantic_text": "filter language korean and language not like japanese {column 1} {value 1} and {column 1} not like {value 2}",
+    "tables": [],
+    "columns": [
+      "language"
+    ]
+  },
+  {
+    "fragment_id": "760:select_0:projection:0",
+    "example_id": "760",
+    "db_id": "superhero",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "CAST(COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id)",
+    "template_sql": "CAST(COUNT(CASE WHEN {column_2} = {value_3} THEN {value_2} ELSE NULL END) AS REAL) * {value_1} / COUNT({column_1})",
+    "semantic_text": "projection cast count case when t2 publisher name marvel comics then 1 else null end as real 100 count t1 id cast count case when {column 2} {value 3} then {value 2} else null end as real {value 1} count {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.id",
+      "T2.publisher_name"
+    ]
+  },
+  {
+    "fragment_id": "760:select_0:join:1",
+    "example_id": "760",
+    "db_id": "superhero",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.publisher_id = T2.id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 publisher id t2 id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.publisher_id",
+      "T2.id"
+    ]
+  },
+  {
+    "fragment_id": "760:select_0:filter:2",
+    "example_id": "760",
+    "db_id": "superhero",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.height_cm BETWEEN 150 AND 180",
+    "template_sql": "{column_1} BETWEEN {value_1} AND {value_2}",
+    "semantic_text": "filter t1 height cm between 150 and 180 {column 1} between {value 1} and {value 2}",
+    "tables": [],
+    "columns": [
+      "T1.height_cm"
+    ]
+  },
+  {
+    "fragment_id": "760:select_0:aggregate:3",
+    "example_id": "760",
+    "db_id": "superhero",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(T1.id)",
+    "template_sql": "COUNT({column_1})",
+    "semantic_text": "aggregate count t1 id count {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.id"
+    ]
+  },
+  {
+    "fragment_id": "760:select_0:aggregate:4",
+    "example_id": "760",
+    "db_id": "superhero",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END)",
+    "template_sql": "COUNT(CASE WHEN {column_1} = {value_2} THEN {value_1} ELSE NULL END)",
+    "semantic_text": "aggregate count case when t2 publisher name marvel comics then 1 else null end count case when {column 1} {value 2} then {value 1} else null end",
+    "tables": [],
+    "columns": [
+      "T2.publisher_name"
+    ]
+  },
+  {
+    "fragment_id": "220:select_0:projection:0",
+    "example_id": "220",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T.element",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t element {column 1}",
+    "tables": [],
+    "columns": [
+      "T.element"
+    ]
+  },
+  {
+    "fragment_id": "220:select_0:filter:1",
+    "example_id": "220",
+    "db_id": "toxicology",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "T.molecule_id = 'TR000'",
+    "template_sql": "{column_1} = {value_1}",
+    "semantic_text": "filter t molecule id tr000 {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "T.molecule_id"
+    ]
+  },
+  {
+    "fragment_id": "220:select_0:order:2",
+    "example_id": "220",
+    "db_id": "toxicology",
+    "kind": "order",
+    "scope_id": "select_0",
+    "concrete_sql": "T.element",
+    "template_sql": "{column_1}",
+    "semantic_text": "order t element {column 1}",
+    "tables": [],
+    "columns": [
+      "T.element"
+    ]
+  },
+  {
+    "fragment_id": "220:select_0:limit:3",
+    "example_id": "220",
+    "db_id": "toxicology",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "3",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 3 {value 1}",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1498:select_0:projection:0",
+    "example_id": "1498",
+    "db_id": "debit_card_specializing",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "SUM(Consumption)",
+    "template_sql": "SUM({column_1})",
+    "semantic_text": "projection sum consumption sum {column 1}",
+    "tables": [],
+    "columns": [
+      "Consumption"
+    ]
+  },
+  {
+    "fragment_id": "1498:select_0:filter:1",
+    "example_id": "1498",
+    "db_id": "debit_card_specializing",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "SUBSTRING(Date, 1, 4) = '2012'",
+    "template_sql": "SUBSTRING({column_1}, {value_2}, {value_3}) = {value_1}",
+    "semantic_text": "filter substring date 1 4 2012 substring {column 1} {value 2} {value 3} {value 1}",
+    "tables": [],
+    "columns": [
+      "Date"
+    ]
+  },
+  {
+    "fragment_id": "1498:select_0:group:2",
+    "example_id": "1498",
+    "db_id": "debit_card_specializing",
+    "kind": "group",
+    "scope_id": "select_0",
+    "concrete_sql": "SUBSTRING(Date, 5, 2)",
+    "template_sql": "SUBSTRING({column_1}, {value_1}, {value_2})",
+    "semantic_text": "group substring date 5 2 substring {column 1} {value 1} {value 2}",
+    "tables": [],
+    "columns": [
+      "Date"
+    ]
+  },
+  {
+    "fragment_id": "1498:select_0:order:3",
+    "example_id": "1498",
+    "db_id": "debit_card_specializing",
+    "kind": "order",
+    "scope_id": "select_0",
+    "concrete_sql": "SUM(Consumption) DESC",
+    "template_sql": "SUM({column_1}) DESC",
+    "semantic_text": "order sum consumption desc sum {column 1} desc",
+    "tables": [],
+    "columns": [
+      "Consumption"
+    ]
+  },
+  {
+    "fragment_id": "1498:select_0:limit:4",
+    "example_id": "1498",
+    "db_id": "debit_card_specializing",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "1",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 1 {value 1}",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1498:select_0:aggregate:5",
+    "example_id": "1498",
+    "db_id": "debit_card_specializing",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "SUM(Consumption)",
+    "template_sql": "SUM({column_1})",
+    "semantic_text": "aggregate sum consumption sum {column 1}",
+    "tables": [],
+    "columns": [
+      "Consumption"
+    ]
+  },
+  {
+    "fragment_id": "955:select_0:projection:0",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "year",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection year {column 1}",
+    "tables": [],
+    "columns": [
+      "year"
+    ]
+  },
+  {
+    "fragment_id": "955:select_0:projection:1",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "AVG(time_seconds)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "projection avg time seconds avg {column 1}",
+    "tables": [],
+    "columns": [
+      "time_seconds"
+    ]
+  },
+  {
+    "fragment_id": "955:select_0:filter:2",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "year < 1975",
+    "template_sql": "{column_1} < {value_1}",
+    "semantic_text": "filter year 1975 {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "year"
+    ]
+  },
+  {
+    "fragment_id": "955:select_0:group:3",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "group",
+    "scope_id": "select_0",
+    "concrete_sql": "year",
+    "template_sql": "{column_1}",
+    "semantic_text": "group year {column 1}",
+    "tables": [],
+    "columns": [
+      "year"
+    ]
+  },
+  {
+    "fragment_id": "955:select_0:having:4",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "having",
+    "scope_id": "select_0",
+    "concrete_sql": "NOT AVG(time_seconds) IS NULL",
+    "template_sql": "NOT AVG({column_1}) IS NULL",
+    "semantic_text": "having not avg time seconds is null not avg {column 1} is null",
+    "tables": [],
+    "columns": [
+      "time_seconds"
+    ]
+  },
+  {
+    "fragment_id": "955:select_0:aggregate:5",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "AVG(time_seconds)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "aggregate avg time seconds avg {column 1}",
+    "tables": [],
+    "columns": [
+      "time_seconds"
+    ]
+  },
+  {
+    "fragment_id": "955:select_1:projection:0",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T2.year",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t2 year {column 1}",
+    "tables": [],
+    "columns": [
+      "T2.year"
+    ]
+  },
+  {
+    "fragment_id": "955:select_1:projection:1",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T2.raceId",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t2 race id {column 1}",
+    "tables": [],
+    "columns": [
+      "T2.raceId"
+    ]
+  },
+  {
+    "fragment_id": "955:select_1:projection:2",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.positionOrder",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 position order {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.positionOrder"
+    ]
+  },
+  {
+    "fragment_id": "955:select_1:projection:3",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "CASE WHEN T1.positionOrder = 1 THEN (CAST(SUBSTRING(T1.time, 1, 1) AS REAL) * 3600) + (CAST(SUBSTRING(T1.time, 3, 2) AS REAL) * 60) + CAST(SUBSTRING(T1.time, 6, 2) AS REAL) + CAST(SUBSTRING(T1.time, 9) AS REAL) / 1000 ELSE 0 END AS time_seconds",
+    "template_sql": "CASE WHEN {column_1} = {value_2} THEN (CAST(SUBSTRING({column_2}, {value_2}, {value_2}) AS REAL) * {value_7}) + (CAST(SUBSTRING({column_2}, {value_9}, {value_5}) AS REAL) * {value_8}) + CAST(SUBSTRING({column_2}, {value_4}, {value_5}) AS REAL) + CAST(SUBSTRING({column_2}, {value_6}) AS REAL) / {value_3} ELSE {value_1} END AS time_seconds",
+    "semantic_text": "projection case when t1 position order 1 then cast substring t1 time 1 1 as real 3600 cast substring t1 time 3 2 as real 60 cast substring t1 time 6 2 as real cast substring t1 time 9 as real 1000 else 0 end as time seconds case when {column 1} {value 2} then cast substring {column 2} {value 2} {value 2} as real {value 7} cast substring {column 2} {value 9} {value 5} as real {value 8} cast substring {column 2} {value 4} {value 5} as real cast substring {column 2} {value 6} as real {value 3} else {value 1} end as time seconds",
+    "tables": [],
+    "columns": [
+      "T1.positionOrder",
+      "T1.time"
+    ]
+  },
+  {
+    "fragment_id": "955:select_1:join:4",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "join",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.raceId = T2.raceId",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 race id t2 race id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.raceId",
+      "T2.raceId"
+    ]
+  },
+  {
+    "fragment_id": "955:select_1:filter:5",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "filter",
+    "scope_id": "select_1",
+    "concrete_sql": "NOT T1.time IS NULL",
+    "template_sql": "NOT {column_1} IS NULL",
+    "semantic_text": "filter not t1 time is null not {column 1} is null",
+    "tables": [],
+    "columns": [
+      "T1.time"
+    ]
+  },
+  {
+    "fragment_id": "955:select_2:projection:0",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "year",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection year {column 1}",
+    "tables": [],
+    "columns": [
+      "year"
+    ]
+  },
+  {
+    "fragment_id": "955:select_2:projection:1",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "raceId",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection race id {column 1}",
+    "tables": [],
+    "columns": [
+      "raceId"
+    ]
+  },
+  {
+    "fragment_id": "955:select_2:projection:2",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "time_seconds",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection time seconds {column 1}",
+    "tables": [],
+    "columns": [
+      "time_seconds"
+    ]
+  },
+  {
+    "fragment_id": "955:select_2:filter:3",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "filter",
+    "scope_id": "select_2",
+    "concrete_sql": "positionOrder = 1",
+    "template_sql": "{column_1} = {value_1}",
+    "semantic_text": "filter position order 1 {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "positionOrder"
+    ]
+  },
+  {
+    "fragment_id": "955:root:scope:0",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "scope",
+    "scope_id": "root",
+    "concrete_sql": "time_in_seconds",
+    "template_sql": "{named_scope}",
+    "semantic_text": "named intermediate scope time_in_seconds",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "955:root:scope:1",
+    "example_id": "955",
+    "db_id": "formula_1",
+    "kind": "scope",
+    "scope_id": "root",
+    "concrete_sql": "champion_time",
+    "template_sql": "{named_scope}",
+    "semantic_text": "named intermediate scope champion_time",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "129:select_0:projection:0",
+    "example_id": "129",
+    "db_id": "financial",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.A2",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 a2 {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.A2"
+    ]
+  },
+  {
+    "fragment_id": "129:select_0:join:1",
+    "example_id": "129",
+    "db_id": "financial",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.district_id = T2.district_id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 district id t2 district id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.district_id",
+      "T2.district_id"
+    ]
+  },
+  {
+    "fragment_id": "129:select_0:join:2",
+    "example_id": "129",
+    "db_id": "financial",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.account_id = T3.account_id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t2 account id t3 account id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T2.account_id",
+      "T3.account_id"
+    ]
+  },
+  {
+    "fragment_id": "129:select_0:filter:3",
+    "example_id": "129",
+    "db_id": "financial",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "T3.type = 'VYDAJ' AND T3.date LIKE '1996-01%'",
+    "template_sql": "{column_1} = {value_1} AND {column_2} LIKE {value_2}",
+    "semantic_text": "filter t3 type vydaj and t3 date like 1996 01 {column 1} {value 1} and {column 2} like {value 2}",
+    "tables": [],
+    "columns": [
+      "T3.date",
+      "T3.type"
+    ]
+  },
+  {
+    "fragment_id": "129:select_0:order:4",
+    "example_id": "129",
+    "db_id": "financial",
+    "kind": "order",
+    "scope_id": "select_0",
+    "concrete_sql": "A2 ASC",
+    "template_sql": "{column_1} ASC",
+    "semantic_text": "order a2 asc {column 1} asc",
+    "tables": [],
+    "columns": [
+      "A2"
+    ]
+  },
+  {
+    "fragment_id": "129:select_0:limit:5",
+    "example_id": "129",
+    "db_id": "financial",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "10",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 10 {value 1}",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "788:select_0:projection:0",
+    "example_id": "788",
+    "db_id": "superhero",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "CAST(COUNT(CASE WHEN T3.gender = 'Female' AND T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) * 100",
+    "template_sql": "CAST(COUNT(CASE WHEN {column_2} = {value_4} AND {column_1} = {value_3} THEN {value_2} ELSE NULL END) AS REAL) / COUNT(CASE WHEN {column_1} = {value_3} THEN {value_2} ELSE NULL END) * {value_1}",
+    "semantic_text": "projection cast count case when t3 gender female and t2 publisher name marvel comics then 1 else null end as real count case when t2 publisher name marvel comics then 1 else null end 100 cast count case when {column 2} {value 4} and {column 1} {value 3} then {value 2} else null end as real count case when {column 1} {value 3} then {value 2} else null end {value 1}",
+    "tables": [],
+    "columns": [
+      "T2.publisher_name",
+      "T3.gender"
+    ]
+  },
+  {
+    "fragment_id": "788:select_0:join:1",
+    "example_id": "788",
+    "db_id": "superhero",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.publisher_id = T2.id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 publisher id t2 id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.publisher_id",
+      "T2.id"
+    ]
+  },
+  {
+    "fragment_id": "788:select_0:join:2",
+    "example_id": "788",
+    "db_id": "superhero",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.gender_id = T3.id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 gender id t3 id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.gender_id",
+      "T3.id"
+    ]
+  },
+  {
+    "fragment_id": "788:select_0:aggregate:3",
+    "example_id": "788",
+    "db_id": "superhero",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END)",
+    "template_sql": "COUNT(CASE WHEN {column_1} = {value_2} THEN {value_1} ELSE NULL END)",
+    "semantic_text": "aggregate count case when t2 publisher name marvel comics then 1 else null end count case when {column 1} {value 2} then {value 1} else null end",
+    "tables": [],
+    "columns": [
+      "T2.publisher_name"
+    ]
+  },
+  {
+    "fragment_id": "788:select_0:aggregate:4",
+    "example_id": "788",
+    "db_id": "superhero",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(CASE WHEN T3.gender = 'Female' AND T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END)",
+    "template_sql": "COUNT(CASE WHEN {column_1} = {value_2} AND {column_2} = {value_3} THEN {value_1} ELSE NULL END)",
+    "semantic_text": "aggregate count case when t3 gender female and t2 publisher name marvel comics then 1 else null end count case when {column 1} {value 2} and {column 2} {value 3} then {value 1} else null end",
+    "tables": [],
+    "columns": [
+      "T2.publisher_name",
+      "T3.gender"
+    ]
+  },
+  {
+    "fragment_id": "17:select_0:projection:0",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "CharterNum",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection charter num {column 1}",
+    "tables": [],
+    "columns": [
+      "CharterNum"
+    ]
+  },
+  {
+    "fragment_id": "17:select_0:projection:1",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "AvgScrWrite",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection avg scr write {column 1}",
+    "tables": [],
+    "columns": [
+      "AvgScrWrite"
+    ]
+  },
+  {
+    "fragment_id": "17:select_0:projection:2",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "RANK() OVER (ORDER BY AvgScrWrite DESC) AS WritingScoreRank",
+    "template_sql": "RANK() OVER (ORDER BY {column_1} DESC) AS WritingScoreRank",
+    "semantic_text": "projection rank over order by avg scr write desc as writing score rank rank over order by {column 1} desc as writing score rank",
+    "tables": [],
+    "columns": [
+      "AvgScrWrite"
+    ]
+  },
+  {
+    "fragment_id": "17:select_0:join:3",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.CDSCode = T2.cds",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 cdscode t2 cds {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.CDSCode",
+      "T2.cds"
+    ]
+  },
+  {
+    "fragment_id": "17:select_0:filter:4",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.AvgScrWrite > 499 AND NOT CharterNum IS NULL",
+    "template_sql": "{column_1} > {value_1} AND NOT {column_2} IS NULL",
+    "semantic_text": "filter t2 avg scr write 499 and not charter num is null {column 1} {value 1} and not {column 2} is null",
+    "tables": [],
+    "columns": [
+      "CharterNum",
+      "T2.AvgScrWrite"
+    ]
+  },
+  {
+    "fragment_id": "17:select_0:aggregate:5",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "RANK()",
+    "template_sql": "RANK()",
+    "semantic_text": "aggregate rank rank",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "17:select_0:window:6",
+    "example_id": "17",
+    "db_id": "california_schools",
+    "kind": "window",
+    "scope_id": "select_0",
+    "concrete_sql": "RANK() OVER (ORDER BY AvgScrWrite DESC)",
+    "template_sql": "RANK() OVER (ORDER BY {column_1} DESC)",
+    "semantic_text": "window rank over order by avg scr write desc rank over order by {column 1} desc",
+    "tables": [],
+    "columns": [
+      "AvgScrWrite"
+    ]
+  },
+  {
+    "fragment_id": "1435:select_0:projection:0",
+    "example_id": "1435",
+    "db_id": "student_club",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "event_name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection event name {column 1}",
+    "tables": [],
+    "columns": [
+      "event_name"
+    ]
+  },
+  {
+    "fragment_id": "1435:select_0:filter:1",
+    "example_id": "1435",
+    "db_id": "student_club",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "type = 'Game' AND DATE(SUBSTRING(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20' AND status = 'Closed'",
+    "template_sql": "{column_2} = {value_2} AND DATE(SUBSTRING({column_3}, {value_5}, {value_6})) BETWEEN {value_3} AND {value_4} AND {column_1} = {value_1}",
+    "semantic_text": "filter type game and date substring event date 1 10 between 2019 03 15 and 2020 03 20 and status closed {column 2} {value 2} and date substring {column 3} {value 5} {value 6} between {value 3} and {value 4} and {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "event_date",
+      "status",
+      "type"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_0:projection:0",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "A",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection a {column 1}",
+    "tables": [],
+    "columns": [
+      "A"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_0:order:1",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "order",
+    "scope_id": "select_0",
+    "concrete_sql": "result DESC",
+    "template_sql": "{column_1} DESC",
+    "semantic_text": "order result desc {column 1} desc",
+    "tables": [],
+    "columns": [
+      "result"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_0:limit:2",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "1",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 1 {value 1}",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1058:select_1:projection:0",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "AVG(finishing) AS result",
+    "template_sql": "AVG({column_1}) AS result",
+    "semantic_text": "projection avg finishing as result avg {column 1} as result",
+    "tables": [],
+    "columns": [
+      "finishing"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_1:projection:1",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "'Max' AS A",
+    "template_sql": "{value_1} AS A",
+    "semantic_text": "projection max as a {value 1} as a",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1058:select_1:join:2",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "join",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.player_api_id = T2.player_api_id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 player api id t2 player api id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.player_api_id",
+      "T2.player_api_id"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_1:filter:3",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "filter",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.height = (SELECT MAX(height) FROM Player)",
+    "template_sql": "{column_1} = (SELECT MAX({column_2}) FROM {table_1})",
+    "semantic_text": "filter t1 height select max height from player {column 1} select max {column 2} from {table 1}",
+    "tables": [
+      "Player"
+    ],
+    "columns": [
+      "T1.height",
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_1:aggregate:4",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "aggregate",
+    "scope_id": "select_1",
+    "concrete_sql": "AVG(finishing)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "aggregate avg finishing avg {column 1}",
+    "tables": [],
+    "columns": [
+      "finishing"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_2:projection:0",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "AVG(finishing) AS result",
+    "template_sql": "AVG({column_1}) AS result",
+    "semantic_text": "projection avg finishing as result avg {column 1} as result",
+    "tables": [],
+    "columns": [
+      "finishing"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_2:projection:1",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_2",
+    "concrete_sql": "'Min' AS A",
+    "template_sql": "{value_1} AS A",
+    "semantic_text": "projection min as a {value 1} as a",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1058:select_2:join:2",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "join",
+    "scope_id": "select_2",
+    "concrete_sql": "T1.player_api_id = T2.player_api_id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 player api id t2 player api id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.player_api_id",
+      "T2.player_api_id"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_2:filter:3",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "filter",
+    "scope_id": "select_2",
+    "concrete_sql": "T1.height = (SELECT MIN(height) FROM Player)",
+    "template_sql": "{column_1} = (SELECT MIN({column_2}) FROM {table_1})",
+    "semantic_text": "filter t1 height select min height from player {column 1} select min {column 2} from {table 1}",
+    "tables": [
+      "Player"
+    ],
+    "columns": [
+      "T1.height",
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_2:aggregate:4",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "aggregate",
+    "scope_id": "select_2",
+    "concrete_sql": "AVG(finishing)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "aggregate avg finishing avg {column 1}",
+    "tables": [],
+    "columns": [
+      "finishing"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_3:projection:0",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_3",
+    "concrete_sql": "MAX(height)",
+    "template_sql": "MAX({column_1})",
+    "semantic_text": "projection max height max {column 1}",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_3:aggregate:1",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "aggregate",
+    "scope_id": "select_3",
+    "concrete_sql": "MAX(height)",
+    "template_sql": "MAX({column_1})",
+    "semantic_text": "aggregate max height max {column 1}",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_4:projection:0",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_4",
+    "concrete_sql": "MIN(height)",
+    "template_sql": "MIN({column_1})",
+    "semantic_text": "projection min height min {column 1}",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1058:select_4:aggregate:1",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "aggregate",
+    "scope_id": "select_4",
+    "concrete_sql": "MIN(height)",
+    "template_sql": "MIN({column_1})",
+    "semantic_text": "aggregate min height min {column 1}",
+    "tables": [],
+    "columns": [
+      "height"
+    ]
+  },
+  {
+    "fragment_id": "1058:root:set_operation:0",
+    "example_id": "1058",
+    "db_id": "european_football_2",
+    "kind": "set_operation",
+    "scope_id": "root",
+    "concrete_sql": "UNION",
+    "template_sql": "UNION",
+    "semantic_text": "set operation union",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "282:select_0:projection:0",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) / (CASE WHEN COUNT(atom_id) = 0 THEN NULL ELSE COUNT(atom_id) END) AS ratio",
+    "template_sql": "CAST(COUNT(CASE WHEN {column_2} = {value_2} THEN {column_1} ELSE NULL END) AS REAL) / (CASE WHEN COUNT({column_1}) = {value_1} THEN NULL ELSE COUNT({column_1}) END) AS ratio",
+    "semantic_text": "projection cast count case when element h then atom id else null end as real case when count atom id 0 then null else count atom id end as ratio cast count case when {column 2} {value 2} then {column 1} else null end as real case when count {column 1} {value 1} then null else count {column 1} end as ratio",
+    "tables": [],
+    "columns": [
+      "atom_id",
+      "element"
+    ]
+  },
+  {
+    "fragment_id": "282:select_0:projection:1",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "label",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection label {column 1}",
+    "tables": [],
+    "columns": [
+      "label"
+    ]
+  },
+  {
+    "fragment_id": "282:select_0:group:2",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "group",
+    "scope_id": "select_0",
+    "concrete_sql": "label",
+    "template_sql": "{column_1}",
+    "semantic_text": "group label {column 1}",
+    "tables": [],
+    "columns": [
+      "label"
+    ]
+  },
+  {
+    "fragment_id": "282:select_0:aggregate:3",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END)",
+    "template_sql": "COUNT(CASE WHEN {column_2} = {value_1} THEN {column_1} ELSE NULL END)",
+    "semantic_text": "aggregate count case when element h then atom id else null end count case when {column 2} {value 1} then {column 1} else null end",
+    "tables": [],
+    "columns": [
+      "atom_id",
+      "element"
+    ]
+  },
+  {
+    "fragment_id": "282:select_0:aggregate:4",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(atom_id)",
+    "template_sql": "COUNT({column_1})",
+    "semantic_text": "aggregate count atom id count {column 1}",
+    "tables": [],
+    "columns": [
+      "atom_id"
+    ]
+  },
+  {
+    "fragment_id": "282:select_1:projection:0",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.atom_id",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 atom id {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.atom_id"
+    ]
+  },
+  {
+    "fragment_id": "282:select_1:projection:1",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.element",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 element {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.element"
+    ]
+  },
+  {
+    "fragment_id": "282:select_1:projection:2",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.molecule_id",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t1 molecule id {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.molecule_id"
+    ]
+  },
+  {
+    "fragment_id": "282:select_1:projection:3",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "T2.label",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection t2 label {column 1}",
+    "tables": [],
+    "columns": [
+      "T2.label"
+    ]
+  },
+  {
+    "fragment_id": "282:select_1:join:4",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "join",
+    "scope_id": "select_1",
+    "concrete_sql": "T1.molecule_id = T2.molecule_id",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 molecule id t2 molecule id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.molecule_id",
+      "T2.molecule_id"
+    ]
+  },
+  {
+    "fragment_id": "282:select_1:filter:5",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "filter",
+    "scope_id": "select_1",
+    "concrete_sql": "T2.molecule_id = 'TR006'",
+    "template_sql": "{column_1} = {value_1}",
+    "semantic_text": "filter t2 molecule id tr006 {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "T2.molecule_id"
+    ]
+  },
+  {
+    "fragment_id": "282:root:scope:0",
+    "example_id": "282",
+    "db_id": "toxicology",
+    "kind": "scope",
+    "scope_id": "root",
+    "concrete_sql": "SubQuery",
+    "template_sql": "{named_scope}",
+    "semantic_text": "named intermediate scope SubQuery",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "408:select_0:projection:0",
+    "example_id": "408",
+    "db_id": "card_games",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(DISTINCT T1.id)",
+    "template_sql": "COUNT(DISTINCT {column_1})",
+    "semantic_text": "projection count distinct t1 id count distinct {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.id"
+    ]
+  },
+  {
+    "fragment_id": "408:select_0:join:1",
+    "example_id": "408",
+    "db_id": "card_games",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.uuid = T2.uuid",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 uuid t2 uuid {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.uuid",
+      "T2.uuid"
+    ]
+  },
+  {
+    "fragment_id": "408:select_0:filter:2",
+    "example_id": "408",
+    "db_id": "card_games",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "(T1.power IS NULL OR T1.power = '*') AND T2.text LIKE '%triggered ability%'",
+    "template_sql": "({column_2} IS NULL OR {column_2} = {value_2}) AND {column_1} LIKE {value_1}",
+    "semantic_text": "filter t1 power is null or t1 power and t2 text like triggered ability {column 2} is null or {column 2} {value 2} and {column 1} like {value 1}",
+    "tables": [],
+    "columns": [
+      "T1.power",
+      "T2.text"
+    ]
+  },
+  {
+    "fragment_id": "408:select_0:aggregate:3",
+    "example_id": "408",
+    "db_id": "card_games",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(DISTINCT T1.id)",
+    "template_sql": "COUNT(DISTINCT {column_1})",
+    "semantic_text": "aggregate count distinct t1 id count distinct {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.id"
+    ]
+  },
+  {
+    "fragment_id": "604:select_0:projection:0",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "AVG(T1.UpVotes)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "projection avg t1 up votes avg {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.UpVotes"
+    ]
+  },
+  {
+    "fragment_id": "604:select_0:projection:1",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "AVG(T1.Age)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "projection avg t1 age avg {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.Age"
+    ]
+  },
+  {
+    "fragment_id": "604:select_0:join:2",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.Id = T2.OwnerUserId",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 id t2 owner user id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.Id",
+      "T2.OwnerUserId"
+    ]
+  },
+  {
+    "fragment_id": "604:select_0:aggregate:3",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "AVG(T1.UpVotes)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "aggregate avg t1 up votes avg {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.UpVotes"
+    ]
+  },
+  {
+    "fragment_id": "604:select_0:aggregate:4",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "AVG(T1.Age)",
+    "template_sql": "AVG({column_1})",
+    "semantic_text": "aggregate avg t1 age avg {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.Age"
+    ]
+  },
+  {
+    "fragment_id": "604:select_1:projection:0",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "OwnerUserId",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection owner user id {column 1}",
+    "tables": [],
+    "columns": [
+      "OwnerUserId"
+    ]
+  },
+  {
+    "fragment_id": "604:select_1:projection:1",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "projection",
+    "scope_id": "select_1",
+    "concrete_sql": "COUNT(*) AS post_count",
+    "template_sql": "COUNT(*) AS post_count",
+    "semantic_text": "projection count as post count count as post count",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "604:select_1:group:2",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "group",
+    "scope_id": "select_1",
+    "concrete_sql": "OwnerUserId",
+    "template_sql": "{column_1}",
+    "semantic_text": "group owner user id {column 1}",
+    "tables": [],
+    "columns": [
+      "OwnerUserId"
+    ]
+  },
+  {
+    "fragment_id": "604:select_1:having:3",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "having",
+    "scope_id": "select_1",
+    "concrete_sql": "post_count > 10",
+    "template_sql": "{column_1} > {value_1}",
+    "semantic_text": "having post count 10 {column 1} {value 1}",
+    "tables": [],
+    "columns": [
+      "post_count"
+    ]
+  },
+  {
+    "fragment_id": "604:select_1:aggregate:4",
+    "example_id": "604",
+    "db_id": "codebase_community",
+    "kind": "aggregate",
+    "scope_id": "select_1",
+    "concrete_sql": "COUNT(*)",
+    "template_sql": "COUNT(*)",
+    "semantic_text": "aggregate count count",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "1252:select_0:projection:0",
+    "example_id": "1252",
+    "db_id": "thrombosis_prediction",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(T1.ID)",
+    "template_sql": "COUNT({column_1})",
+    "semantic_text": "projection count t1 id count {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.ID"
+    ]
+  },
+  {
+    "fragment_id": "1252:select_0:join:1",
+    "example_id": "1252",
+    "db_id": "thrombosis_prediction",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T1.ID = T2.ID",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t1 id t2 id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T1.ID",
+      "T2.ID"
+    ]
+  },
+  {
+    "fragment_id": "1252:select_0:join:2",
+    "example_id": "1252",
+    "db_id": "thrombosis_prediction",
+    "kind": "join",
+    "scope_id": "select_0",
+    "concrete_sql": "T3.ID = T2.ID",
+    "template_sql": "{column_1} = {column_2}",
+    "semantic_text": "join t3 id t2 id {column 1} {column 2}",
+    "tables": [],
+    "columns": [
+      "T2.ID",
+      "T3.ID"
+    ]
+  },
+  {
+    "fragment_id": "1252:select_0:filter:3",
+    "example_id": "1252",
+    "db_id": "thrombosis_prediction",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "T2.IGG BETWEEN 900 AND 2000 AND NOT T3.Symptoms IS NULL",
+    "template_sql": "{column_1} BETWEEN {value_1} AND {value_2} AND NOT {column_2} IS NULL",
+    "semantic_text": "filter t2 igg between 900 and 2000 and not t3 symptoms is null {column 1} between {value 1} and {value 2} and not {column 2} is null",
+    "tables": [],
+    "columns": [
+      "T2.IGG",
+      "T3.Symptoms"
+    ]
+  },
+  {
+    "fragment_id": "1252:select_0:aggregate:4",
+    "example_id": "1252",
+    "db_id": "thrombosis_prediction",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(T1.ID)",
+    "template_sql": "COUNT({column_1})",
+    "semantic_text": "aggregate count t1 id count {column 1}",
+    "tables": [],
+    "columns": [
+      "T1.ID"
+    ]
+  },
+  {
+    "fragment_id": "1471:select_0:projection:0",
+    "example_id": "1471",
+    "db_id": "debit_card_specializing",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS REAL) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio",
+    "template_sql": "CAST(SUM(IIF({column_1} = {value_4}, {value_1}, {value_2})) AS REAL) / SUM(IIF({column_1} = {value_3}, {value_1}, {value_2})) AS ratio",
+    "semantic_text": "projection cast sum iif currency eur 1 0 as real sum iif currency czk 1 0 as ratio cast sum iif {column 1} {value 4} {value 1} {value 2} as real sum iif {column 1} {value 3} {value 1} {value 2} as ratio",
+    "tables": [],
+    "columns": [
+      "Currency"
+    ]
+  },
+  {
+    "fragment_id": "1471:select_0:aggregate:1",
+    "example_id": "1471",
+    "db_id": "debit_card_specializing",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "SUM(IIF(Currency = 'CZK', 1, 0))",
+    "template_sql": "SUM(IIF({column_1} = {value_3}, {value_1}, {value_2}))",
+    "semantic_text": "aggregate sum iif currency czk 1 0 sum iif {column 1} {value 3} {value 1} {value 2}",
+    "tables": [],
+    "columns": [
+      "Currency"
+    ]
+  },
+  {
+    "fragment_id": "1471:select_0:aggregate:2",
+    "example_id": "1471",
+    "db_id": "debit_card_specializing",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "SUM(IIF(Currency = 'EUR', 1, 0))",
+    "template_sql": "SUM(IIF({column_1} = {value_3}, {value_1}, {value_2}))",
+    "semantic_text": "aggregate sum iif currency eur 1 0 sum iif {column 1} {value 3} {value 1} {value 2}",
+    "tables": [],
+    "columns": [
+      "Currency"
+    ]
+  },
+  {
+    "fragment_id": "1078:select_0:projection:0",
+    "example_id": "1078",
+    "db_id": "european_football_2",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "player_name",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection player name {column 1}",
+    "tables": [],
+    "columns": [
+      "player_name"
+    ]
+  },
+  {
+    "fragment_id": "1078:select_0:filter:1",
+    "example_id": "1078",
+    "db_id": "european_football_2",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "player_name IN ('Aaron Lennon', 'Abdelaziz Barrada')",
+    "template_sql": "{column_1} IN ({value_1}, {value_2})",
+    "semantic_text": "filter player name in aaron lennon abdelaziz barrada {column 1} in {value 1} {value 2}",
+    "tables": [],
+    "columns": [
+      "player_name"
+    ]
+  },
+  {
+    "fragment_id": "1078:select_0:order:2",
+    "example_id": "1078",
+    "db_id": "european_football_2",
+    "kind": "order",
+    "scope_id": "select_0",
+    "concrete_sql": "birthday ASC",
+    "template_sql": "{column_1} ASC",
+    "semantic_text": "order birthday asc {column 1} asc",
+    "tables": [],
+    "columns": [
+      "birthday"
+    ]
+  },
+  {
+    "fragment_id": "1078:select_0:limit:3",
+    "example_id": "1078",
+    "db_id": "european_football_2",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "1",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 1 {value 1}",
+    "tables": [],
+    "columns": []
+  },
+  {
+    "fragment_id": "368:select_0:projection:0",
+    "example_id": "368",
+    "db_id": "card_games",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "CAST(SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id)",
+    "template_sql": "CAST(SUM(CASE WHEN {column_2} = {value_4} THEN {value_3} ELSE {value_2} END) AS REAL) * {value_1} / COUNT({column_1})",
+    "semantic_text": "projection cast sum case when border color borderless then 1 else 0 end as real 100 count id cast sum case when {column 2} {value 4} then {value 3} else {value 2} end as real {value 1} count {column 1}",
+    "tables": [],
+    "columns": [
+      "borderColor",
+      "id"
+    ]
+  },
+  {
+    "fragment_id": "368:select_0:aggregate:1",
+    "example_id": "368",
+    "db_id": "card_games",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "COUNT(id)",
+    "template_sql": "COUNT({column_1})",
+    "semantic_text": "aggregate count id count {column 1}",
+    "tables": [],
+    "columns": [
+      "id"
+    ]
+  },
+  {
+    "fragment_id": "368:select_0:aggregate:2",
+    "example_id": "368",
+    "db_id": "card_games",
+    "kind": "aggregate",
+    "scope_id": "select_0",
+    "concrete_sql": "SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END)",
+    "template_sql": "SUM(CASE WHEN {column_1} = {value_3} THEN {value_2} ELSE {value_1} END)",
+    "semantic_text": "aggregate sum case when border color borderless then 1 else 0 end sum case when {column 1} {value 3} then {value 2} else {value 1} end",
+    "tables": [],
+    "columns": [
+      "borderColor"
+    ]
+  },
+  {
+    "fragment_id": "1392:select_0:projection:0",
+    "example_id": "1392",
+    "db_id": "student_club",
+    "kind": "projection",
+    "scope_id": "select_0",
+    "concrete_sql": "source",
+    "template_sql": "{column_1}",
+    "semantic_text": "projection source {column 1}",
+    "tables": [],
+    "columns": [
+      "source"
+    ]
+  },
+  {
+    "fragment_id": "1392:select_0:filter:1",
+    "example_id": "1392",
+    "db_id": "student_club",
+    "kind": "filter",
+    "scope_id": "select_0",
+    "concrete_sql": "date_received BETWEEN '2019-09-01' AND '2019-09-30'",
+    "template_sql": "{column_1} BETWEEN {value_1} AND {value_2}",
+    "semantic_text": "filter date received between 2019 09 01 and 2019 09 30 {column 1} between {value 1} and {value 2}",
+    "tables": [],
+    "columns": [
+      "date_received"
+    ]
+  },
+  {
+    "fragment_id": "1392:select_0:order:2",
+    "example_id": "1392",
+    "db_id": "student_club",
+    "kind": "order",
+    "scope_id": "select_0",
+    "concrete_sql": "source DESC",
+    "template_sql": "{column_1} DESC",
+    "semantic_text": "order source desc {column 1} desc",
+    "tables": [],
+    "columns": [
+      "source"
+    ]
+  },
+  {
+    "fragment_id": "1392:select_0:limit:3",
+    "example_id": "1392",
+    "db_id": "student_club",
+    "kind": "limit",
+    "scope_id": "select_0",
+    "concrete_sql": "1",
+    "template_sql": "{value_1}",
+    "semantic_text": "limit 1 {value 1}",
+    "tables": [],
+    "columns": []
+  }
+]

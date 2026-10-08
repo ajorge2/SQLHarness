@@ -1,0 +1,89 @@
+{
+  "benchmark": {
+    "databases": [
+      {
+        "bytes": 34635776,
+        "db_id": "debit_card_specializing",
+        "path": "debit_card_specializing/debit_card_specializing.sqlite",
+        "sha256": "b3d149ad05746dbbe5116e229e17e18f09c39db43cf117d9ef3441753608b691"
+      }
+    ],
+    "dataset_path": "data/bird/mini_dev_sqlite.json",
+    "dataset_sha256": "88ceb0710163cae46a256ecea8f0a8c98286599530b60587fda5c3cfe57d45d2",
+    "dialect": "sqlite",
+    "gold_execution_audit": {
+      "attempted": 5,
+      "failed": 0,
+      "failures": [],
+      "ready": true,
+      "succeeded": 5,
+      "total_latency_ms": 351.028,
+      "truncated": 0,
+      "truncated_example_ids": []
+    },
+    "name": "BIRD Mini-Dev",
+    "official_code_url": "https://github.com/bird-bench/mini_dev",
+    "official_evaluator_commit": "abd11b6db92a1c9f809b32f7564c7c71b34d67f0",
+    "omitted_non_readonly_or_unparseable": 0,
+    "selected_examples": 5,
+    "selection_limit": 5,
+    "selection_offset": 0,
+    "selection_sha256": "6aba1688d86e1c5ad296e8ee281a00c711e11b3cf4da19c7a077f4afc5241937",
+    "source_examples": 500,
+    "source_url": "https://huggingface.co/datasets/birdsql/bird_mini_dev",
+    "subset_policy": "single-statement SELECT-only gold queries"
+  },
+  "created_at": "2026-10-07T23:30:39.173977+00:00",
+  "environment": {
+    "packages": {
+      "openai": "3.26.0",
+      "sqlglot": "30.21.0"
+    },
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "python": "3.12.13",
+    "source_sha256": "894f58744af178a36c52222e1711b7cb9c3d37669b74f7a653344693e7c20c04"
+  },
+  "execution": {
+    "database_mode": "read-only",
+    "max_rows": 100000,
+    "timeout_seconds": 30.0
+  },
+  "manifest_version": 1,
+  "model": {
+    "ephemeral": true,
+    "id": "gpt-6-astra",
+    "interface": "codex-exec",
+    "provider": "codex-cli",
+    "reasoning_effort": "medium",
+    "store": null
+  },
+  "pricing": null,
+  "prompt": {
+    "system_prompt_sha256": "e7236ef5c501ce8e12a28a7c7f555af1e199bc4194e6ce2624cd19ade7eabc94",
+    "version": "direct-sql-v1"
+  },
+  "status": "completed",
+  "summary": {
+    "estimated_model_cost_usd": null,
+    "examples": 5,
+    "execution_accuracy": 0.8,
+    "execution_correct": 4,
+    "execution_success_rate": 1.0,
+    "execution_successes": 5,
+    "local_evaluation_coverage": 1.0,
+    "locally_evaluated_examples": 5,
+    "locally_unscored_examples": 0,
+    "mean_model_latency_ms": 6340.943900000275,
+    "model_cached_input_tokens": 0,
+    "model_input_tokens": 74749,
+    "model_output_tokens": 457,
+    "model_reasoning_tokens": 62,
+    "model_total_tokens": 75206,
+    "models": [
+      "codex-cli/gpt-6-astra"
+    ],
+    "pricing": null,
+    "validation_passes": 5,
+    "validation_rate": 1.0
+  }
+}

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
+    <title>SQLHarness — Research system and execution harness</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="SQLHarness home">
+        <span class="brand-mark">S</span><span>SQLHarness</span>
+      </a>
+      <nav aria-label="Page navigation">
+        <a href="#system">System</a>
+        <a href="#trace">Trace</a>
+        <a href="#research">Research</a>
+        <a href="share.html">AI brief</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero shell">
+        <div class="eyebrow"><span class="dot"></span> Applied AI system + research program</div>
+        <h1>Make database agents <em>legible</em> before making them autonomous.</h1>
+        <p class="hero-copy">
+          SQLHarness compiles business questions into explicit semantic structure and SQL primitives,
+          then places execution behind a governed boundary. The research question is whether that
+          structure can improve the accuracy–cost frontier over direct LLM generation.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#trace">Inspect a real trace</a>
+          <a class="button secondary" href="#research">See the experiment</a>
+          <a class="button secondary" href="share.html">Share with an AI reviewer</a>
+        </div>
+        <div class="status-row" aria-label="Project status">
+          <span><b class="status implemented">Frozen</b> 500-query baseline protocol</span>
+          <span><b class="status implemented">Implemented</b> policy validation</span>
+          <span><b class="status implemented">Audited</b> intent contract v0.2</span>
+          <span><b class="status implemented">Measured</b> first vertical slice</span>
+          <span><b class="status implemented">Implemented</b> MCP authority</span>
+        </div>
+      </section>
+
+      <section id="system" class="section shell">
+        <div class="section-heading">
+          <span class="kicker">System</span>
+          <h2>One architecture, two lenses</h2>
+          <p>The same pipeline exposes research decisions upstream and execution guarantees downstream.</p>
+        </div>
+
+        <div class="flow" aria-label="SQLHarness architecture">
+          <article class="flow-card">
+            <span class="step">01</span>
+            <h3>Business request</h3>
+            <p>Natural language, database schema, and task evidence.</p>
+          </article>
+          <span class="arrow" aria-hidden="true">→</span>
+          <article class="flow-card research-card">
+            <span class="step">02</span>
+            <h3>Intent graph</h3>
+            <p>Explicit entities, constraints, operations, and relations.</p>
+          </article>
+          <span class="arrow" aria-hidden="true">→</span>
+          <article class="flow-card research-card">
+            <span class="step">03</span>
+            <h3>Fragment retrieval</h3>
+            <p>Graph-conditioned SQL primitives for lightweight assembly.</p>
+          </article>
+          <span class="arrow" aria-hidden="true">→</span>
+          <article class="flow-card engineering-card">
+            <span class="step">04</span>
+            <h3>Authority boundary</h3>
+            <p>AST, schema, policy, timeout, and bounded execution checks.</p>
+          </article>
+        </div>
+
+        <div class="lens-grid">
+          <article class="lens-panel research-panel">
+            <div class="panel-label">Research lens</div>
+            <h3>Where does explicit structure help?</h3>
+            <ul>
+              <li>Teacher distribution → semantic intent graph</li>
+              <li>Intent fragments → contextual SQL retrieval</li>
+              <li>Ablations isolate parser, retriever, and assembler errors</li>
+            </ul>
+          </article>
+          <article class="lens-panel engineering-panel">
+            <div class="panel-label">Engineering lens</div>
+            <h3>What is the system allowed to do?</h3>
+            <ul>
+              <li>Model proposes; governed boundary decides</li>
+              <li>Read-only SQLite execution with time and row limits</li>
+              <li>Every proposal, decision, and result becomes a trace</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="trace" class="section trace-section">
+        <div class="shell">
+          <div class="section-heading inverse">
+            <span class="kicker">Inspectable evidence</span>
+            <h2>Follow one request through the harness</h2>
+            <p>This cached run is produced by the repository’s real validation and execution code. It needs no API key.</p>
+          </div>
+
+          <div class="trace-toolbar">
+            <div class="segmented" role="group" aria-label="Trace choice">
+              <button class="trace-choice active" data-trace="successful">Successful query</button>
+              <button class="trace-choice" data-trace="blocked">Blocked write</button>
+            </div>
+            <span id="trace-provenance" class="provenance">Loading trace…</span>
+          </div>
+
+          <div id="trace-content" class="trace-grid" aria-live="polite"></div>
+          <p class="disclosure">
+            Offline fixture, not a BIRD score. Its purpose is to prove the harness is executable and the safety path is inspectable.
+          </p>
+        </div>
+      </section>
+
+      <section id="research" class="section shell">
+        <div class="section-heading">
+          <span class="kicker">Research contract</span>
+          <h2>A result only counts if the comparison is controlled</h2>
+          <p>Every arm receives the same frozen BIRD examples, schema, and evaluation conditions.</p>
+        </div>
+
+        <div class="experiment-grid">
+          <article class="experiment-card">
+            <span class="experiment-number">A</span>
+            <h3>Direct model baseline</h3>
+            <p>Question + schema → frontier-model SQL.</p>
+          </article>
+          <article class="experiment-card featured">
+            <span class="experiment-number">B</span>
+            <h3>SQLHarness system</h3>
+            <p>Intent graph → retrieved fragments → lightweight assembly.</p>
+          </article>
+          <article class="experiment-card">
+            <span class="experiment-number">C</span>
+            <h3>Ablations</h3>
+            <p>Remove each component to measure its actual contribution.</p>
+          </article>
+        </div>
+
+        <div class="metrics-card">
+          <div>
+            <span class="metric-name">Primary</span>
+            <strong>Execution accuracy</strong>
+          </div>
+          <div>
+            <span class="metric-name">Efficiency</span>
+            <strong>Cost per correct query</strong>
+          </div>
+          <div>
+            <span class="metric-name">Operations</span>
+            <strong>End-to-end latency</strong>
+          </div>
+          <div>
+            <span class="metric-name">Diagnosis</span>
+            <strong>Stage-level error taxonomy</strong>
+          </div>
+        </div>
+
+        <div class="pending-results">
+          <div>
+            <span class="status implemented">Frozen development result</span>
+            <h3>The direct model wins. The architecture explains why.</h3>
+          </div>
+          <p>
+            The structured system has not moved the frontier on this slice. That negative result is preserved beside
+            the component evidence and governed execution path.
+          </p>
+        </div>
+
+        <div class="preflight-proof" aria-label="Frozen five-example development comparison">
+          <div class="preflight-heading">
+            <div>
+              <span class="kicker">Frozen comparison · 20 train / 5 held out</span>
+              <h3>Explicit structure improves diagnosis—not performance yet.</h3>
+            </div>
+            <span class="status implemented">Pinned evaluator reproduced</span>
+          </div>
+          <div class="preflight-stats">
+            <div class="preflight-stat"><strong>4/5</strong><span>Direct Astra correct</span></div>
+            <div class="preflight-stat"><strong>3/5</strong><span>SQLHarness dense correct</span></div>
+            <div class="preflight-stat"><strong>3/5</strong><span>SQLHarness learned correct</span></div>
+            <div class="preflight-stat"><strong>1</strong><span>Parser abstention</span></div>
+          </div>
+          <div class="slice-comparison">
+            <div>
+              <span class="metric-name">Direct generation</span>
+              <strong>5.61 s mean model latency · 77,327 tokens</strong>
+            </div>
+            <div>
+              <span class="metric-name">SQLHarness learned</span>
+              <strong>67.23 s mean observed latency · 142,764 reported tokens</strong>
+            </div>
+          </div>
+          <p class="preflight-disclosure">
+            Development evidence, not a leaderboard claim. SQLHarness tokens cover four completed pipelines and omit
+            the timed-out parser, so they understate true consumption. The pinned BIRD per-query executor reproduces
+            the 80% versus 60% scores. <a href="final-results.md">Read the complete result and error decomposition.</a>
+          </p>
+        </div>
+
+        <div class="preflight-proof" aria-label="First held-out SQLHarness vertical slice">
+          <div class="preflight-heading">
+            <div>
+              <span class="kicker">First held-out vertical slice · 3 examples</span>
+              <h3>The pipeline runs end to end. It has not earned its extra inference cost yet.</h3>
+            </div>
+            <span class="status implemented">Measured honestly</span>
+          </div>
+          <div class="preflight-stats">
+            <div class="preflight-stat"><strong>2/3</strong><span>Direct model correct</span></div>
+            <div class="preflight-stat"><strong>2/3</strong><span>SQLHarness correct</span></div>
+            <div class="preflight-stat"><strong>1</strong><span>Parser-timeout abstention</span></div>
+            <div class="preflight-stat"><strong>7 → 48</strong><span>Training examples → fragments</span></div>
+          </div>
+          <div class="slice-comparison">
+            <div>
+              <span class="metric-name">Direct generation</span>
+              <strong>6.35 s/query · 45,546 tokens across 3</strong>
+            </div>
+            <div>
+              <span class="metric-name">SQLHarness v0.1</span>
+              <strong>46.19 s/completed query · 70,197 tokens across 2</strong>
+            </div>
+          </div>
+          <p class="preflight-disclosure">
+            Development evidence, not a benchmark claim. The third direct query followed conflicting benchmark
+            evidence (<code>COUNT &gt; 2</code>) instead of the question and gold SQL (<code>COUNT &gt;= 2</code>);
+            SQLHarness timed out before answering it. <a href="vertical-slice.md">Read the full failure analysis.</a>
+          </p>
+        </div>
+
+        <div class="preflight-proof" aria-label="Fragment retrieval diagnosis">
+          <div class="preflight-heading">
+            <div>
+              <span class="kicker">Model B isolated · lexical / dense / learned · 20/5 split</span>
+              <h3>Learning helps rank one candidate, but does not beat dense retrieval.</h3>
+            </div>
+            <span class="status implemented">Controlled comparison</span>
+          </div>
+          <div class="preflight-stats">
+            <div class="preflight-stat"><strong>58.82%</strong><span>Exact catalog coverage</span></div>
+            <div class="preflight-stat"><strong>15.38%</strong><span>Lexical Recall@3</span></div>
+            <div class="preflight-stat"><strong>23.08%</strong><span>Dense Recall@3</span></div>
+            <div class="preflight-stat"><strong>15.38%</strong><span>Learned Recall@3</span></div>
+          </div>
+          <p class="preflight-disclosure">
+            Five-example development comparison; four graphs were available and three queries had a relevant exact
+            structure in the catalog. Dense BGE-small reaches 23.08% Recall@12; the learned ranker improves Recall@1
+            but falls to 15.38% at rank 12. Catalog coverage remains the dominant ceiling.
+            <a href="fragment-retrieval-evaluation.md">Read the retrieval analysis.</a>
+          </p>
+        </div>
+
+        <div class="preflight-proof" aria-label="Arm A reproducibility preflight">
+          <div class="preflight-heading">
+            <div>
+              <span class="kicker">Arm A preflight</span>
+              <h3>The experiment is frozen before inference.</h3>
+            </div>
+            <span class="status implemented">Verified locally</span>
+          </div>
+          <div id="preflight-stats" class="preflight-stats" aria-live="polite">
+            <span>Loading preflight evidence…</span>
+          </div>
+          <p id="preflight-disclosure" class="preflight-disclosure"></p>
+        </div>
+
+        <div class="preflight-proof" aria-label="Codex CLI development pilot">
+          <div class="preflight-heading">
+            <div>
+              <span class="kicker">Development pilot · Codex CLI / GPT-6 Astra</span>
+              <h3>The complete evaluation path now runs through live inference.</h3>
+            </div>
+            <span class="status implemented">Measured</span>
+          </div>
+          <div class="preflight-stats">
+            <div class="preflight-stat"><strong>4/5</strong><span>Locally correct</span></div>
+            <div class="preflight-stat"><strong>5/5</strong><span>Valid SQL</span></div>
+            <div class="preflight-stat"><strong>6.34s</strong><span>Mean model latency</span></div>
+            <div class="preflight-stat"><strong>75,206</strong><span>CLI-reported tokens</span></div>
+          </div>
+          <p class="preflight-disclosure">
+            Diagnostic smoke test—not a benchmark claim. The single rejection selected the correct entity but
+            returned an extra aggregate column, causing a strict result-shape mismatch. CLI usage is not assigned
+            API cost because it runs through the authenticated Codex product runtime.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell footer-inner">
+        <span>SQLHarness</span>
+        <span>Semantic compilation · governed execution · reproducible evaluation</span>
+      </div>
+    </footer>
+    <script src="assets/app.js?v=2026-10-07-final-study"></script>
+  </body>
+</html>

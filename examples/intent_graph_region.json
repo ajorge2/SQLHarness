@@ -1,0 +1,48 @@
+{
+  "graph_version": "0.2",
+  "request": "Which region has the most customers?",
+  "evidence": "",
+  "nodes": [
+    {
+      "node_id": "region",
+      "kind": "attribute",
+      "concept": "region",
+      "spans": [{"source": "request", "start": 6, "end": 12, "text": "region"}],
+      "schema_candidates": ["regions.name", "customers.region_id"]
+    },
+    {
+      "node_id": "customers",
+      "kind": "entity",
+      "concept": "customer",
+      "spans": [{"source": "request", "start": 26, "end": 35, "text": "customers"}],
+      "schema_candidates": ["customers"]
+    },
+    {
+      "node_id": "customer_count",
+      "kind": "operation",
+      "concept": "count",
+      "spans": [{"source": "request", "start": 21, "end": 35, "text": "most customers"}],
+      "schema_candidates": ["customers.id"],
+      "attributes": {"distinct": false}
+    },
+    {
+      "node_id": "largest_group",
+      "kind": "operation",
+      "concept": "argmax",
+      "spans": [{"source": "request", "start": 21, "end": 25, "text": "most"}],
+      "attributes": {"limit": 1}
+    },
+    {
+      "node_id": "answer",
+      "kind": "output",
+      "concept": "answer"
+    }
+  ],
+  "edges": [
+    {"source": "customer_count", "role": "theme", "target": "customers"},
+    {"source": "customer_count", "role": "group_by", "target": "region"},
+    {"source": "largest_group", "role": "measure", "target": "customer_count"},
+    {"source": "answer", "role": "returns", "target": "region"},
+    {"source": "answer", "role": "constrained_by", "target": "largest_group"}
+  ]
+}

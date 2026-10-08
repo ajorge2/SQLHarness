@@ -1,0 +1,23 @@
+{
+  "disclosure": "Structural generation audit; semantic graph correctness is not yet scored.",
+  "examples": 3,
+  "generated": 2,
+  "generation_rate": 0.6666666666666666,
+  "input_fidelity_passes": 2,
+  "input_fidelity_rate": 1.0,
+  "input_tokens": 32380,
+  "mean_latency_ms": 41614.5842499991,
+  "mean_nodes": 11.0,
+  "models": [
+    "codex-cli/gpt-6-astra"
+  ],
+  "output_tokens": 3661,
+  "raw_structural_validity_rate": 0.5,
+  "raw_structurally_valid": 1,
+  "reasoning_tokens": 812,
+  "schema_candidate_passes": 2,
+  "schema_candidate_validity_rate": 1.0,
+  "structural_validity_rate": 0.5,
+  "structurally_valid": 1,
+  "unique_span_repairs": 0
+}

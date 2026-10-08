@@ -1,0 +1,276 @@
+{
+  "examples": [
+    {
+      "edge_signatures": [
+        [
+          "condition|circuit country equals italy|compare|attribute|circuit country",
+          "condition|circuit country equals italy|value|value|italy",
+          "entity|circuits|attribute|attribute|circuit country",
+          "entity|circuits|filter|condition|circuit country equals italy",
+          "entity|recorded laps|attribute|attribute|recorded lap time",
+          "operation|minimum recorded lap time per circuit|group_by|entity|circuits",
+          "operation|minimum recorded lap time per circuit|measure|attribute|recorded lap time",
+          "operation|minimum recorded lap time per circuit|source|entity|recorded laps",
+          "output|circuit lap records|joined_by|relation|lap recorded during a race",
+          "output|circuit lap records|joined_by|relation|race held at a circuit",
+          "output|circuit lap records|returns|entity|circuits",
+          "output|circuit lap records|returns|operation|minimum recorded lap time per circuit",
+          "relation|lap recorded during a race|source|entity|recorded laps",
+          "relation|lap recorded during a race|target|entity|races",
+          "relation|race held at a circuit|source|entity|races",
+          "relation|race held at a circuit|target|entity|circuits"
+        ]
+      ],
+      "example_id": "1014",
+      "mean_pairwise_edge_jaccard": null,
+      "mean_pairwise_node_jaccard": null,
+      "node_signatures": [
+        [
+          "attribute|circuit country",
+          "attribute|recorded lap time",
+          "condition|circuit country equals italy",
+          "entity|circuits",
+          "entity|races",
+          "entity|recorded laps",
+          "operation|minimum recorded lap time per circuit",
+          "output|circuit lap records",
+          "relation|lap recorded during a race",
+          "relation|race held at a circuit",
+          "value|italy"
+        ]
+      ],
+      "samples": 2,
+      "unique_graphs": 1,
+      "valid_graphs": 1
+    },
+    {
+      "edge_signatures": [
+        [
+          "attribute|height|source|entity|players",
+          "attribute|player name|source|entity|players",
+          "operation|select players ranked first by height, retaining all ties|order_by|attribute|height",
+          "operation|select players ranked first by height, retaining all ties|theme|entity|players",
+          "output|names of tallest players|returns|attribute|player name",
+          "output|names of tallest players|theme|operation|select players ranked first by height, retaining all ties"
+        ],
+        [
+          "condition|height rank equals one|compare|operation|rank players by descending height",
+          "condition|height rank equals one|value|value|1",
+          "entity|players|attribute|attribute|height",
+          "entity|players|attribute|attribute|player name",
+          "operation|rank players by descending height|measure|attribute|height",
+          "operation|rank players by descending height|scoped_to|scope|all players",
+          "output|names of tallest players|filter|condition|height rank equals one",
+          "output|names of tallest players|returns|attribute|player name",
+          "output|names of tallest players|scoped_to|scope|all players",
+          "scope|all players|theme|entity|players"
+        ]
+      ],
+      "example_id": "1116",
+      "mean_pairwise_edge_jaccard": 0.06666666666666667,
+      "mean_pairwise_node_jaccard": 0.4444444444444444,
+      "node_signatures": [
+        [
+          "attribute|height",
+          "attribute|player name",
+          "entity|players",
+          "operation|select players ranked first by height, retaining all ties",
+          "output|names of tallest players"
+        ],
+        [
+          "attribute|height",
+          "attribute|player name",
+          "condition|height rank equals one",
+          "entity|players",
+          "operation|rank players by descending height",
+          "output|names of tallest players",
+          "scope|all players",
+          "value|1"
+        ]
+      ],
+      "samples": 2,
+      "unique_graphs": 2,
+      "valid_graphs": 2
+    },
+    {
+      "edge_signatures": [
+        [
+          "attribute|event name|attribute|entity|events",
+          "attribute|event type|attribute|entity|events",
+          "condition|attendance exceeds threshold|compare|operation|attendance count per event",
+          "condition|attendance exceeds threshold|value|value|20",
+          "condition|event is a fundraiser|compare|attribute|event type",
+          "condition|event is a fundraiser|value|value|fundraiser",
+          "logic|and|operand|condition|attendance exceeds threshold",
+          "logic|and|operand|logic|not",
+          "logic|not|operand|condition|event is a fundraiser",
+          "operation|attendance count per event|group_by|entity|events",
+          "operation|attendance count per event|theme|relation|student attendance at events",
+          "output|event names|filter|logic|and",
+          "output|event names|returns|attribute|event name",
+          "output|event names|theme|entity|events",
+          "relation|student attendance at events|source|entity|students",
+          "relation|student attendance at events|target|entity|events"
+        ],
+        [
+          "condition|attendance exceeds twenty|compare|operation|count attendance records per event",
+          "condition|attendance exceeds twenty|value|value|20",
+          "condition|event is a fundraiser|compare|attribute|event type",
+          "condition|event is a fundraiser|value|value|fundraiser",
+          "entity|events|attribute|attribute|event identifier",
+          "entity|events|attribute|attribute|event name",
+          "entity|events|attribute|attribute|event type",
+          "logic|and|operand|condition|attendance exceeds twenty",
+          "logic|and|operand|logic|not",
+          "logic|not|operand|condition|event is a fundraiser",
+          "operation|count attendance records per event|group_by|entity|events",
+          "operation|count attendance records per event|joined_by|relation|event attendance by students",
+          "operation|count attendance records per event|measure|attribute|event identifier",
+          "output|names of qualifying events|filter|logic|and",
+          "output|names of qualifying events|returns|attribute|event name",
+          "relation|event attendance by students|source|entity|events",
+          "relation|event attendance by students|target|entity|students"
+        ]
+      ],
+      "example_id": "1323",
+      "mean_pairwise_edge_jaccard": 0.13793103448275862,
+      "mean_pairwise_node_jaccard": 0.5,
+      "node_signatures": [
+        [
+          "attribute|event name",
+          "attribute|event type",
+          "condition|attendance exceeds threshold",
+          "condition|event is a fundraiser",
+          "entity|events",
+          "entity|students",
+          "logic|and",
+          "logic|not",
+          "operation|attendance count per event",
+          "output|event names",
+          "relation|student attendance at events",
+          "value|20",
+          "value|fundraiser"
+        ],
+        [
+          "attribute|event identifier",
+          "attribute|event name",
+          "attribute|event type",
+          "condition|attendance exceeds twenty",
+          "condition|event is a fundraiser",
+          "entity|events",
+          "entity|students",
+          "logic|and",
+          "logic|not",
+          "operation|count attendance records per event",
+          "output|names of qualifying events",
+          "relation|event attendance by students",
+          "value|20",
+          "value|fundraiser"
+        ]
+      ],
+      "samples": 2,
+      "unique_graphs": 2,
+      "valid_graphs": 2
+    },
+    {
+      "edge_signatures": [
+        [
+          "condition|closed before 2000|compare|attribute|school closing date",
+          "condition|closed before 2000|value|value|2000",
+          "condition|opened after 1991|compare|attribute|school opening date",
+          "condition|opened after 1991|value|value|1991",
+          "entity|school sat results|attribute|attribute|average writing score",
+          "entity|schools|attribute|attribute|phone number",
+          "entity|schools|attribute|attribute|school closing date",
+          "entity|schools|attribute|attribute|school name",
+          "entity|schools|attribute|attribute|school opening date",
+          "entity|schools|filter|logic|or",
+          "logic|or|operand|condition|closed before 2000",
+          "logic|or|operand|condition|opened after 1991",
+          "operation|include phone number when available|optional|attribute|phone number",
+          "output|school names, average writing scores, and phone numbers when available|joined_by|relation|sat results belonging to a school",
+          "output|school names, average writing scores, and phone numbers when available|returns|attribute|average writing score",
+          "output|school names, average writing scores, and phone numbers when available|returns|attribute|school name",
+          "output|school names, average writing scores, and phone numbers when available|returns|operation|include phone number when available",
+          "output|school names, average writing scores, and phone numbers when available|theme|entity|schools",
+          "relation|sat results belonging to a school|source|entity|schools",
+          "relation|sat results belonging to a school|target|entity|school sat results"
+        ]
+      ],
+      "example_id": "27",
+      "mean_pairwise_edge_jaccard": null,
+      "mean_pairwise_node_jaccard": null,
+      "node_signatures": [
+        [
+          "attribute|average writing score",
+          "attribute|phone number",
+          "attribute|school closing date",
+          "attribute|school name",
+          "attribute|school opening date",
+          "condition|closed before 2000",
+          "condition|opened after 1991",
+          "entity|school sat results",
+          "entity|schools",
+          "logic|or",
+          "operation|include phone number when available",
+          "output|school names, average writing scores, and phone numbers when available",
+          "relation|sat results belonging to a school",
+          "value|1991",
+          "value|2000"
+        ]
+      ],
+      "samples": 1,
+      "unique_graphs": 1,
+      "valid_graphs": 1
+    },
+    {
+      "edge_signatures": [
+        [
+          "condition|translation language does not match japanese|compare|attribute|translation language",
+          "condition|translation language does not match japanese|value|value|%japanese%",
+          "condition|translation language equals korean|compare|attribute|translation language",
+          "condition|translation language equals korean|value|value|korean",
+          "entity|set translations|attribute|attribute|translation language",
+          "entity|set translations|filter|logic|and",
+          "entity|sets|attribute|attribute|set name",
+          "entity|sets|joined_by|relation|set has translation",
+          "logic|and|operand|condition|translation language does not match japanese",
+          "logic|and|operand|condition|translation language equals korean",
+          "output|set names|returns|attribute|set name",
+          "output|set names|theme|entity|sets",
+          "relation|set has translation|target|entity|set translations"
+        ]
+      ],
+      "example_id": "529",
+      "mean_pairwise_edge_jaccard": null,
+      "mean_pairwise_node_jaccard": null,
+      "node_signatures": [
+        [
+          "attribute|set name",
+          "attribute|translation language",
+          "condition|translation language does not match japanese",
+          "condition|translation language equals korean",
+          "entity|set translations",
+          "entity|sets",
+          "logic|and",
+          "output|set names",
+          "relation|set has translation",
+          "value|%japanese%",
+          "value|korean"
+        ]
+      ],
+      "samples": 1,
+      "unique_graphs": 1,
+      "valid_graphs": 1
+    }
+  ],
+  "summary": {
+    "examples": 5,
+    "examples_with_repeated_samples": 3,
+    "interpretation": "Repeated teacher samples estimate representation variability; they do not establish semantic correctness without gold-compatible or human review.",
+    "mean_edge_jaccard_on_repeated_valid_examples": 0.10229885057471264,
+    "mean_node_jaccard_on_repeated_valid_examples": 0.4722222222222222,
+    "repeated_examples_with_multiple_valid_graphs": 2,
+    "samples": 8
+  }
+}

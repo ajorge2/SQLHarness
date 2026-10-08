@@ -1,0 +1,16 @@
+{
+  "abstentions": 1,
+  "answered_accuracy": 1.0,
+  "disclosure": "Three-example held-out development slice; not a benchmark claim.",
+  "end_to_end_accuracy": 0.6666666666666666,
+  "examples": 3,
+  "execution_correct": 2,
+  "failure_stages": {
+    "intent_parser": 1
+  },
+  "generated_sql": 2,
+  "mean_completed_pipeline_latency_ms": 46193.27681249938,
+  "mean_observed_end_to_end_latency_ms": 70795.51787499976,
+  "reported_model_tokens_for_completed_pipelines": 70197,
+  "token_accounting_disclosure": "Token total includes only completed parser-plus-assembler pipelines; the timed-out parser did not return usage."
+}

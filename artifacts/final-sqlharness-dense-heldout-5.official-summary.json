@@ -1,0 +1,38 @@
+{
+  "accuracy_by_observed_difficulty": {
+    "moderate": 0.0,
+    "simple": 0.75
+  },
+  "aggregation_disclosure": "Uses the pinned official per-query executor and set-based execution-match function. Subset aggregation is local because this frozen slice contains no challenging examples, which makes the official full-benchmark difficulty printer divide by zero.",
+  "difficulty_counts": {
+    "moderate": 1,
+    "simple": 4
+  },
+  "evaluator": "BIRD Mini-Dev evaluation_ex.calculate_ex",
+  "evaluator_commit": "abd11b6db92a1c9f809b32f7564c7c71b34d67f0",
+  "examples": 5,
+  "execution_accuracy": 0.6,
+  "execution_correct": 3,
+  "per_example": [
+    {
+      "res": 0,
+      "sql_idx": 0
+    },
+    {
+      "res": 1,
+      "sql_idx": 1
+    },
+    {
+      "res": 1,
+      "sql_idx": 2
+    },
+    {
+      "res": 1,
+      "sql_idx": 3
+    },
+    {
+      "res": 0,
+      "sql_idx": 4
+    }
+  ]
+}

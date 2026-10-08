@@ -1,0 +1,48 @@
+{
+  "bias": -1.2836197360912578,
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "feature_means": [
+    0.5871651737529867,
+    0.02106048099387428,
+    0.056799272981746786,
+    0.3878078650156484
+  ],
+  "feature_names": [
+    "dense_cosine",
+    "token_jaccard",
+    "operator_jaccard",
+    "kind_compatible"
+  ],
+  "feature_scales": [
+    0.055092585374989796,
+    0.03396302820656146,
+    0.17849002374474174,
+    0.4872503718291583
+  ],
+  "model_version": 1,
+  "training_summary": {
+    "epochs": 500,
+    "examples_requested": 20,
+    "examples_used": 16,
+    "final_weighted_log_loss": 0.36710242268481597,
+    "intent_fragments_with_positives": 97,
+    "l2": 0.01,
+    "label_definition": "Positive when a corpus fragment exactly matches a gold SQL signature and its fragment kind is compatible with the intent-node kind.",
+    "learning_rate": 0.08,
+    "negative_pairs": 6281,
+    "positive_pairs": 1068,
+    "skipped_example_ids": [
+      "1014",
+      "1239",
+      "17",
+      "408"
+    ],
+    "training_pairs": 7349
+  },
+  "weights": [
+    0.2996752621868332,
+    0.08708370963559937,
+    -0.24281200256999763,
+    1.9396121115497613
+  ]
+}

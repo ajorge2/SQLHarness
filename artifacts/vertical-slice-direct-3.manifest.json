@@ -1,0 +1,101 @@
+{
+  "benchmark": {
+    "databases": [
+      {
+        "bytes": 481419264,
+        "db_id": "codebase_community",
+        "path": "codebase_community/codebase_community.sqlite",
+        "sha256": "92101be6d2a9f6adceea59d38f6d1c556087f9eea1432432a21268cb1348036d"
+      },
+      {
+        "bytes": 71294976,
+        "db_id": "financial",
+        "path": "financial/financial.sqlite",
+        "sha256": "d15d89cdb068a202b6f2b99342af44dffc1d52545b39ceaf62efdc0ba570101e"
+      },
+      {
+        "bytes": 7327744,
+        "db_id": "thrombosis_prediction",
+        "path": "thrombosis_prediction/thrombosis_prediction.sqlite",
+        "sha256": "87583183c3dc472fba04de702965560a9d7c0a548836613f242317e0eeb83f00"
+      }
+    ],
+    "dataset_path": "data/bird/mini_dev_sqlite.json",
+    "dataset_sha256": "88ceb0710163cae46a256ecea8f0a8c98286599530b60587fda5c3cfe57d45d2",
+    "dialect": "sqlite",
+    "gold_execution_audit": {
+      "attempted": 3,
+      "failed": 0,
+      "failures": [],
+      "ready": true,
+      "succeeded": 3,
+      "total_latency_ms": 80.169,
+      "truncated": 0,
+      "truncated_example_ids": []
+    },
+    "name": "BIRD Mini-Dev",
+    "official_code_url": "https://github.com/bird-bench/mini_dev",
+    "official_evaluator_commit": "abd11b6db92a1c9f809b32f7564c7c71b34d67f0",
+    "omitted_non_readonly_or_unparseable": 0,
+    "selected_examples": 3,
+    "selection_limit": null,
+    "selection_offset": 0,
+    "selection_sha256": "c9f33010b11477bdcd44f74cfe06e82368e39eda30b872e874e5bf4f4c3f58c3",
+    "source_examples": 500,
+    "source_url": "https://huggingface.co/datasets/birdsql/bird_mini_dev",
+    "subset_policy": "single-statement SELECT-only gold queries"
+  },
+  "created_at": "2026-10-08T00:27:56.053722+00:00",
+  "environment": {
+    "packages": {
+      "openai": "3.26.0",
+      "sqlglot": "30.21.0"
+    },
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "python": "3.12.13",
+    "source_sha256": "37c3a337ee130ebf3238e75deea1317295c08b19ffe9b6ff09c289cfc090160c"
+  },
+  "execution": {
+    "database_mode": "read-only",
+    "max_rows": 100000,
+    "timeout_seconds": 30.0
+  },
+  "manifest_version": 1,
+  "model": {
+    "ephemeral": true,
+    "id": "gpt-6-astra",
+    "interface": "codex-exec",
+    "provider": "codex-cli",
+    "reasoning_effort": "medium",
+    "store": null
+  },
+  "pricing": null,
+  "prompt": {
+    "system_prompt_sha256": "e7236ef5c501ce8e12a28a7c7f555af1e199bc4194e6ce2624cd19ade7eabc94",
+    "version": "direct-sql-v1"
+  },
+  "status": "completed",
+  "summary": {
+    "estimated_model_cost_usd": null,
+    "examples": 3,
+    "execution_accuracy": 0.6666666666666666,
+    "execution_correct": 2,
+    "execution_success_rate": 1.0,
+    "execution_successes": 3,
+    "local_evaluation_coverage": 1.0,
+    "locally_evaluated_examples": 3,
+    "locally_unscored_examples": 0,
+    "mean_model_latency_ms": 6354.483069334189,
+    "model_cached_input_tokens": 14336,
+    "model_input_tokens": 45243,
+    "model_output_tokens": 303,
+    "model_reasoning_tokens": 74,
+    "model_total_tokens": 45546,
+    "models": [
+      "codex-cli/gpt-6-astra"
+    ],
+    "pricing": null,
+    "validation_passes": 3,
+    "validation_rate": 1.0
+  }
+}

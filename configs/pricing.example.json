@@ -1,0 +1,8 @@
+{
+  "model": "REPLACE_WITH_EXACT_MODEL_ID",
+  "input_usd_per_million": 0.0,
+  "cached_input_usd_per_million": 0.0,
+  "output_usd_per_million": 0.0,
+  "captured_at": "YYYY-MM-DD",
+  "source_url": "https://developers.openai.com/api/docs/pricing"
+}

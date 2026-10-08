@@ -1,0 +1,21 @@
+{
+  "disclosure": "Structural generation audit; semantic graph correctness is not yet scored.",
+  "examples": 1,
+  "generated": 0,
+  "generation_rate": 0.0,
+  "input_fidelity_passes": 0,
+  "input_fidelity_rate": 0.0,
+  "input_tokens": 0,
+  "mean_latency_ms": 0.0,
+  "mean_nodes": 0.0,
+  "models": [],
+  "output_tokens": 0,
+  "raw_structural_validity_rate": 0.0,
+  "raw_structurally_valid": 0,
+  "reasoning_tokens": 0,
+  "schema_candidate_passes": 0,
+  "schema_candidate_validity_rate": 0.0,
+  "structural_validity_rate": 0.0,
+  "structurally_valid": 0,
+  "unique_span_repairs": 0
+}

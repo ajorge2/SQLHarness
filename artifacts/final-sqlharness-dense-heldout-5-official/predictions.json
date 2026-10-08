@@ -1,0 +1,7 @@
+{
+  "0": "SELECT COUNT(DISTINCT p.ID) AS patient_count\nFROM Patient AS p\nJOIN Laboratory AS l ON l.ID = p.ID\nWHERE l.IGG > 900\n  AND l.IGG < 2000\n  AND EXISTS (\n    SELECT 1\n    FROM Examination AS e\n    WHERE e.ID = p.ID\n      AND e.Symptoms IS NOT NULL\n  );\t----- bird -----\tthrombosis_prediction",
+  "1": "SELECT CAST(COUNT(CASE WHEN Currency = 'EUR' THEN 1 END) AS REAL) / NULLIF(COUNT(CASE WHEN Currency = 'CZK' THEN 1 END), 0) AS ratio FROM customers;\t----- bird -----\tdebit_card_specializing",
+  "2": "SELECT player_name FROM Player WHERE player_name IN ('Aaron Lennon', 'Abdelaziz Barrada') ORDER BY birthday ASC LIMIT 1;\t----- bird -----\teuropean_football_2",
+  "3": "SELECT 100.0 * COUNT(CASE WHEN borderColor = 'borderless' THEN id END) / COUNT(id) AS percentage FROM cards;\t----- bird -----\tcard_games",
+  "4": "\t----- bird -----\tstudent_club"
+}
