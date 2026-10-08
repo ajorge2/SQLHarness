@@ -69,3 +69,22 @@
   .share-actions { align-items: stretch; flex-direction: column; }
   .share-actions .button { text-align: center; }
 }
+
+.share-shell {
+  width: min(820px, calc(100% - 40px));
+  padding: 52px 0 68px;
+}
+.share-intro h1 { max-width: 760px; font-size: clamp(30px, 4vw, 40px); }
+.share-intro > p { max-width: 720px; color: #3c4043; font-size: 16px; }
+.share-actions { margin: 22px 0 34px; }
+.brief-frame { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.brief-content { padding: 32px 0; }
+.brief-content h1 { margin-bottom: 24px; font-size: clamp(28px, 4vw, 36px); }
+.brief-content h2 { margin-top: 36px; border-color: var(--line); font-size: 21px; }
+.brief-content p, .brief-content li { color: #3c4043; font-size: 15.5px; }
+
+@media (max-width: 650px) {
+  .share-shell { width: min(100% - 28px, 820px); padding: 42px 0 56px; }
+  .share-actions { align-items: flex-start; }
+  .share-actions .button { text-align: left; }
+}
