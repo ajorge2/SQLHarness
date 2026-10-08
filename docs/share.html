@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="A self-contained SQLHarness project brief for AI reviewers." />
-    <title>SQLHarness — AI reviewer brief</title>
+    <meta name="description" content="SQLHarness architecture, evaluation design, results, and research boundaries." />
+    <title>SQLHarness — Technical brief</title>
     <link rel="stylesheet" href="assets/style.css" />
     <link rel="stylesheet" href="assets/share.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Return to SQLHarness showcase">
+      <a class="brand" href="index.html" aria-label="Return to SQLHarness analysis">
         <span class="brand-mark">S</span><span>SQLHarness</span>
       </a>
       <nav aria-label="Page navigation">
-        <a href="index.html">Showcase</a>
+        <a href="index.html">Analysis</a>
           <a href="research-plan.md">Research plan</a>
           <a href="intent-contract-audit.md">Intent audit</a>
           <a href="semantic-review-rubric.md">Review rubric</a>
@@ -23,14 +23,14 @@
 
     <main class="share-shell">
       <section class="share-intro">
-        <div class="eyebrow"><span class="dot"></span> AI reviewer brief</div>
-        <h1>A complete project handoff, without the conversation history.</h1>
+        <div class="eyebrow"><span class="dot"></span> Technical brief</div>
+        <h1>Architecture, evaluation design, and current findings.</h1>
         <p>
-          Copy this self-contained Markdown into Gemini or another model. It separates the intended
-          architecture, frozen results, implemented authority boundary, and remaining research questions.
+          This brief separates the intended architecture, frozen results, implemented authority
+          boundary, observed failures, and remaining research questions.
         </p>
         <div class="share-actions">
-          <button id="copy-brief" class="button primary" type="button">Copy complete brief</button>
+          <button id="copy-brief" class="button primary" type="button">Copy Markdown</button>
           <a class="button secondary" href="share-brief.md" download>Download Markdown</a>
           <span id="copy-status" role="status" aria-live="polite"></span>
         </div>
@@ -38,7 +38,7 @@
 
       <section class="brief-frame" aria-label="SQLHarness share brief">
         <div class="brief-bar">
-          <span>sqlharness-context.md</span>
+          <span>sqlharness-technical-brief.md</span>
           <span id="brief-count">Loading…</span>
         </div>
         <article id="brief-content" class="brief-content"></article>
@@ -48,7 +48,7 @@
     <footer>
       <div class="shell footer-inner">
         <span>SQLHarness</span>
-        <span>Self-contained context · explicit status · no unmeasured claims</span>
+        <span>Architecture · measured results · explicit limitations</span>
       </div>
     </footer>
     <script src="assets/share.js"></script>

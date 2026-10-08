@@ -19,7 +19,7 @@ The model proposes SQL. The execution boundary decides whether that proposal is 
 
 ## Implemented MCP authority boundary
 
-`DatabaseAuthority` owns database resolution, validation, read-only connections, execution limits, and trace receipts. The MCP server exposes only that capability through `list_databases`, `inspect_schema`, `validate_sql`, `explain_sql`, and `execute_readonly_sql`; it does not expose a raw connection or filesystem path. The SQLHarness evaluation path invokes the same authority before candidate execution, so the server is not a showcase-only wrapper.
+`DatabaseAuthority` owns database resolution, validation, read-only connections, execution limits, and trace receipts. The MCP server exposes only that capability through `list_databases`, `inspect_schema`, `validate_sql`, `explain_sql`, and `execute_readonly_sql`; it does not expose a raw connection or filesystem path. The SQLHarness evaluation path invokes the same authority before candidate execution, so the server is not an interface-only wrapper.
 
 An in-memory MCP client integration test proves that a mutation is rejected with `database_touched=false` and that an allowed read returns results through the server. The standalone `sqlharness-mcp` command serves the boundary over MCP's default stdio transport.
 

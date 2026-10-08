@@ -1,5 +1,5 @@
 {
-  "artifact": "SQLHarness offline showcase",
+  "artifact": "SQLHarness offline fixture set",
   "benchmark_claim": false,
   "disclosure": "These deterministic fixtures prove the evaluation and safety paths are runnable. They are not BIRD benchmark results or evidence of model quality.",
   "execution_accuracy": 1.0,

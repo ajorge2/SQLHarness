@@ -16,7 +16,7 @@
         <a href="#system">System</a>
         <a href="#trace">Trace</a>
         <a href="#research">Research</a>
-        <a href="share.html">AI brief</a>
+        <a href="share.html">Technical brief</a>
       </nav>
     </header>
 
@@ -32,14 +32,7 @@
         <div class="hero-actions">
           <a class="button primary" href="#trace">Inspect a real trace</a>
           <a class="button secondary" href="#research">See the experiment</a>
-          <a class="button secondary" href="share.html">Share with an AI reviewer</a>
-        </div>
-        <div class="status-row" aria-label="Project status">
-          <span><b class="status implemented">Frozen</b> 500-query baseline protocol</span>
-          <span><b class="status implemented">Implemented</b> policy validation</span>
-          <span><b class="status implemented">Audited</b> intent contract v0.2</span>
-          <span><b class="status implemented">Measured</b> first vertical slice</span>
-          <span><b class="status implemented">Implemented</b> MCP authority</span>
+          <a class="button secondary" href="share.html">Read the technical brief</a>
         </div>
       </section>
 
@@ -101,7 +94,7 @@
       <section id="trace" class="section trace-section">
         <div class="shell">
           <div class="section-heading inverse">
-            <span class="kicker">Inspectable evidence</span>
+            <span class="kicker">Measured behavior</span>
             <h2>Follow one request through the harness</h2>
             <p>This cached run is produced by the repository’s real validation and execution code. It needs no API key.</p>
           </div>
@@ -167,7 +160,7 @@
 
         <div class="pending-results">
           <div>
-            <span class="status implemented">Frozen development result</span>
+            <span class="kicker">Five-query development comparison</span>
             <h3>The direct model wins. The architecture explains why.</h3>
           </div>
           <p>
@@ -182,7 +175,6 @@
               <span class="kicker">Frozen comparison · 20 train / 5 held out</span>
               <h3>Explicit structure improves diagnosis—not performance yet.</h3>
             </div>
-            <span class="status implemented">Pinned evaluator reproduced</span>
           </div>
           <div class="preflight-stats">
             <div class="preflight-stat"><strong>4/5</strong><span>Direct Astra correct</span></div>
@@ -201,7 +193,7 @@
             </div>
           </div>
           <p class="preflight-disclosure">
-            Development evidence, not a leaderboard claim. SQLHarness tokens cover four completed pipelines and omit
+            Five-example development comparison. SQLHarness tokens cover four completed pipelines and omit
             the timed-out parser, so they understate true consumption. The pinned BIRD per-query executor reproduces
             the 80% versus 60% scores. <a href="final-results.md">Read the complete result and error decomposition.</a>
           </p>
@@ -213,7 +205,6 @@
               <span class="kicker">First held-out vertical slice · 3 examples</span>
               <h3>The pipeline runs end to end. It has not earned its extra inference cost yet.</h3>
             </div>
-            <span class="status implemented">Measured honestly</span>
           </div>
           <div class="preflight-stats">
             <div class="preflight-stat"><strong>2/3</strong><span>Direct model correct</span></div>
@@ -232,7 +223,7 @@
             </div>
           </div>
           <p class="preflight-disclosure">
-            Development evidence, not a benchmark claim. The third direct query followed conflicting benchmark
+            Three-example development comparison. The third direct query followed conflicting benchmark
             evidence (<code>COUNT &gt; 2</code>) instead of the question and gold SQL (<code>COUNT &gt;= 2</code>);
             SQLHarness timed out before answering it. <a href="vertical-slice.md">Read the full failure analysis.</a>
           </p>
@@ -244,7 +235,6 @@
               <span class="kicker">Model B isolated · lexical / dense / learned · 20/5 split</span>
               <h3>Learning helps rank one candidate, but does not beat dense retrieval.</h3>
             </div>
-            <span class="status implemented">Controlled comparison</span>
           </div>
           <div class="preflight-stats">
             <div class="preflight-stat"><strong>58.82%</strong><span>Exact catalog coverage</span></div>
@@ -266,7 +256,6 @@
               <span class="kicker">Arm A preflight</span>
               <h3>The experiment is frozen before inference.</h3>
             </div>
-            <span class="status implemented">Verified locally</span>
           </div>
           <div id="preflight-stats" class="preflight-stats" aria-live="polite">
             <span>Loading preflight evidence…</span>
@@ -280,7 +269,6 @@
               <span class="kicker">Development pilot · Codex CLI / GPT-6 Astra</span>
               <h3>The complete evaluation path now runs through live inference.</h3>
             </div>
-            <span class="status implemented">Measured</span>
           </div>
           <div class="preflight-stats">
             <div class="preflight-stat"><strong>4/5</strong><span>Locally correct</span></div>
@@ -289,7 +277,7 @@
             <div class="preflight-stat"><strong>75,206</strong><span>CLI-reported tokens</span></div>
           </div>
           <p class="preflight-disclosure">
-            Diagnostic smoke test—not a benchmark claim. The single rejection selected the correct entity but
+            Five-query diagnostic smoke test. The single rejection selected the correct entity but
             returned an extra aggregate column, causing a strict result-shape mismatch. CLI usage is not assigned
             API cost because it runs through the authenticated Codex product runtime.
           </p>

@@ -1,4 +1,4 @@
-# SQLHarness: project context
+# SQLHarness: technical brief
 
 SQLHarness is an Applied AI engineering and NLP research project investigating whether explicit semantic structure can improve natural-language-to-SQL systems over a direct frontier-LLM call.
 
@@ -26,7 +26,7 @@ Those samples bootstrap two learnable relationships:
 - natural language plus schema → task-oriented intent graph;
 - contextual intent fragment → distribution over SQL fragments.
 
-The gold training pairs then correct the teacher-inherited behavior. The current working plan is to use gold data first to improve fragment selection, then obtain SQL-consistent graph targets for the gold pairs, and finally use those targets to improve the intent parser. The exact graph induction and supervision procedure remains a research decision to validate, not a completed claim.
+The gold training pairs then correct the teacher-inherited behavior. The current working plan is to use gold data first to improve fragment selection, then obtain SQL-consistent graph targets for the gold pairs, and finally use those targets to improve the intent parser. The exact graph induction and supervision procedure remains a research decision to validate, not a completed result.
 
 Free-form chain-of-thought is not treated as ground truth. Any teacher-generated semantic representation must follow a constrained schema and be checked against the generated SQL and database schema.
 
@@ -42,7 +42,7 @@ Primary outcome: official BIRD execution accuracy.
 
 Secondary outcomes: cost per correct query, total model tokens, end-to-end and per-stage latency, validation rejection rate, execution failure rate, abstention rate, and an error taxonomy covering intent parsing, schema linking, retrieval, assembly, and execution.
 
-The untouched test set is reserved for the final comparison. Development uses training data and a separate validation split. Published BIRD claims will use the official evaluator rather than only the project's local comparator.
+The untouched test set is reserved for the final comparison. Development uses training data and a separate validation split. Published BIRD results will use the official evaluator rather than only the project's local comparator.
 
 ## What is implemented now
 
@@ -55,7 +55,7 @@ The untouched test set is reserved for the final comparison. Development uses tr
 - Read-only SQLite execution with time and row limits.
 - Candidate-versus-gold execution-result comparison.
 - Per-example JSONL traces and aggregate run summaries.
-- Offline automated tests and deterministic, no-key showcase fixtures.
+- Offline automated tests and deterministic, no-key fixtures.
 - A browser trace inspector showing both an accepted read and a rejected destructive proposal.
 - A v0.2 phrase- and evidence-grounded intent-graph contract, revised against 25 diverse BIRD questions spanning all 11 databases and 27 SQL demands.
 - Directed role-signature validation, exact schema-candidate checks, unique-span repair with raw-versus-repaired reporting, and bounded graph-generation timeouts.
@@ -72,16 +72,16 @@ The untouched test set is reserved for the final comparison. Development uses tr
 - A bounded one-retry correction path driven only by validator or database errors, plus explicit abstention.
 - A final frozen five-example comparison reproduced by the pinned BIRD per-query executor: direct GPT-6 Astra scores 4/5, while SQLHarness with either dense or learned retrieval scores 3/5. The result rejects the performance hypothesis at this scale.
 
-The offline showcase proves that the evaluation and policy paths execute. It is deliberately labeled as a fixture and is not presented as evidence of model quality.
+The offline fixtures prove that the evaluation and policy paths execute. They are not presented as evidence of model quality.
 
 ## Study conclusion
 
 The development study and governed execution system are complete. The direct call wins this slice. Explicit structure currently contributes inspectability, failure localization, and governed execution—not a better accuracy–latency–token frontier.
 
-Future research is deliberately narrower: distill Model A so graph construction no longer requires a frontier-model call, expand exact SQL-fragment catalog coverage beyond 58.82%, and train fragment alignment on substantially more than 16 usable graphs. A full production-API BIRD run remains a separate benchmark-scale follow-on, not unfinished evidence hidden behind a resume claim.
+Future research is deliberately narrower: distill Model A so graph construction no longer requires a frontier-model call, expand exact SQL-fragment catalog coverage beyond 58.82%, and train fragment alignment on substantially more than 16 usable graphs. A full production-API BIRD run remains a separate benchmark-scale follow-on and is not yet established evidence.
 
-## Portfolio intent
+## Research and engineering scope
 
-The same repository deliberately supports two readings. The research lens asks whether explicit semantic representations improve compositional language understanding. The Applied AI engineering lens demonstrates reproducible evaluation, model routing, structured intermediate state, safety policy, bounded execution, tracing, and honest measurement.
+The research question is whether explicit semantic representations improve compositional language understanding. The engineering system provides reproducible evaluation, model routing, structured intermediate state, safety policy, bounded execution, tracing, and calibrated measurement.
 
-No benchmark-scale accuracy, cost-reduction, or latency-improvement claim is made from the five-example slice. Its measured loss is reported precisely because the current structured pipeline has not earned its additional inference cost.
+The five-example slice does not establish benchmark-scale accuracy, cost reduction, or latency improvement. Its measured loss is reported precisely because the current structured pipeline has not earned its additional inference cost.

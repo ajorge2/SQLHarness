@@ -38,10 +38,10 @@ The first governed comparison uses the canonical SQLite Mini-Dev release's singl
 - Keep the final test split untouched during development.
 - Report uncertainty and paired per-example differences, not only aggregate point estimates.
 - Publish unsuccessful ablations and the cases where direct generation is better.
-- Treat local result comparison as development feedback; use the official BIRD evaluator for published claims.
+- Treat local result comparison as development feedback; use the official BIRD evaluator for final reported results.
 - Report local-comparator coverage separately; a timed-out or truncated gold query is unscored, never automatically counted as a model error.
 
-## Current status
+## Completed work
 
 The provider-neutral baseline runner, OpenAI API and Codex CLI adapters, AST/schema validator, bounded read-only SQLite executor, trace format, and offline tests are implemented. A five-query Codex CLI development pilot exercised the live path: 4/5 queries were locally correct and all five produced valid, executable SQL. The v0.2 intent contract has also been revised through a 25-example representational audit spanning every BIRD database and 27 SQL demands.
 

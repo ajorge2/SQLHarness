@@ -4,7 +4,7 @@
   "databases": 11,
   "dataset_sha256": "88ceb0710163cae46a256ecea8f0a8c98286599530b60587fda5c3cfe57d45d2",
   "dialect": "sqlite",
-  "disclosure": "This is a reproducibility preflight, not model-performance evidence. The official BIRD evaluator remains authoritative for the headline score.",
+  "disclosure": "This preflight tests reproducibility rather than model performance. The official BIRD evaluator determines the final score.",
   "gold_execution_audit": {
     "attempted": 500,
     "succeeded_under_local_limits": 498,
