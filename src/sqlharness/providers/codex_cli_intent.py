@@ -4,9 +4,9 @@ import json
 from dataclasses import dataclass
 from typing import Any, Callable
 
-from graphsql.intent import EDGE_ROLES, GRAPH_VERSION, NODE_KINDS, IntentGraph
-from graphsql.providers.codex_cli import run_codex_structured
-from graphsql.types import TokenUsage
+from sqlharness.intent import EDGE_ROLES, GRAPH_VERSION, NODE_KINDS, IntentGraph
+from sqlharness.providers.codex_cli import run_codex_structured
+from sqlharness.types import TokenUsage
 
 
 INTENT_GRAPH_SCHEMA = {

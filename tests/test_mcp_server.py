@@ -5,7 +5,7 @@ import sqlite3
 
 from mcp import Client
 
-from graphsql.mcp_server import create_server
+from sqlharness.mcp_server import create_server
 
 
 def test_mcp_server_enforces_authority_boundary(tmp_path):

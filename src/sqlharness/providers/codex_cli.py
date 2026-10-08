@@ -8,8 +8,8 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 
-from graphsql.providers.openai import SYSTEM_PROMPT, render_user_prompt
-from graphsql.types import Generation, TokenUsage
+from sqlharness.providers.openai import SYSTEM_PROMPT, render_user_prompt
+from sqlharness.types import Generation, TokenUsage
 
 
 SQL_ANSWER_SCHEMA = {
@@ -85,7 +85,7 @@ def run_codex_structured(
     runner: Callable[..., Any] | None = None,
 ) -> tuple[str, TokenUsage, float]:
     active_runner = runner or subprocess.run
-    with tempfile.TemporaryDirectory(prefix="graphsql-codex-") as temporary_directory:
+    with tempfile.TemporaryDirectory(prefix="sqlharness-codex-") as temporary_directory:
         working_directory = Path(temporary_directory)
         schema_path = working_directory / "output.schema.json"
         output_path = working_directory / "answer.json"

@@ -3,9 +3,9 @@ from __future__ import annotations
 import json
 import sqlite3
 
-from graphsql.fragments import SQLFragment
-from graphsql.types import BirdExample, Generation, TokenUsage
-from graphsql.vertical_slice import run_vertical_slice
+from sqlharness.fragments import SQLFragment
+from sqlharness.types import BirdExample, Generation, TokenUsage
+from sqlharness.vertical_slice import run_vertical_slice
 
 
 class FakeAssembler:

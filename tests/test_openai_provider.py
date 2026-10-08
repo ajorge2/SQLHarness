@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
-from graphsql.providers.openai import OpenAISQLGenerator
+from sqlharness.providers.openai import OpenAISQLGenerator
 
 
 class FakeResponses:

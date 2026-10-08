@@ -22,7 +22,7 @@
     "mean_model_latency_ms": 6354.483069334189,
     "reported_tokens": 45546
   },
-  "graphsql": {
+  "sqlharness": {
     "correct": 2,
     "accuracy": 0.6666666667,
     "answered": 2,

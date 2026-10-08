@@ -12,9 +12,9 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from graphsql.benchmark import run_baseline  # noqa: E402
-from graphsql.authority import DatabaseAuthority  # noqa: E402
-from graphsql.types import BirdExample, Generation  # noqa: E402
+from sqlharness.benchmark import run_baseline  # noqa: E402
+from sqlharness.authority import DatabaseAuthority  # noqa: E402
+from sqlharness.types import BirdExample, Generation  # noqa: E402
 
 
 class OfflineShowcaseGenerator:
@@ -104,7 +104,7 @@ def main() -> None:
         ),
     ]
 
-    with tempfile.TemporaryDirectory(prefix="graphsql-showcase-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="sqlharness-showcase-") as temporary:
         database_root = Path(temporary)
         database_dir = database_root / "commerce"
         database_dir.mkdir()

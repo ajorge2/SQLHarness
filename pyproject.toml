@@ -25,11 +25,11 @@ mcp = [
 ]
 
 [project.scripts]
-sqlharness = "graphsql.cli:main"
-sqlharness-mcp = "graphsql.mcp_server:main"
+sqlharness = "sqlharness.cli:main"
+sqlharness-mcp = "sqlharness.mcp_server:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/graphsql"]
+packages = ["src/sqlharness"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

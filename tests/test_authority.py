@@ -4,7 +4,7 @@ import sqlite3
 
 import pytest
 
-from graphsql.authority import DatabaseAuthority
+from sqlharness.authority import DatabaseAuthority
 
 
 @pytest.fixture

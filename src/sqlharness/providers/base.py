@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from graphsql.types import Generation
+from sqlharness.types import Generation
 
 
 class SQLGenerator(Protocol):

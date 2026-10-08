@@ -7,9 +7,9 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.benchmark import run_baseline
-from graphsql.experiment import PricingRates
-from graphsql.types import BirdExample, Generation, TokenUsage
+from sqlharness.benchmark import run_baseline
+from sqlharness.experiment import PricingRates
+from sqlharness.types import BirdExample, Generation, TokenUsage
 
 
 class FakeGenerator:

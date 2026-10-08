@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from graphsql.teacher_distribution import analyze_teacher_distribution
+from sqlharness.teacher_distribution import analyze_teacher_distribution
 
 
 def test_teacher_distribution_measures_repeated_graph_variability(tmp_path):

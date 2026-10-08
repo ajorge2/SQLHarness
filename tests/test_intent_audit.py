@@ -4,8 +4,8 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.intent_audit import extract_sql_features, select_diverse_examples
-from graphsql.types import BirdExample
+from sqlharness.intent_audit import extract_sql_features, select_diverse_examples
+from sqlharness.types import BirdExample
 
 
 def example(example_id: str, db_id: str, difficulty: str, sql: str) -> BirdExample:

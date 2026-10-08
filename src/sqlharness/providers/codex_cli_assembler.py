@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 from typing import Any, Callable, Iterable
 
-from graphsql.fragments import RetrievalHit
-from graphsql.intent import IntentGraph
-from graphsql.providers.codex_cli import SQL_ANSWER_SCHEMA, run_codex_structured
-from graphsql.types import Generation
+from sqlharness.fragments import RetrievalHit
+from sqlharness.intent import IntentGraph
+from sqlharness.providers.codex_cli import SQL_ANSWER_SCHEMA, run_codex_structured
+from sqlharness.types import Generation
 
 
 class CodexCLIFragmentAssembler:

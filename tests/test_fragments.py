@@ -7,7 +7,7 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.fragments import (
+from sqlharness.fragments import (
     FastEmbedFragmentRetriever,
     IntentFragment,
     LexicalFragmentRetriever,
@@ -15,7 +15,7 @@ from graphsql.fragments import (
     extract_sql_fragments,
     serialize_intent_fragments,
 )
-from graphsql.intent import IntentGraph
+from sqlharness.intent import IntentGraph
 
 
 ROOT = Path(__file__).resolve().parents[1]

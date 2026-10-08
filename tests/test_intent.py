@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from graphsql.intent import (
+from sqlharness.intent import (
     IntentEdge,
     IntentGraph,
     repair_unique_source_spans,

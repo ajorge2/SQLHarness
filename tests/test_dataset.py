@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import sqlite3
 
-from graphsql.dataset import find_sqlite_database, introspect_sqlite_schema, load_bird_examples, render_schema
+from sqlharness.dataset import find_sqlite_database, introspect_sqlite_schema, load_bird_examples, render_schema
 
 
 def test_loads_bird_json_and_introspects_database(tmp_path):

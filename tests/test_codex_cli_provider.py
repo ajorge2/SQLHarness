@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from graphsql.providers.codex_cli import CodexCLISQLGenerator
+from sqlharness.providers.codex_cli import CodexCLISQLGenerator
 
 
 def test_codex_cli_adapter_uses_ephemeral_readonly_session_and_captures_usage():

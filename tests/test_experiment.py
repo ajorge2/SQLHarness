@@ -7,15 +7,15 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.dataset import load_bird_examples
-from graphsql.experiment import (
+from sqlharness.dataset import load_bird_examples
+from sqlharness.experiment import (
     PricingRates,
     build_preflight_manifest,
     estimate_usage_cost,
     is_select_only,
     select_readonly_examples,
 )
-from graphsql.types import TokenUsage
+from sqlharness.types import TokenUsage
 
 
 def test_select_only_filter_excludes_mutations():

@@ -4,7 +4,7 @@ import json
 import time
 from typing import Any
 
-from graphsql.types import Generation, TokenUsage
+from sqlharness.types import Generation, TokenUsage
 
 
 SYSTEM_PROMPT = """You translate natural-language data questions into SQLite SQL.

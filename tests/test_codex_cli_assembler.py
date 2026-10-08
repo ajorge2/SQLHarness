@@ -4,9 +4,9 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-from graphsql.fragments import RetrievalHit, SQLFragment
-from graphsql.intent import IntentGraph
-from graphsql.providers.codex_cli_assembler import CodexCLIFragmentAssembler
+from sqlharness.fragments import RetrievalHit, SQLFragment
+from sqlharness.intent import IntentGraph
+from sqlharness.providers.codex_cli_assembler import CodexCLIFragmentAssembler
 
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -6,15 +6,15 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.fragments import extract_sql_fragments, serialize_intent_fragments
-from graphsql.intent import IntentGraph
-from graphsql.learned_retriever import (
+from sqlharness.fragments import extract_sql_fragments, serialize_intent_fragments
+from sqlharness.intent import IntentGraph
+from sqlharness.learned_retriever import (
     LearnedFragmentRetriever,
     LinearRankerModel,
     train_fragment_ranker,
 )
-from graphsql.retrieval_evaluation import fragment_signature
-from graphsql.types import BirdExample
+from sqlharness.retrieval_evaluation import fragment_signature
+from sqlharness.types import BirdExample
 
 
 class _FakeEncoder:

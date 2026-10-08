@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 import sqlite3
 
-from graphsql.intent import IntentGraph
-from graphsql.intent_evaluation import load_intent_audit_sample, run_intent_generation_audit
-from graphsql.providers.codex_cli_intent import IntentGraphGeneration
-from graphsql.types import TokenUsage
+from sqlharness.intent import IntentGraph
+from sqlharness.intent_evaluation import load_intent_audit_sample, run_intent_generation_audit
+from sqlharness.providers.codex_cli_intent import IntentGraphGeneration
+from sqlharness.types import TokenUsage
 
 
 class FakeIntentGenerator:

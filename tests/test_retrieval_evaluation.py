@@ -6,9 +6,9 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.fragments import extract_sql_fragments
-from graphsql.retrieval_evaluation import evaluate_fragment_retrieval, fragment_signature
-from graphsql.types import BirdExample
+from sqlharness.fragments import extract_sql_fragments
+from sqlharness.retrieval_evaluation import evaluate_fragment_retrieval, fragment_signature
+from sqlharness.types import BirdExample
 
 
 def test_signature_ignores_schema_names_but_preserves_structure():

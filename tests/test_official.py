@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from graphsql.official import BIRD_SEPARATOR, export_bird_evaluator_inputs
-from graphsql.types import BirdExample
+from sqlharness.official import BIRD_SEPARATOR, export_bird_evaluator_inputs
+from sqlharness.types import BirdExample
 
 
 def test_exports_official_bird_input_contract(tmp_path):

@@ -4,7 +4,7 @@ import pytest
 
 pytest.importorskip("sqlglot")
 
-from graphsql.validation import validate_readonly_sql
+from sqlharness.validation import validate_readonly_sql
 
 
 SCHEMA = {
