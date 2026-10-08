@@ -1,0 +1,47 @@
+{
+  "artifact": "Five-example intent-graph semantic review",
+  "rubric_version": 1,
+  "strict_pass_rule": "All five dimensions must score 2.",
+  "dimensions": [
+    "request_coverage",
+    "operator_correctness",
+    "scope_attachment",
+    "output_fidelity",
+    "schema_grounding"
+  ],
+  "reviews": [
+    {
+      "example_id": "27",
+      "scores": [2, 2, 2, 2, 2],
+      "strict_pass": true,
+      "finding": "Preserves the OR filter and optional phone projection."
+    },
+    {
+      "example_id": "1323",
+      "scores": [2, 2, 2, 2, 2],
+      "strict_pass": true,
+      "finding": "Represents attendance threshold and fundraiser negation compositionally."
+    },
+    {
+      "example_id": "1014",
+      "scores": [1, 1, 1, 1, 1],
+      "strict_pass": false,
+      "finding": "Adds circuit output and per-circuit grouping; corrected retry timed out."
+    },
+    {
+      "example_id": "1116",
+      "scores": [2, 2, 2, 2, 2],
+      "strict_pass": true,
+      "finding": "Represents descending rank and retains all height ties."
+    },
+    {
+      "example_id": "529",
+      "scores": [1, 0, 0, 2, 2],
+      "strict_pass": false,
+      "finding": "Does not separate Korean existence from Japanese nonexistence; gold SQL may share the same annotation defect."
+    }
+  ],
+  "strict_passes": 3,
+  "examples": 5,
+  "disclosure": "Diagnostic review of a small, prompt-development sample; not a parser-accuracy estimate."
+}

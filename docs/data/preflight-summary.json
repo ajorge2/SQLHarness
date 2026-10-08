@@ -1,0 +1,38 @@
+{
+  "artifact": "Arm A preflight",
+  "benchmark": "BIRD Mini-Dev",
+  "databases": 11,
+  "dataset_sha256": "88ceb0710163cae46a256ecea8f0a8c98286599530b60587fda5c3cfe57d45d2",
+  "dialect": "sqlite",
+  "disclosure": "This is a reproducibility preflight, not model-performance evidence. The official BIRD evaluator remains authoritative for the headline score.",
+  "gold_execution_audit": {
+    "attempted": 500,
+    "succeeded_under_local_limits": 498,
+    "timed_out_under_local_limits": 2,
+    "truncated": 0
+  },
+  "local_limits": {
+    "database_mode": "read-only",
+    "max_rows": 100000,
+    "timeout_seconds": 30.0
+  },
+  "model": {
+    "id": "gpt-6.1-sol",
+    "provider": "openai",
+    "reasoning_effort": "medium",
+    "store": false
+  },
+  "official_evaluator_commit": "abd11b6db92a1c9f809b32f7564c7c71b34d67f0",
+  "pricing": {
+    "cached_input_usd_per_million": 0.1,
+    "captured_at": "2026-10-07",
+    "input_usd_per_million": 2.0,
+    "model": "gpt-6.1-sol",
+    "output_usd_per_million": 10.0,
+    "source_url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+  },
+  "selected_examples": 500,
+  "selection_sha256": "1b8080310938a6a956292322d82bc54b52c4197dbfbfb9192f767ab69e38c55e",
+  "source_examples": 500,
+  "status": "preflight"
+}

@@ -1,0 +1,23 @@
+{
+  "database_touched": false,
+  "db_id": "commerce",
+  "decision": "blocked",
+  "execution": null,
+  "proposed_sql": "DELETE FROM purchases WHERE amount < 10",
+  "receipt_id": "794c586a63e3e8bfd993",
+  "receipt_semantics": "Deterministic trace identifier for this decision; not an immutability claim.",
+  "request": "Clean up purchases below $10.",
+  "validation": {
+    "errors": [
+      "non_readonly_operations: DELETE"
+    ],
+    "normalized_sql": "DELETE FROM purchases WHERE amount < 10",
+    "referenced_columns": [
+      "amount"
+    ],
+    "referenced_tables": [
+      "purchases"
+    ],
+    "valid": false
+  }
+}

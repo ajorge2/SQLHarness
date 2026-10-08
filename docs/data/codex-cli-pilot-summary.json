@@ -1,0 +1,21 @@
+{
+  "artifact": "Codex CLI development pilot",
+  "benchmark": "BIRD Mini-Dev",
+  "disclosure": "Five-query diagnostic smoke test, not a benchmark claim.",
+  "examples": 5,
+  "execution_correct": 4,
+  "execution_accuracy": 0.8,
+  "execution_successes": 5,
+  "validation_passes": 5,
+  "mean_model_latency_ms": 6340.9439,
+  "model": "codex-cli/gpt-6-astra",
+  "reasoning_effort": "medium",
+  "reported_tokens": {
+    "input": 74749,
+    "output": 457,
+    "reasoning": 62,
+    "total": 75206
+  },
+  "estimated_model_cost_usd": null,
+  "failure_note": "The rejected query selected the correct entity but added an aggregate output column, so strict result-shape comparison failed."
+}

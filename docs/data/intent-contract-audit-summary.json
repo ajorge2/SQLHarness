@@ -1,0 +1,28 @@
+{
+  "artifact": "Intent-contract representability audit",
+  "graph_version_before": "0.1",
+  "graph_version_after": "0.2",
+  "benchmark": "BIRD Mini-Dev",
+  "examples": 25,
+  "databases": 11,
+  "difficulty_distribution": {
+    "challenging": 8,
+    "moderate": 10,
+    "simple": 7
+  },
+  "sql_demands_covered": 27,
+  "selected_example_ids": [
+    "27", "1323", "1014", "1116", "529", "760", "220", "117", "707", "1239",
+    "1498", "955", "129", "788", "17", "1435", "1058", "282", "408", "604",
+    "1252", "1471", "1078", "368", "1392"
+  ],
+  "contract_changes": [
+    "request/evidence source channels",
+    "explicit Boolean composition",
+    "nested semantic scope",
+    "explicit inferred-meaning markers",
+    "optional projections",
+    "ratio and ranking relation roles"
+  ],
+  "disclosure": "Representational audit only; no parser-accuracy claim."
+}

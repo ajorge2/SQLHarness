@@ -1,0 +1,39 @@
+{
+  "artifact": "SQLHarness first held-out vertical slice",
+  "date": "2026-10-07",
+  "development_only": true,
+  "benchmark_claim": false,
+  "training": {
+    "examples": 7,
+    "sql_fragments": 48,
+    "retriever": "transparent lexical control"
+  },
+  "evaluation": {
+    "examples": 3,
+    "example_ids": ["117", "707", "1239"],
+    "model": "codex-cli/gpt-6-astra",
+    "reasoning_effort": "medium"
+  },
+  "direct": {
+    "correct": 2,
+    "accuracy": 0.6666666667,
+    "answered": 3,
+    "abstentions": 0,
+    "mean_model_latency_ms": 6354.483069334189,
+    "reported_tokens": 45546
+  },
+  "graphsql": {
+    "correct": 2,
+    "accuracy": 0.6666666667,
+    "answered": 2,
+    "answered_accuracy": 1.0,
+    "abstentions": 1,
+    "mean_completed_pipeline_latency_ms": 46193.27681249938,
+    "mean_observed_end_to_end_latency_ms": 70795.51787499976,
+    "reported_tokens_for_completed_pipelines": 70197,
+    "timed_out_parser_usage_available": false
+  },
+  "finding": "The first SQLHarness slice tied direct generation on end-to-end accuracy, used substantially more inference, and replaced the direct system's incorrect third answer with a parser-timeout abstention. This is diagnostic evidence, not evidence that the structured system is better.",
+  "annotation_finding": "The failed direct example exposes a BIRD supervision conflict: the question and gold SQL encode two-or-more as COUNT >= 2, while the supplied evidence says COUNT > 2. The direct model followed the evidence and failed the gold execution comparison.",
+  "disclosure": "Three held-out development examples are too few for a benchmark conclusion. CLI tokens include runtime context; SQLHarness token totals exclude the timed-out parser because it returned no usage."
+}

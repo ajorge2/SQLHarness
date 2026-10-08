@@ -1,0 +1,48 @@
+{
+  "scope": "Frozen 20-train / 5-held-out BIRD Mini-Dev development slice",
+  "evaluator_commit": "abd11b6db92a1c9f809b32f7564c7c71b34d67f0",
+  "arms": [
+    {
+      "name": "Direct GPT-6 Astra",
+      "correct": 4,
+      "examples": 5,
+      "execution_accuracy": 0.8,
+      "mean_model_latency_ms": 5611.488516800455,
+      "reported_tokens": 77327,
+      "abstentions": 0
+    },
+    {
+      "name": "SQLHarness + BGE-small",
+      "correct": 3,
+      "examples": 5,
+      "execution_accuracy": 0.6,
+      "mean_observed_end_to_end_latency_ms": 67988.23109200166,
+      "reported_tokens_for_completed_pipelines": 142809,
+      "abstentions": 1
+    },
+    {
+      "name": "SQLHarness + learned ranker",
+      "correct": 3,
+      "examples": 5,
+      "execution_accuracy": 0.6,
+      "mean_observed_end_to_end_latency_ms": 67229.99841680139,
+      "reported_tokens_for_completed_pipelines": 142764,
+      "abstentions": 1
+    }
+  ],
+  "retrieval": {
+    "catalog_signature_coverage": 0.5882352941176471,
+    "graph_coverage": 0.8,
+    "lexical": {"recall_at_1": 0.07692307692307693, "recall_at_3": 0.15384615384615385, "recall_at_12": 0.23076923076923078, "mrr": 0.5111111111111111},
+    "dense": {"recall_at_1": 0.07692307692307693, "recall_at_3": 0.23076923076923078, "recall_at_12": 0.23076923076923078, "mrr": 0.6666666666666666},
+    "learned": {"recall_at_1": 0.15384615384615385, "recall_at_3": 0.15384615384615385, "recall_at_12": 0.15384615384615385, "mrr": 0.6666666666666666}
+  },
+  "teacher_distribution": {
+    "repeated_examples": 3,
+    "repeated_examples_with_multiple_valid_graphs": 2,
+    "mean_node_jaccard": 0.4722222222222222,
+    "mean_edge_jaccard": 0.10229885057471264
+  },
+  "conclusion": "The direct model wins this slice. Explicit structure makes failures inspectable, but the frontier-model parser dominates cost and latency, one parser timeout causes an abstention, and the learned ranker does not improve end-to-end accuracy over generic dense retrieval.",
+  "disclosure": "Five-example development evidence, not a benchmark-scale claim. The pinned official per-query BIRD executor was used; aggregation is local because the slice contains no challenging examples."
+}

@@ -1,0 +1,26 @@
+{
+  "artifact": "v0.2 intent-graph generation pilot",
+  "model": "codex-cli/gpt-6-astra",
+  "reasoning_effort": "medium",
+  "initial_pilot": {
+    "examples": 5,
+    "generated": 5,
+    "input_fidelity_passes": 5,
+    "raw_span_and_shape_passes": 4,
+    "passes_after_unique_span_repair": 5,
+    "passes_after_directed_role_validation": 2,
+    "unique_span_repairs": 5,
+    "mean_latency_ms": 37838.1093,
+    "reported_input_tokens": 79819,
+    "reported_output_tokens": 8537
+  },
+  "direction_clarification_retry": {
+    "attempted": 3,
+    "generated_within_300_seconds": 2,
+    "contract_passes": 2,
+    "schema_candidate_passes": 2,
+    "timeouts": 1
+  },
+  "future_generation_timeout_seconds": 120,
+  "disclosure": "Generation and contract-validity pilot only; semantic graph correctness is not yet scored."
+}

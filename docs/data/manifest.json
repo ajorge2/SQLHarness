@@ -1,0 +1,12 @@
+{
+  "artifact": "SQLHarness offline showcase",
+  "benchmark_claim": false,
+  "disclosure": "These deterministic fixtures prove the evaluation and safety paths are runnable. They are not BIRD benchmark results or evidence of model quality.",
+  "execution_accuracy": 1.0,
+  "generated_by": "scripts/build_showcase.py",
+  "requires_api_key": false,
+  "trace_examples": 2,
+  "uses_database_authority": true,
+  "uses_production_harness_code": true,
+  "validation_rate": 1.0
+}

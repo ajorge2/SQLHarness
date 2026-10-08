@@ -1,0 +1,23 @@
+{
+  "estimated_model_cost_usd": null,
+  "examples": 2,
+  "execution_accuracy": 1.0,
+  "execution_correct": 2,
+  "execution_success_rate": 1.0,
+  "execution_successes": 2,
+  "local_evaluation_coverage": 1.0,
+  "locally_evaluated_examples": 2,
+  "locally_unscored_examples": 0,
+  "mean_model_latency_ms": 0.0,
+  "model_cached_input_tokens": 0,
+  "model_input_tokens": 0,
+  "model_output_tokens": 0,
+  "model_reasoning_tokens": 0,
+  "model_total_tokens": 0,
+  "models": [
+    "deterministic-offline-fixture"
+  ],
+  "pricing": null,
+  "validation_passes": 2,
+  "validation_rate": 1.0
+}
