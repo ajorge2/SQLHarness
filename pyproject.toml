@@ -3,6 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
+license = "MIT"
 name = "sqlharness"
 version = "0.1.0"
 description = "A benchmarked semantic compiler and governed execution harness for NL-to-SQL."

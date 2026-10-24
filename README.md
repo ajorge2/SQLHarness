@@ -258,3 +258,7 @@ uv run sqlharness export-bird \
 The direct model wins the frozen development slice, 4/5 to 3/5. SQLHarness's value today is diagnostic and operational: its explicit graph, retrieved fragments, failure stages, authority receipts, and abstention make each decision inspectable. The experiment rejects the claim that this first structured implementation already moves the accuracy–latency–token frontier.
 
 The evidence points to three future research targets rather than more harness decoration: distill the intent parser, expand exact structural catalog coverage beyond 58.82%, and train fragment alignment on substantially more than 16 usable graphs. See [`docs/final-results.md`](docs/final-results.md) for the frozen results and limitations.
+
+## Privacy and licensing
+
+See [PRIVACY.md](PRIVACY.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The software license does not relicense third-party data or publications.

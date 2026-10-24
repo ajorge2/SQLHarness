@@ -7,3 +7,9 @@ __pycache__/
 *.swp
 /artifacts/models/
 /data/
+
+*.pem
+*.key
+*.pyc
+
+node_modules/
