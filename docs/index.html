@@ -34,7 +34,7 @@ structure can produce more accurate queries for a given cost than a language mod
 
 <section id="system">
 <div>
-<p>System</p>
+
 <h2>System architecture</h2>
 <p>The pipeline separates research on query representation and retrieval from the checks that control execution.</p>
 </div>
@@ -42,7 +42,7 @@ structure can produce more accurate queries for a given cost than a language mod
 <table><thead><tr><th>Stage</th><th>Input or responsibility</th></tr></thead><tbody><tr><td>Business request</td><td>Natural language, database schema, and task evidence.</td></tr><tr><td>Intent graph</td><td>Explicit entities, constraints, operations, and relations.</td></tr><tr><td>Fragment retrieval</td><td>SQL building blocks retrieved using the intent graph for lightweight assembly.</td></tr><tr><td>Authority boundary</td><td>SQL syntax-tree (AST), schema, policy, timeout, and execution-limit checks.</td></tr></tbody></table>
 <div>
 <article>
-<div>Research lens</div>
+
 <h3>Representation and retrieval</h3>
 <ul>
 <li>Teacher-model output distribution → semantic intent graph</li>
@@ -51,7 +51,7 @@ structure can produce more accurate queries for a given cost than a language mod
 </ul>
 </article>
 <article>
-<div>Engineering lens</div>
+
 <h3>Execution constraints</h3>
 <ul>
 <li>Model proposes; governed boundary decides</li>
@@ -83,7 +83,7 @@ structure can produce more accurate queries for a given cost than a language mod
 <section id="trace">
 <div>
 <div>
-<p>Measured behavior</p>
+
 <h2>Example execution trace</h2>
 <p>This cached run is produced by the repository’s real validation and execution code. It needs no API key.</p>
 </div>
@@ -96,7 +96,7 @@ Offline demonstration fixture, not a score on the BIRD text-to-SQL benchmark. It
 
 <section id="research">
 <div>
-<p>Research contract</p>
+
 <h2>Evaluation design</h2>
 <p>Every comparison method receives the same fixed BIRD examples, database schema, and evaluation conditions.</p>
 </div>
@@ -123,7 +123,7 @@ Offline demonstration fixture, not a score on the BIRD text-to-SQL benchmark. It
 
 <div>
 <div>
-<p>Five-query development comparison</p>
+
 <h3>Direct generation leads on the five-query comparison.</h3>
 </div>
 <p>
@@ -213,12 +213,7 @@ API cost because it runs through the authenticated Codex product runtime.
 </section>
 </main>
 
-<footer>
-<div>
-<span>SQLHarness</span>
-<span>Semantic compilation · governed execution · reproducible evaluation</span>
-</div>
-</footer>
+
 
 </body>
 </html>
