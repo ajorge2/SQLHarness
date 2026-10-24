@@ -1,296 +1,224 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
-    <title>SQLHarness — Research system and execution harness</title>
-    <link rel="stylesheet" href="assets/style.css?v=charis-sil" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="#top" aria-label="SQLHarness home">
-        <span class="brand-mark">S</span><span>SQLHarness</span>
-      </a>
-      <nav aria-label="Page navigation">
-        <a href="#system">System</a>
-        <a href="#trace">Trace</a>
-        <a href="#research">Research</a>
-        <a href="share.html">Technical brief</a>
-      </nav>
-    </header>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
+<title>SQLHarness — Research system and execution harness</title>
+<link rel="stylesheet" href="analysis-plain.css?v=research-plain-1" />
+</head>
+<body>
+<header>
+<a href="#top" aria-label="SQLHarness home">
+<span>SQLHarness</span>
+</a>
+<nav aria-label="Page navigation">
+<a href="#system">System</a>
+<a href="#trace">Trace</a>
+<a href="#research">Research</a>
+<a href="share.html">Technical brief</a>
+</nav>
+</header>
 
-    <main id="top">
-      <section class="hero shell">
-        <div class="eyebrow"><span class="dot"></span> Natural-language-to-SQL evaluation</div>
-        <h1>Explicit intent graphs and governed SQL execution.</h1>
-        <p class="hero-copy">
-          SQLHarness compiles business questions into explicit semantic structure and SQL primitives,
-          then places execution behind a governed boundary. The research question is whether that
-          structure can improve the accuracy–cost frontier over direct LLM generation.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#trace">View example trace</a>
-          <a class="button secondary" href="#research">View evaluation design</a>
-          <a class="button secondary" href="share.html">Read the technical brief</a>
-        </div>
-      </section>
+<main id="top">
+<section>
 
-      <section id="system" class="section shell">
-        <div class="section-heading">
-          <span class="kicker">System</span>
-          <h2>System architecture</h2>
-          <p>The same pipeline exposes research decisions upstream and execution guarantees downstream.</p>
-        </div>
+<h1>From business questions to inspectable, governed SQL.</h1>
+<p>
+SQLHarness translates business questions into a structured query description and SQL building blocks,
+then checks the resulting SQL before allowing execution. The research asks whether this
+structure can produce more accurate queries for a given cost than a language model generating SQL directly.
+</p>
 
-        <div class="flow" aria-label="SQLHarness architecture">
-          <article class="flow-card">
-            <span class="step">01</span>
-            <h3>Business request</h3>
-            <p>Natural language, database schema, and task evidence.</p>
-          </article>
-          <span class="arrow" aria-hidden="true">→</span>
-          <article class="flow-card research-card">
-            <span class="step">02</span>
-            <h3>Intent graph</h3>
-            <p>Explicit entities, constraints, operations, and relations.</p>
-          </article>
-          <span class="arrow" aria-hidden="true">→</span>
-          <article class="flow-card research-card">
-            <span class="step">03</span>
-            <h3>Fragment retrieval</h3>
-            <p>Graph-conditioned SQL primitives for lightweight assembly.</p>
-          </article>
-          <span class="arrow" aria-hidden="true">→</span>
-          <article class="flow-card engineering-card">
-            <span class="step">04</span>
-            <h3>Authority boundary</h3>
-            <p>AST, schema, policy, timeout, and bounded execution checks.</p>
-          </article>
-        </div>
+</section>
 
-        <div class="lens-grid">
-          <article class="lens-panel research-panel">
-            <div class="panel-label">Research lens</div>
-            <h3>Representation and retrieval</h3>
-            <ul>
-              <li>Teacher distribution → semantic intent graph</li>
-              <li>Intent fragments → contextual SQL retrieval</li>
-              <li>Ablations isolate parser, retriever, and assembler errors</li>
-            </ul>
-          </article>
-          <article class="lens-panel engineering-panel">
-            <div class="panel-label">Engineering lens</div>
-            <h3>Execution constraints</h3>
-            <ul>
-              <li>Model proposes; governed boundary decides</li>
-              <li>Read-only SQLite execution with time and row limits</li>
-              <li>Every proposal, decision, and result becomes a trace</li>
-            </ul>
-          </article>
-        </div>
-      </section>
+<section id="system">
+<div>
+<p>System</p>
+<h2>System architecture</h2>
+<p>The pipeline separates research on query representation and retrieval from the checks that control execution.</p>
+</div>
 
-      <section id="trace" class="section trace-section">
-        <div class="shell">
-          <div class="section-heading inverse">
-            <span class="kicker">Measured behavior</span>
-            <h2>Example execution trace</h2>
-            <p>This cached run is produced by the repository’s real validation and execution code. It needs no API key.</p>
-          </div>
+<table><thead><tr><th>Stage</th><th>Input or responsibility</th></tr></thead><tbody><tr><td>Business request</td><td>Natural language, database schema, and task evidence.</td></tr><tr><td>Intent graph</td><td>Explicit entities, constraints, operations, and relations.</td></tr><tr><td>Fragment retrieval</td><td>SQL building blocks retrieved using the intent graph for lightweight assembly.</td></tr><tr><td>Authority boundary</td><td>SQL syntax-tree (AST), schema, policy, timeout, and execution-limit checks.</td></tr></tbody></table>
+<div>
+<article>
+<div>Research lens</div>
+<h3>Representation and retrieval</h3>
+<ul>
+<li>Teacher-model output distribution → semantic intent graph</li>
+<li>Intent-graph fragments → retrieval of SQL building blocks</li>
+<li>Component-removal tests (ablations) isolate parser, retriever, and assembler errors</li>
+</ul>
+</article>
+<article>
+<div>Engineering lens</div>
+<h3>Execution constraints</h3>
+<ul>
+<li>Model proposes; governed boundary decides</li>
+<li>Read-only SQLite execution with time and row limits</li>
+<li>Every proposal, decision, and result becomes a trace</li>
+</ul>
+</article>
+</div>
+</section>
 
-          <div class="trace-toolbar">
-            <div class="segmented" role="group" aria-label="Trace choice">
-              <button class="trace-choice active" data-trace="successful">Successful query</button>
-              <button class="trace-choice" data-trace="blocked">Blocked write</button>
-            </div>
-            <span id="trace-provenance" class="provenance">Loading trace…</span>
-          </div>
+<section id="implementation">
+<h2>Making each query stage inspectable</h2>
+<p>A generated query can be valid SQL and still answer the wrong question. SQLHarness separates the request’s meaning, the SQL structures available for retrieval, and permission to execute. This makes a failure attributable to a stage instead of treating every wrong result as a prompt problem.</p>
+<h3>Following one request through the representation</h3>
+<p>The repository’s version 0.2 example represents “Which region has the most customers?” with a customer entity, a region attribute, a count operation grouped by region, and an argmax operation limited to one result. Directed edges connect the count to its customer target and region grouping; the output returns the region constrained by that maximum.</p>
+<p>Retrieval uses the graph to select parameterized SQL building blocks; the assembler receives the graph, selected fragments, and database schema to propose SQL. The necessary operations here are joining customers to regions, grouping, counting, and selecting the largest group. The saved graph is an illustrative contract example, not a recorded model-generated retrieval trace. The executable fixture below separately demonstrates the resulting SQL and authority checks.</p>
+<p><a href="data/intent-graph-region.json">Inspect the complete graph, source spans, and schema candidates.</a> <a href="architecture.md">Read the architecture contract and proposed training path.</a></p>
+<h3>One execution authority across interfaces</h3>
+<p>The Model Context Protocol (MCP) server and command-line evaluator call the same <code>DatabaseAuthority</code>. Every exposed execution tool uses these checks: database IDs resolve inside a configured root, SQL is parsed and checked against the schema and read-only policy, and allowed execution uses a read-only SQLite connection with a deadline and row cap.</p>
+<table><thead><tr><th>MCP tool</th><th>Responsibility</th></tr></thead><tbody>
+<tr><td><code>list_databases</code></td><td>List databases inside the configured authority root.</td></tr>
+<tr><td><code>inspect_schema</code></td><td>Return the selected database’s tables and columns.</td></tr>
+<tr><td><code>validate_sql</code></td><td>Check syntax, schema references, and policy without executing the proposal.</td></tr>
+<tr><td><code>explain_sql</code></td><td>Validate the proposal before returning a bounded SQLite query plan.</td></tr>
+<tr><td><code>execute_readonly_sql</code></td><td>Validate again, then execute under time and row limits.</td></tr>
+</tbody></table>
+<p>Decisions include structured errors and deterministic receipt IDs for tracing. A receipt is an identifier for a decision, not a claim of immutable storage. Read-only enforcement limits database effects; it does not establish that an allowed query answers the business question correctly. <a href="safety-model.md">Inspect the safety boundary and its limits.</a></p>
+</section>
+<section id="trace">
+<div>
+<div>
+<p>Measured behavior</p>
+<h2>Example execution trace</h2>
+<p>This cached run is produced by the repository’s real validation and execution code. It needs no API key.</p>
+</div>
 
-          <div id="trace-content" class="trace-grid" aria-live="polite"></div>
-          <p class="disclosure">
-            Offline fixture, not a BIRD score. Its purpose is to prove the harness is executable and the safety path is inspectable.
-          </p>
-        </div>
-      </section>
+<h3>Successful query</h3><p><strong>Business request:</strong> Which region has the most customers?</p><p><strong>Task evidence:</strong> Count customers by region and return only the largest group.</p><pre><code>SELECT r.name, COUNT(*) AS customer_count FROM customers AS c JOIN regions AS r ON c.region_id = r.id GROUP BY r.id, r.name ORDER BY customer_count DESC LIMIT 1</code></pre><table><thead><tr><th>Validation and execution</th><th>Recorded result</th></tr></thead><tbody><tr><td>Decision</td><td>executed</td></tr><tr><td>Receipt</td><td>0a59a1292a6ef895eea3</td></tr><tr><td>Tables</td><td>customers, regions</td></tr><tr><td>Columns</td><td>c.region_id, customer_count, r.id, r.name</td></tr><tr><td>Errors</td><td>None</td></tr><tr><td>Result</td><td>Matched reference result; Northeast, 3 customers</td></tr><tr><td>Latency</td><td>0.21 ms</td></tr></tbody></table><h3>Blocked write</h3><p><strong>Requested operation:</strong> Clean up purchases below $10.</p><pre><code>DELETE FROM purchases WHERE amount &lt; 10</code></pre><p><strong>Policy rejection:</strong> non_readonly_operations: DELETE. Decision: blocked. Database untouched. Receipt: 794c586a63e3e8bfd993.</p>          <p>
+Offline demonstration fixture, not a score on the BIRD text-to-SQL benchmark. Its purpose is to prove the harness is executable and the safety path is inspectable.
+</p>
+</div>
+</section>
 
-      <section id="research" class="section shell">
-        <div class="section-heading">
-          <span class="kicker">Research contract</span>
-          <h2>Controlled comparison</h2>
-          <p>Every arm receives the same frozen BIRD examples, schema, and evaluation conditions.</p>
-        </div>
+<section id="research">
+<div>
+<p>Research contract</p>
+<h2>Evaluation design</h2>
+<p>Every comparison method receives the same fixed BIRD examples, database schema, and evaluation conditions.</p>
+</div>
 
-        <div class="experiment-grid">
-          <article class="experiment-card">
-            <span class="experiment-number">A</span>
-            <h3>Direct model baseline</h3>
-            <p>Question + schema → frontier-model SQL.</p>
-          </article>
-          <article class="experiment-card featured">
-            <span class="experiment-number">B</span>
-            <h3>SQLHarness system</h3>
-            <p>Intent graph → retrieved fragments → lightweight assembly.</p>
-          </article>
-          <article class="experiment-card">
-            <span class="experiment-number">C</span>
-            <h3>Ablations</h3>
-            <p>Remove each component to measure its actual contribution.</p>
-          </article>
-        </div>
+<div>
+<article>
+<p><strong>Arm A</strong></p>
+<h3>Direct model baseline</h3>
+<p>Question + schema → SQL generated directly by a frontier language model.</p>
+</article>
+<article>
+<p><strong>Arm B</strong></p>
+<h3>SQLHarness system</h3>
+<p>Intent graph → retrieved fragments → lightweight assembly.</p>
+</article>
+<article>
+<p><strong>Arm C</strong></p>
+<h3>Ablations</h3>
+<p>Remove each component to measure its actual contribution.</p>
+</article>
+</div>
 
-        <div class="metrics-card">
-          <div>
-            <span class="metric-name">Primary</span>
-            <strong>Execution accuracy</strong>
-          </div>
-          <div>
-            <span class="metric-name">Efficiency</span>
-            <strong>Cost per correct query</strong>
-          </div>
-          <div>
-            <span class="metric-name">Operations</span>
-            <strong>End-to-end latency</strong>
-          </div>
-          <div>
-            <span class="metric-name">Diagnosis</span>
-            <strong>Stage-level error taxonomy</strong>
-          </div>
-        </div>
+<table><thead><tr><th>Evaluation role</th><th>Measure</th></tr></thead><tbody><tr><td>Primary</td><td>Execution accuracy</td></tr><tr><td>Efficiency</td><td>Cost per correct query</td></tr><tr><td>Operations</td><td>End-to-end latency</td></tr><tr><td>Diagnosis</td><td>Errors classified by pipeline stage</td></tr></tbody></table>
 
-        <div class="pending-results">
-          <div>
-            <span class="kicker">Five-query development comparison</span>
-            <h3>Direct generation leads on the five-query comparison.</h3>
-          </div>
-          <p>
-            The structured system has not moved the frontier on this slice. That negative result is preserved beside
-            the component evidence and governed execution path.
-          </p>
-        </div>
+<div>
+<div>
+<p>Five-query development comparison</p>
+<h3>Direct generation leads on the five-query comparison.</h3>
+</div>
+<p>
+The structured system did not improve the accuracy–cost tradeoff on this small comparison. That negative result is preserved beside
+the component evidence and governed execution path.
+</p>
+</div>
 
-        <div class="preflight-proof" aria-label="Frozen five-example development comparison">
-          <div class="preflight-heading">
-            <div>
-              <span class="kicker">Frozen comparison · 20 train / 5 held out</span>
-              <h3>Final result: direct 4/5; structured arms 3/5.</h3>
-            </div>
-          </div>
-          <div class="preflight-stats">
-            <div class="preflight-stat"><strong>4/5</strong><span>Direct Astra correct</span></div>
-            <div class="preflight-stat"><strong>3/5</strong><span>SQLHarness dense correct</span></div>
-            <div class="preflight-stat"><strong>3/5</strong><span>SQLHarness learned correct</span></div>
-            <div class="preflight-stat"><strong>1</strong><span>Parser abstention</span></div>
-          </div>
-          <div class="slice-comparison">
-            <div>
-              <span class="metric-name">Direct generation</span>
-              <strong>5.61 s mean model latency · 77,327 tokens</strong>
-            </div>
-            <div>
-              <span class="metric-name">SQLHarness learned</span>
-              <strong>67.23 s mean observed latency · 142,764 reported tokens</strong>
-            </div>
-          </div>
-          <p class="preflight-disclosure">
-            Five-example development comparison. SQLHarness tokens cover four completed pipelines and omit
-            the timed-out parser, so they understate true consumption. The pinned BIRD per-query executor reproduces
-            the 80% versus 60% scores. <a href="final-results.md">Read the complete result and error decomposition.</a>
-          </p>
-        </div>
+<div aria-label="Frozen five-example development comparison">
+<div>
+<div>
+<p>Frozen comparison · 20 train / 5 held out</p>
+<h3>Five-query result: direct 4/5; structured arms 3/5.</h3>
+</div>
+</div>
+<table><thead><tr><th>Measure</th><th>Observed</th></tr></thead><tbody><tr><td>Direct model (Astra) correct</td><td>4/5</td></tr><tr><td>SQLHarness with dense retrieval correct</td><td>3/5</td></tr><tr><td>SQLHarness with learned retrieval correct</td><td>3/5</td></tr><tr><td>Queries left unanswered by parser</td><td>1</td></tr></tbody></table>
+<table><thead><tr><th>Method</th><th>Reported usage and latency</th></tr></thead><tbody><tr><td>Direct generation</td><td>5.61 s mean model latency · 77,327 tokens</td></tr><tr><td>SQLHarness with learned retrieval</td><td>67.23 s mean observed latency · 142,764 reported tokens</td></tr></tbody></table>
+<p>
+Five-example development comparison. SQLHarness tokens cover four completed pipelines and omit
+the timed-out parser, so they understate true consumption. The latency fields also differ: direct generation reports model latency, while the structured result combines recorded parser and assembler latency. The fixed-version BIRD per-query evaluator reproduces
+the 80% versus 60% scores. <a href="final-results.md">Read the complete result and error decomposition.</a>
+</p>
+</div>
 
-        <div class="preflight-proof" aria-label="First held-out SQLHarness vertical slice">
-          <div class="preflight-heading">
-            <div>
-              <span class="kicker">First held-out vertical slice · 3 examples</span>
-              <h3>Initial slice: both arms 2/3; structured inference was slower.</h3>
-            </div>
-          </div>
-          <div class="preflight-stats">
-            <div class="preflight-stat"><strong>2/3</strong><span>Direct model correct</span></div>
-            <div class="preflight-stat"><strong>2/3</strong><span>SQLHarness correct</span></div>
-            <div class="preflight-stat"><strong>1</strong><span>Parser-timeout abstention</span></div>
-            <div class="preflight-stat"><strong>7 → 48</strong><span>Training examples → fragments</span></div>
-          </div>
-          <div class="slice-comparison">
-            <div>
-              <span class="metric-name">Direct generation</span>
-              <strong>6.35 s/query · 45,546 tokens across 3</strong>
-            </div>
-            <div>
-              <span class="metric-name">SQLHarness v0.1</span>
-              <strong>46.19 s/completed query · 70,197 tokens across 2</strong>
-            </div>
-          </div>
-          <p class="preflight-disclosure">
-            Three-example development comparison. The third direct query followed conflicting benchmark
-            evidence (<code>COUNT &gt; 2</code>) instead of the question and gold SQL (<code>COUNT &gt;= 2</code>);
-            SQLHarness timed out before answering it. <a href="vertical-slice.md">Read the full failure analysis.</a>
-          </p>
-        </div>
+<div aria-label="First held-out SQLHarness vertical slice">
+<div>
+<div>
+<p>First held-out vertical slice · 3 examples</p>
+<h3>Initial slice: both arms 2/3; structured inference was slower.</h3>
+</div>
+</div>
+<table><thead><tr><th>Measure</th><th>Observed</th></tr></thead><tbody><tr><td>Direct model correct</td><td>2/3</td></tr><tr><td>SQLHarness correct</td><td>2/3</td></tr><tr><td>Parser-timeout abstention</td><td>1</td></tr><tr><td>Training examples → fragments</td><td>7 → 48</td></tr></tbody></table>
+<table><thead><tr><th>Method</th><th>Reported usage and latency</th></tr></thead><tbody><tr><td>Direct generation</td><td>6.35 s/query · 45,546 tokens across 3</td></tr><tr><td>SQLHarness v0.1</td><td>46.19 s/completed query · 70,197 tokens across 2</td></tr></tbody></table>
+<p>
+Three-example development comparison. The third direct query followed conflicting benchmark
+evidence (<code>COUNT &gt; 2</code>) instead of the question and reference SQL (<code>COUNT &gt;= 2</code>);
+SQLHarness timed out before answering it. <a href="vertical-slice.md">Read the full failure analysis.</a>
+</p>
+</div>
 
-        <div class="preflight-proof" aria-label="Fragment retrieval diagnosis">
-          <div class="preflight-heading">
-            <div>
-              <span class="kicker">Model B isolated · lexical / dense / learned · 20/5 split</span>
-              <h3>Retrieval result: the dense encoder leads at Recall@3.</h3>
-            </div>
-          </div>
-          <div class="preflight-stats">
-            <div class="preflight-stat"><strong>58.82%</strong><span>Exact catalog coverage</span></div>
-            <div class="preflight-stat"><strong>15.38%</strong><span>Lexical Recall@3</span></div>
-            <div class="preflight-stat"><strong>23.08%</strong><span>Dense Recall@3</span></div>
-            <div class="preflight-stat"><strong>15.38%</strong><span>Learned Recall@3</span></div>
-          </div>
-          <p class="preflight-disclosure">
-            Five-example development comparison; four graphs were available and three queries had a relevant exact
-            structure in the catalog. Dense BGE-small reaches 23.08% Recall@12; the learned ranker improves Recall@1
-            but falls to 15.38% at rank 12. Catalog coverage remains the dominant ceiling.
-            <a href="fragment-retrieval-evaluation.md">Read the retrieval analysis.</a>
-          </p>
-        </div>
+<div aria-label="Fragment retrieval diagnosis">
+<div>
+<div>
+<p>Fragment retrieval isolated · lexical / dense / learned · 20/5 split</p>
+<h3>Retrieval result: the dense encoder leads at Recall@3.</h3>
+</div>
+</div>
+<table><thead><tr><th>Measure (Recall@3: share of required SQL structures found within the top 3 candidates)</th><th>Observed</th></tr></thead><tbody><tr><td>Required exact SQL structures present in catalog</td><td>58.82%</td></tr><tr><td>Lexical Recall@3</td><td>15.38%</td></tr><tr><td>Dense Recall@3</td><td>23.08%</td></tr><tr><td>Learned Recall@3</td><td>15.38%</td></tr></tbody></table>
+<p>
+Five-example development comparison; four graphs were available and three queries had a relevant exact
+structure in the catalog. Dense BGE-small reaches 23.08% Recall@12; the learned ranker improves Recall@1
+but falls to 15.38% at rank 12. Only 58.82% of the required exact SQL structures exist in the catalog, limiting what any retrieval method can return.
+<a href="fragment-retrieval-evaluation.md">Read the retrieval analysis.</a>
+</p>
+</div>
 
-        <div class="preflight-proof" aria-label="Arm A reproducibility preflight">
-          <div class="preflight-heading">
-            <div>
-              <span class="kicker">Arm A preflight</span>
-              <h3>Reproducibility preflight</h3>
-            </div>
-          </div>
-          <div id="preflight-stats" class="preflight-stats" aria-live="polite">
-            <span>Loading preflight evidence…</span>
-          </div>
-          <p id="preflight-disclosure" class="preflight-disclosure"></p>
-        </div>
+<h3>What the failures changed</h3>
+<p>The five-query comparison exposed different ceilings: one parser timeout prevented assembly, and the 20-example fragment catalog contained only 58.82% of the exact SQL structures required by the held-out set. Ranking cannot recover a structure absent from the catalog. The learned ranker improved the first result but lost relevant structures farther down the list, without changing final correctness.</p>
+<p>Those observations favor expanding the catalog and distilling the parser before further ranker tuning. Repeated teacher samples also had much less agreement on graph edges than nodes, so teacher graphs are treated as candidates to refine rather than unquestioned training labels. These are next research hypotheses, not measured improvements.</p>
+<h3>Keeping the evaluation populations separate</h3>
+<p>The 500-example preflight below checks whether reference queries can run within local limits. The five-query CLI pilot checks the direct generation path. The initial seven-train/three-held-out slice tests an early structured pipeline; the later 20-train/five-held-out comparison tests the expanded system and retrieval variants. Their scores describe different development experiments and are not pooled into one benchmark result.</p>
+<div aria-label="Arm A reproducibility preflight">
+<div>
+<div>
+<p>Arm A preflight</p>
+<h3>Direct-model reproducibility preflight</h3>
+</div>
+</div>
+<table><thead><tr><th>Preflight check</th><th>Observed</th></tr></thead><tbody><tr><td>Frozen examples</td><td>500</td></tr><tr><td>SQLite databases</td><td>11</td></tr><tr><td>Reference queries executed within local limits</td><td>99.6% (498/500)</td></tr><tr><td>Result truncations</td><td>0</td></tr></tbody></table>
+<p>This preflight tests reproducibility rather than model performance. The official BIRD evaluator determines the final score.</p>
+</div>
 
-        <div class="preflight-proof" aria-label="Codex CLI development pilot">
-          <div class="preflight-heading">
-            <div>
-              <span class="kicker">Development pilot · Codex CLI / GPT-6 Astra</span>
-              <h3>Codex CLI development pilot</h3>
-            </div>
-          </div>
-          <div class="preflight-stats">
-            <div class="preflight-stat"><strong>4/5</strong><span>Locally correct</span></div>
-            <div class="preflight-stat"><strong>5/5</strong><span>Valid SQL</span></div>
-            <div class="preflight-stat"><strong>6.34s</strong><span>Mean model latency</span></div>
-            <div class="preflight-stat"><strong>75,206</strong><span>CLI-reported tokens</span></div>
-          </div>
-          <p class="preflight-disclosure">
-            Five-query diagnostic smoke test. The single rejection selected the correct entity but
-            returned an extra aggregate column, causing a strict result-shape mismatch. CLI usage is not assigned
-            API cost because it runs through the authenticated Codex product runtime.
-          </p>
-        </div>
-      </section>
-    </main>
+<div aria-label="Codex CLI development pilot">
+<div>
+<div>
+<p>Development pilot · Codex CLI / GPT-6 Astra</p>
+<h3>Codex CLI development pilot</h3>
+</div>
+</div>
+<table><thead><tr><th>Measure</th><th>Observed</th></tr></thead><tbody><tr><td>Locally correct</td><td>4/5</td></tr><tr><td>Valid SQL</td><td>5/5</td></tr><tr><td>Mean model latency</td><td>6.34s</td></tr><tr><td>CLI-reported tokens</td><td>75,206</td></tr></tbody></table>
+<p>
+Five-query diagnostic run. The single rejection selected the correct entity but
+returned an extra aggregate column, causing a strict result-shape mismatch. CLI usage is not assigned
+API cost because it runs through the authenticated Codex product runtime.
+</p>
+</div>
+</section>
+</main>
 
-    <footer>
-      <div class="shell footer-inner">
-        <span>SQLHarness</span>
-        <span>Semantic compilation · governed execution · reproducible evaluation</span>
-      </div>
-    </footer>
-    <script src="assets/app.js?v=2026-10-07-final-study"></script>
-  </body>
+<footer>
+<div>
+<span>SQLHarness</span>
+<span>Semantic compilation · governed execution · reproducible evaluation</span>
+</div>
+</footer>
+
+</body>
 </html>

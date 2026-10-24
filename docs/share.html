@@ -1,56 +1,81 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="SQLHarness architecture, evaluation design, results, and research boundaries." />
-    <title>SQLHarness — Technical brief</title>
-    <link rel="stylesheet" href="assets/style.css?v=charis-sil" />
-    <link rel="stylesheet" href="assets/share.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Return to SQLHarness analysis">
-        <span class="brand-mark">S</span><span>SQLHarness</span>
-      </a>
-      <nav aria-label="Page navigation">
-        <a href="index.html">Analysis</a>
-          <a href="research-plan.md">Research plan</a>
-          <a href="intent-contract-audit.md">Intent audit</a>
-          <a href="semantic-review-rubric.md">Review rubric</a>
-      </nav>
-    </header>
-
-    <main class="share-shell">
-      <section class="share-intro">
-        <div class="eyebrow"><span class="dot"></span> Technical brief</div>
-        <h1>Architecture, evaluation design, and current findings.</h1>
-        <p>
-          This brief separates the intended architecture, frozen results, implemented authority
-          boundary, observed failures, and remaining research questions.
-        </p>
-        <div class="share-actions">
-          <button id="copy-brief" class="button primary" type="button">Copy Markdown</button>
-          <a class="button secondary" href="share-brief.md" download>Download Markdown</a>
-          <span id="copy-status" role="status" aria-live="polite"></span>
-        </div>
-      </section>
-
-      <section class="brief-frame" aria-label="SQLHarness share brief">
-        <div class="brief-bar">
-          <span>sqlharness-technical-brief.md</span>
-          <span id="brief-count">Loading…</span>
-        </div>
-        <article id="brief-content" class="brief-content"></article>
-      </section>
-    </main>
-
-    <footer>
-      <div class="shell footer-inner">
-        <span>SQLHarness</span>
-        <span>Architecture · measured results · explicit limitations</span>
-      </div>
-    </footer>
-    <script src="assets/share.js"></script>
-  </body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="SQLHarness architecture, evaluation design, results, and research boundaries."><title>SQLHarness — Technical brief</title><link rel="stylesheet" href="analysis-plain.css?v=research-plain-1"></head><body><main>
+<nav><a href="index.html" aria-label="Return to SQLHarness analysis"><strong>SQLHarness</strong></a><div><a href="index.html">Analysis</a><a href="research-plan.md">Research plan</a><a href="intent-contract-audit.md">Intent audit</a><a href="semantic-review-rubric.md">Review rubric</a><a href="share-brief.md" download>Download Markdown</a></div></nav>
+<h1>SQLHarness: technical brief</h1>
+<p>SQLHarness is an applied AI engineering and natural language processing research project investigating whether explicit semantic structure can improve natural-language-to-SQL systems over a direct call to a frontier large language model.</p>
+<h2>Research question</h2>
+<p>Can a system externalize the model's interpretation of a business request into a task-oriented intent graph, connect pieces of that graph to reusable SQL primitives, and use a lightweight model to assemble the final query—while preserving or improving execution accuracy and reducing cost and latency?</p>
+<p>The project is not premised on the structured system automatically winning. Its purpose is to measure where explicit structure helps, where direct generation remains better, and which component causes each failure.</p>
+<h2>Intended architecture</h2>
+<ol>
+<li><strong>Input:</strong> a natural-language business question, database schema, and optional task evidence.</li>
+<li><strong>Model A — intent parser:</strong> converts the request into a task-specific semantic graph containing entities, operations, filters, comparisons, aggregation, ordering, and relationships. The graph is inspired by Abstract Meaning Representation (AMR), but focuses on SQL-relevant intent rather than general linguistic coverage.</li>
+<li><strong>Model B — fragment retriever:</strong> represents contextual pieces of the intent graph as numerical vectors (embeddings) and retrieves parameterized SQL primitives. It maps local semantic meaning to possible SQL realizations rather than translating the entire graph at once.</li>
+<li><strong>Lightweight assembler:</strong> combines the graph, retrieved fragments, and schema into one executable SQL proposal.</li>
+<li><strong>Governed execution boundary:</strong> parses the SQL abstract syntax tree (AST), checks schema references and read-only policy, applies time and row limits, and executes only allowed queries. The implemented Model Context Protocol (MCP) server controls this execution authority rather than merely wrapping an unrestricted database client.</li>
+<li><strong>Evaluation:</strong> compares executed results with reference (gold) answers and records accuracy, validation decisions, failure stage, latency, token usage, and cost.</li>
+</ol>
+<h2>Proposed training approach</h2>
+<p>The proposed first learning phase would repeatedly sample a capable teacher model on unlabeled training inputs. The goal is to observe the teacher's current solution space: the alternative semantic decompositions and SQL patterns it associates with similar requests.</p>
+<p>Those samples bootstrap two learnable relationships:</p>
+<ul>
+<li>natural language plus schema → task-oriented intent graph;</li>
+<li>contextual intent fragment → distribution over SQL fragments.</li>
+</ul>
+<p>Reference question–SQL training pairs would then correct behavior inherited from the teacher model. The current working plan is to use gold data first to improve fragment selection, then obtain SQL-consistent graph targets for the gold pairs, and finally use those targets to improve the intent parser. How to derive and supervise these graph targets remains a research decision to validate, not a completed result.</p>
+<p>Free-form chain-of-thought is not treated as ground truth. Any teacher-generated semantic representation must follow a constrained schema and be checked against the generated SQL and database schema.</p>
+<h2>Evaluation design</h2>
+<p>The principal benchmark is BIRD-SQL. Every system arm receives the same frozen question, evidence, database schema, execution limits, and evaluator.</p>
+<ul>
+<li><strong>Arm A:</strong> direct generation with a fixed frontier-model version.</li>
+<li><strong>Arm B:</strong> complete SQLHarness pipeline.</li>
+<li><strong>Ablations:</strong> remove the intent graph, remove fragment retrieval, and vary the final assembler so the contribution of each component can be isolated.</li>
+</ul>
+<p>Primary outcome: official BIRD execution accuracy.</p>
+<p>Secondary outcomes: cost per correct query, total model tokens, end-to-end and per-stage latency, validation rejection rate, execution failure rate, abstention rate, and an error taxonomy covering intent parsing, schema linking, retrieval, assembly, and execution.</p>
+<p>A separate untouched test set is intended for a future benchmark-scale comparison. Development uses training data and a separate validation split. Published BIRD results will use the official evaluator rather than only the project's local comparator.</p>
+<h2>Research iterations and resulting decisions</h2>
+<p>The implementation developed through separate checks of the representation, retrieval, execution boundary, and end-to-end result. Each step narrowed a different uncertainty; a working harness was not counted as evidence that the structured approach outperformed direct generation.</p>
+<ol>
+<li><strong>Define the representation:</strong> Audit 25 diverse BIRD questions across 11 databases and 27 SQL demands, then revise the intent graph to version 0.2. Directed roles, schema grounding, and bounded generation made graph errors inspectable before retrieval.</li>
+<li><strong>Check the experiment machinery:</strong> Freeze a 500-example reference-query preflight and run small direct-generation and intent-graph pilots. Reference-query executability and graph validity test infrastructure and representation, not end-to-end model quality.</li>
+<li><strong>Run the first structured slice:</strong> Extract 48 fragments from seven examples and compare on three excluded examples. Both arms answered two correctly; parser timeout and higher structured usage argued against assuming the decomposition was already efficient.</li>
+<li><strong>Isolate retrieval, then compare the expanded system:</strong> On the 20-train/five-held-out split, inspect catalog coverage and lexical, dense, and learned ranking separately. Direct generation scored 4/5 while both structured variants scored 3/5; ranking changes did not improve final correctness.</li>
+<li><strong>Choose the next work from the failure evidence:</strong> Expand structural catalog coverage and distill the parser before more ranker optimization. These remain proposals; the completed study does not demonstrate an accuracy, latency, or token advantage over direct generation.</li>
+</ol>
+<h2>Implementation and diagnostic findings</h2>
+<ul>
+<li>BIRD-format JSON and JSONL loading.</li>
+<li>SQLite schema introspection.</li>
+<li>A provider-neutral SQL generation interface.</li>
+<li>A structured OpenAI Responses API baseline adapter.</li>
+<li>A separate temporary, read-only Codex CLI (command-line interface) adapter for development runs without an API key.</li>
+<li>SQLGlot AST parsing, read-only enforcement, and schema checks.</li>
+<li>Read-only SQLite execution with time and row limits.</li>
+<li>Candidate-versus-gold execution-result comparison.</li>
+<li>Per-example JSONL traces and aggregate run summaries.</li>
+<li>Offline automated tests and deterministic, no-key fixtures.</li>
+<li>A browser trace inspector showing both an accepted read and a rejected destructive proposal.</li>
+<li>A v0.2 phrase- and evidence-grounded intent-graph contract, revised against 25 diverse BIRD questions spanning all 11 databases and 27 SQL demands.</li>
+<li>Validation of graph-edge direction and roles, exact schema-candidate checks, unambiguous text-span offset repair with raw-versus-repaired reporting, and bounded graph-generation timeouts.</li>
+<li>A five-example live intent-generation pilot that exposed inconsistent graph-edge direction and longer generation times on complex requests.</li>
+<li>A separate five-dimension human rubric for request coverage, operator correctness, scope attachment, output fidelity, and schema grounding; the first diagnostic review produced three strict passes and flagged one possible BIRD annotation issue.</li>
+<li>A frozen Arm A preflight that fingerprints the 500-example dataset, 11 databases, prompt, source tree, environment, model settings, pricing snapshot, and official evaluator revision before inference.</li>
+<li>A five-query Codex CLI smoke test: 4/5 locally correct, 5/5 valid and executable, 6.34-second mean model latency, and 75,206 CLI-reported tokens. This is explicitly labeled as diagnostic evidence rather than a benchmark result.</li>
+<li>A first held-out end-to-end slice: seven development examples yielded 48 parameterized fragments, and three held-out examples compared direct generation with the intent-graph/retrieval/assembly path. Both scored 2/3. SQLHarness answered two correctly and abstained on one parser timeout, but was materially slower and used more reported inference tokens. The result is preserved as a diagnostic, not framed as a win.</li>
+<li>A concrete benchmark-quality finding from that slice: one direct error followed BIRD's supplied <code>COUNT &gt; 2</code> evidence, while the question and gold SQL specify “two or more” / <code>COUNT &gt;= 2</code>. The project records that case as conflicting supervision rather than silently calling it a clean model failure.</li>
+<li>An assembler-independent retrieval evaluator that extracts parameterized relevance targets from held-out gold SQL and reports catalog coverage, strict Recall@k (required structures found among the top k results), catalog-conditional Recall@k (limited to structures present in the catalog), and graph availability separately. The first three-example diagnostic finds 100% broad operation-kind coverage, 43.75% exact structural catalog coverage, and 12.5% strict micro Recall@12 on the two usable graphs (33.33% conditioned on the exact structure existing in the corpus).</li>
+<li>A frozen retrieval comparison with 20 training and five held-out examples compares word matching (lexical), embeddings (dense), and a learned reranker. BGE-small reaches 23.08% strict micro Recall@3 versus 15.38% for lexical and learned retrieval. The learned reranker raises Recall@1 to 15.38% but loses a relevant structure by rank 12, making the small-data failure visible rather than selecting it away.</li>
+<li>Repeated-teacher analysis: among two examples with multiple valid graphs, mean Jaccard overlap is 0.472 for node signatures and only 0.102 for edge signatures. Teacher graphs are therefore treated as a variable distribution rather than unquestioned labels.</li>
+<li>A real MCP v2 server with five typed tools backed by the same <code>DatabaseAuthority</code> used in evaluation. An in-memory client test proves that mutation is blocked before contact while an allowed read succeeds.</li>
+<li>A bounded one-retry correction path driven only by validator or database errors, plus explicit abstention.</li>
+<li>A final frozen five-example comparison reproduced by the pinned BIRD per-query executor: direct GPT-6 Astra scores 4/5, while SQLHarness with either dense or learned retrieval scores 3/5. The result rejects the performance hypothesis at this scale.</li>
+</ul>
+<p>The offline fixtures prove that the evaluation and policy paths execute. They are not presented as evidence of model quality.</p>
+<h2>Study conclusion</h2>
+<p>The development study and governed execution system are complete. The direct call wins this slice. Explicit structure currently contributes inspectability, failure localization, and governed execution, but does not improve the trade-off among accuracy, latency, and token use.</p>
+<p>Future research is deliberately narrower: distill Model A into a smaller model so graph construction no longer requires a frontier-model call, expand exact SQL-fragment catalog coverage beyond 58.82%, and train fragment alignment on substantially more than 16 usable graphs. A full production-API BIRD run remains a separate benchmark-scale follow-on and is not yet established evidence.</p>
+<h2>Research and engineering scope</h2>
+<p>The research question is whether explicit semantic representations improve compositional language understanding. The engineering system provides reproducible evaluation, model routing, structured intermediate state, safety policy, bounded execution, tracing, and calibrated measurement.</p>
+<p>The five-example slice does not establish benchmark-scale accuracy, cost reduction, or latency improvement. Its measured loss is reported precisely because the current structured pipeline has not earned its additional inference cost.</p>
+</main></body></html>
