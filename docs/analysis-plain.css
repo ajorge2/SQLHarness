@@ -1,21 +1,24 @@
-@import url("https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Maitree:wght@200;400;700&display=swap");
 
 :root { --ink:#202124; --muted:#5f6368; --paper:#fff; --line:#dadce0; --green:#202124; --red:#202124; --amber:#202124; --blue:#202124; --teal:#202124; --violet:#202124; }
 * { box-sizing:border-box; }
 html, body { margin:0; background:var(--paper); color:var(--ink); }
-body { font:15.5px/1.65 "Charis SIL",Georgia,"Times New Roman",serif; }
-main { width:min(860px,calc(100% - 36px)); margin:0 auto; padding:24px 0 72px; }
+body { font:15.5px/1.65 "Maitree",Georgia,serif; }
+main { width:min(1000px,calc(100% - 40px)); margin:0 auto; padding:24px 0 72px; }
 nav { display:flex; justify-content:space-between; align-items:baseline; gap:24px; margin-bottom:48px; padding-bottom:14px; border-bottom:1px solid var(--line); }
 nav strong { font-size:14px; font-weight:600; }
 nav div { display:flex; gap:16px; flex-wrap:wrap; }
-nav a, .button { font:500 13px/1.5 "Charis SIL",Georgia,serif; color:var(--ink); text-decoration:underline; background:none; border:0; border-radius:0; padding:0; }
+nav a, .button { font:400 13px/1.5 "Maitree",Georgia,serif; color:var(--ink); text-decoration:underline; background:none; border:0; border-radius:0; padding:0; }
 a { color:var(--ink); text-underline-offset:3px; }
 header { max-width:800px; }
 h1,h2,h3,h4 { font-family:inherit; color:var(--ink); letter-spacing:-.01em; }
-h1 { font-size:26px; line-height:1.3; margin:0 0 18px; font-weight:700; }
-h2 { font-size:21px; line-height:1.3; margin:0 0 16px; font-weight:700; }
-h3 { font-size:17px; line-height:1.4; margin:24px 0 10px; }
-h4 { font-size:15.5px; margin:20px 0 8px; }
+h1 { font-size:clamp(32px,4vw,40px); line-height:1.14; margin:0 0 18px; font-weight:400; }
+h2 { font-size:25px; line-height:1.3; margin:0 0 16px; font-weight:400; }
+h3 { font-size:17px; line-height:1.4; margin:24px 0 10px; font-weight:400; }
+h4 { font-size:15.5px; margin:20px 0 8px; font-weight:400; }
+.project-name { font-style:italic; }
+.hero-copy { max-width:800px; }
+.hero-actions { display:flex; gap:18px; flex-wrap:wrap; }
 section { margin:50px 0; }
 p { margin:0; padding-top:15.5px; }
 header p:first-child, section > p:first-child { padding-top:0; }
@@ -24,7 +27,7 @@ header p:first-child, section > p:first-child { padding-top:0; }
 .grid,.flow,.metrics,.pipeline { display:block; margin:24px 0; padding:0; border:0; }
 .card,.step,.metric-block,.decision,.failure,.gate,.boundary,.scope,.verdict,.withdrawn { display:block; background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin:0; }
 .grid > .card + .card, .flow > .step + .step { margin-top:20px; }
-.metric { font:700 17px/1.5 "Charis SIL",Georgia,serif; margin:0; }
+.metric { font:400 17px/1.5 "Maitree",Georgia,serif; margin:0; }
 .table-wrap { max-width:100%; overflow-x:auto; }
 table { width:100%; border-collapse:collapse; margin-top:20.5px; border:1px solid var(--line); }
 caption { text-align:left; caption-side:top; padding-bottom:12px; }
@@ -56,11 +59,11 @@ figcaption { color:var(--muted); font-size:13px; margin-top:8px; }
 @media(max-width:760px) { main { width:calc(100% - 28px); } nav { flex-direction:column; align-items:flex-start; gap:12px; margin-bottom:36px; } section { margin:42px 0; } table { font-size:14px; } th,td { padding:9px 8px; } }
 .provenance { color:var(--muted); font-size:13px; padding-top:12px; }
 /* Some analyses keep their site header outside the reading column. */
-body > header { width:min(860px,calc(100% - 36px)); max-width:none; margin:0 auto; padding:24px 0 14px; display:flex; justify-content:space-between; align-items:baseline; gap:24px; border-bottom:1px solid var(--line); }
+body > header { width:min(1000px,calc(100% - 40px)); max-width:none; margin:0 auto; padding:24px 0 14px; display:flex; justify-content:space-between; align-items:baseline; gap:24px; border-bottom:0; }
 body > header > a { font-size:14px; font-weight:700; text-decoration:none; }
-body > header nav { margin:0; padding:0; border:0; gap:16px; flex-wrap:wrap; }
+body > header nav { margin:0 0 0 auto; padding:0; border:0; gap:16px; flex-wrap:wrap; }
 body > header + main { padding-top:0; }
-body > footer { width:min(860px,calc(100% - 36px)); margin:0 auto; padding:20px 0 48px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+body > footer { width:min(1000px,calc(100% - 40px)); margin:0 auto; padding:20px 0 48px; border-top:0; color:var(--muted); font-size:13px; }
 body > footer > div { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
 @media(max-width:760px) { body > header { width:calc(100% - 28px); flex-direction:column; gap:12px; } body > footer { width:calc(100% - 28px); } body > header nav { flex-direction:row; } }
 /* Match the analysis-page rhythm for prose and unwrapped Markdown headings. */

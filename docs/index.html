@@ -9,13 +9,7 @@
 </head>
 <body>
 <header>
-<a href="#top" aria-label="SQLHarness home">
-<span>SQLHarness</span>
-</a>
 <nav aria-label="Page navigation">
-<a href="#system">System</a>
-<a href="#trace">Trace</a>
-<a href="#research">Research</a>
 <a href="share.html">Technical brief</a>
 </nav>
 </header>
@@ -23,12 +17,21 @@
 <main id="top">
 <section>
 
-<h1>From business questions to inspectable, governed SQL.</h1>
-<p>
-SQLHarness translates business questions into a structured query description and SQL building blocks,
-then checks the resulting SQL before allowing execution. The research asks whether this
-structure can produce more accurate queries for a given cost than a language model generating SQL directly.
+<h1><em class="project-name">SQLHarness</em>: Convert business instructions from plain English to executable SQL.</h1>
+<p class="hero-copy">
+The objective is to make it as easy as possible for the busiest professionals to extract any specific detail
+from their data, solely through the use of their own words. Ideally, decisions can be made instantly and with
+confidence, all without requiring any SQL knowledge from the user.
 </p>
+<p class="hero-copy">
+The current approach behind SQLharness is to approach this in two parts: intent normalization and code generation.
+First the system translates a plain-English business request into an explicit semantic structure calibrated around
+SQL primitives, answering the question of “What's the universal way to describe this request without the specific
+business jargon?” Then, it translates the resulting normalized intent into real code through a governed boundary,
+minimizing the probabilistic effect of the model as much as possible. The research question is whether that structure
+can improve the accuracy–cost frontier over direct LLM generation.
+</p>
+<p class="hero-actions"><a href="#trace">View example trace</a> <a href="#research">View evaluation design</a></p>
 
 </section>
 
