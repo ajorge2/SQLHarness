@@ -88,7 +88,7 @@ can improve the accuracy–cost frontier over direct LLM generation.
 <div>
 
 <h2>Example execution trace</h2>
-<p>This cached run is produced by the repository’s real validation and execution code. It needs no API key.</p>
+<p>This cached run is produced by the repository’s real validation and execution code.</p>
 </div>
 
 <h3>Successful query</h3><p><strong>Business request:</strong> Which region has the most customers?</p><p><strong>Task evidence:</strong> Count customers by region and return only the largest group.</p><pre><code>SELECT r.name, COUNT(*) AS customer_count FROM customers AS c JOIN regions AS r ON c.region_id = r.id GROUP BY r.id, r.name ORDER BY customer_count DESC LIMIT 1</code></pre><table><thead><tr><th>Validation and execution</th><th>Recorded result</th></tr></thead><tbody><tr><td>Decision</td><td>executed</td></tr><tr><td>Receipt</td><td>0a59a1292a6ef895eea3</td></tr><tr><td>Tables</td><td>customers, regions</td></tr><tr><td>Columns</td><td>c.region_id, customer_count, r.id, r.name</td></tr><tr><td>Errors</td><td>None</td></tr><tr><td>Result</td><td>Matched reference result; Northeast, 3 customers</td></tr><tr><td>Latency</td><td>0.21 ms</td></tr></tbody></table><h3>Blocked write</h3><p><strong>Requested operation:</strong> Clean up purchases below $10.</p><pre><code>DELETE FROM purchases WHERE amount &lt; 10</code></pre><p><strong>Policy rejection:</strong> non_readonly_operations: DELETE. Decision: blocked. Database untouched. Receipt: 794c586a63e3e8bfd993.</p>          <p>
