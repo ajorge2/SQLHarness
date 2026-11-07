@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="SQLHarness architecture, evaluation design, results, and research boundaries."><title>SQLHarness — Technical brief</title><link rel="stylesheet" href="analysis-plain.css?v=research-plain-1"></head><body><main>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="SQLHarness architecture, evaluation design, results, and research boundaries."><title>SQLHarness — Technical brief</title><link rel="stylesheet" href="analysis-plain.css?v=research-plain-25"></head><body><main>
 <nav><a href="index.html" aria-label="Return to SQLHarness analysis"><strong>SQLHarness</strong></a><div><a href="index.html">Analysis</a><a href="research-plan.md">Research plan</a><a href="intent-contract-audit.md">Intent audit</a><a href="semantic-review-rubric.md">Review rubric</a><a href="share-brief.md" download>Download Markdown</a></div></nav>
 <h1>SQLHarness: technical brief</h1>
 <p>SQLHarness is an applied AI engineering and natural language processing research project investigating whether explicit semantic structure can improve natural-language-to-SQL systems over a direct call to a frontier large language model.</p>
@@ -15,7 +15,7 @@
 <li><strong>Governed execution boundary:</strong> parses the SQL abstract syntax tree (AST), checks schema references and read-only policy, applies time and row limits, and executes only allowed queries. The implemented Model Context Protocol (MCP) server controls this execution authority rather than merely wrapping an unrestricted database client.</li>
 <li><strong>Evaluation:</strong> compares executed results with reference (gold) answers and records accuracy, validation decisions, failure stage, latency, token usage, and cost.</li>
 </ol>
-<h2>Proposed training approach</h2>
+<h2 id="teacher-model">Proposed training approach</h2>
 <p>The proposed first learning phase would repeatedly sample a capable teacher model on unlabeled training inputs. The goal is to observe the teacher's current solution space: the alternative semantic decompositions and SQL patterns it associates with similar requests.</p>
 <p>Those samples bootstrap two learnable relationships:</p>
 <ul>

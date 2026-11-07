@@ -5,68 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
 <title>SQLHarness — Research system and execution harness</title>
-<link rel="stylesheet" href="analysis-plain.css?v=research-plain-1" />
+<link rel="stylesheet" href="analysis-plain.css?v=research-plain-25" />
 </head>
 <body>
 <main id="top">
 <section>
 
-<h1><em class="project-name">SQLHarness</em>: Convert business instructions from plain English to executable SQL.</h1>
+<h1><span class="project-name">SQLHarness</span><span class="headline-detail">: Convert Business Instructions from Plain English to Executable SQL.</span></h1>
+<p class="byline">By <a href="https://andrewjorge.com/" rel="author">Andrew Jorge</a></p>
+<h2 data-editable-key="implementation-overview-heading">Overview</h2>
+<div class="hero-columns">
+<aside class="hero-aside" aria-label="Technical writeup">
+<div class="query-example" aria-label="Example business instruction translated into SQL">
+<div class="query-box">
+<div class="query-prompt">
+<blockquote>“Which region has the most customers?”</blockquote>
+<div class="query-arrow" aria-hidden="true">↓</div>
+</div>
+<pre><code>SELECT r.name, COUNT(*) AS customer_count
+FROM customers c
+JOIN regions r ON c.region_id = r.id
+GROUP BY r.name
+ORDER BY customer_count DESC
+LIMIT 1;</code></pre>
+</div>
+<footer class="query-caption">Example of English-to-SQL translation</footer>
+</div>
 <ul class="technical-brief-link">
 <li><a href="share.html">Want more details? View technical writeup →</a></li>
 </ul>
-<p class="hero-copy">
-The objective is to make it as easy as possible for the busiest professionals to extract any specific detail
-from their data, solely through the use of their own words. Ideally, decisions can be made instantly and with
-confidence, all without requiring any SQL knowledge from the user.
+</aside>
+<div class="hero-copy-column">
+<p class="hero-copy" contenteditable="true" data-editable-key="project-objective-v2" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project objective">
+This project gives even the busiest professionals a simple way to extract any specific detail from their data—using
+only their own words. Ideally, decisions can be made instantly and with
+confidence, without needing to know anything about SQL.
 </p>
-<p class="hero-copy">
-SQLHarness approaches this in two parts: <em>intent normalization and code generation</em>.
-First the system translates a plain-English business request into an explicit semantic structure calibrated around
-SQL primitives, answering the question of “What's the universal way to describe this request without the specific
-business jargon?” Then, it translates the resulting normalized intent into real code through a governed boundary,
-minimizing the probabilistic effect of the model as much as possible. The research question is whether that structure
-can improve the accuracy–cost frontier over direct LLM generation.
+<p class="hero-copy" contenteditable="true" data-editable-key="project-approach" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project approach">
+SQLHarness approaches this in two parts: <em>intent normalization</em> and <em>code generation</em>.
+First the system translates the user's plain-English business request into a normalized semantic representation of
+the request calibrated around SQL primitives. This answers the question of “What's the universal way to describe
+this request without the specific business jargon?”. Afterwards, it translates the resulting normalized intent into
+real code through a governed boundary, minimizing the probabilistic effect of the model as much as possible.
+</p>
+<p class="hero-copy" contenteditable="true" data-editable-key="project-purpose" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project purpose">
+The purpose of this brief is to demonstrate my research process of whether SQLHarness’ proposed architecture can
+improve the accuracy–cost frontier over direct LLM generation.
 </p>
 <ul class="hero-actions">
-<li><a href="#trace">View example trace ↓</a></li>
-<li><a href="#research">View evaluation design ↓</a></li>
+<li><a href="#trace">↓ View example trace</a></li>
+<li><a href="#research">↓ View evaluation design</a></li>
 </ul>
+</div>
+</div>
 
 </section>
 
 <section id="system">
-<div>
-
 <h2>System architecture</h2>
-<p>The pipeline separates research on query representation and retrieval from the checks that control execution.</p>
+<div class="system-columns">
+<div class="system-primary">
+<table class="stage-table">
+<thead><tr><th class="stage-tree-head" aria-hidden="true"></th><th>Stage</th><th>Responsibility</th></tr></thead>
+<tbody>
+<tr><td class="stage-tree-cell stage-tree-cell--two" rowspan="2"><span class="stage-tree-label">Intent<br />normalization</span><span class="stage-tree-rail" aria-hidden="true"></span><span class="stage-tree-root" aria-hidden="true"></span></td><td>Business request</td><td>User describes the task in natural language as the only input. The database schema is automatically detected.</td></tr>
+<tr><td>Intent graph</td><td>Organizes the request into a clear, structured plan.</td></tr>
+</tbody>
+<tbody>
+<tr><td class="stage-tree-cell stage-tree-cell--three" rowspan="3"><span class="stage-tree-label">Code generation</span><span class="stage-tree-rail" aria-hidden="true"></span><span class="stage-tree-branch" aria-hidden="true"></span><span class="stage-tree-root" aria-hidden="true"></span></td><td>Fragment retrieval</td><td>Finds the reusable SQL pieces needed to build the query.</td></tr>
+<tr><td data-editable-key="stage-query-assembly">Query assembly</td><td data-editable-key="stage-query-assembly-responsibility">Weaves the retrieved fragments into a complete SQL query.</td></tr>
+<tr><td data-editable-key="stage-authority-boundary">Authority boundary</td><td data-editable-key="stage-authority-boundary-responsibility">Checks that the completed SQL is safe and allowed to run.</td></tr>
+</tbody>
+</table>
 </div>
-
-<table><thead><tr><th>Stage</th><th>Input or responsibility</th></tr></thead><tbody><tr><td>Business request</td><td>Natural language, database schema, and task evidence.</td></tr><tr><td>Intent graph</td><td>Explicit entities, constraints, operations, and relations.</td></tr><tr><td>Fragment retrieval</td><td>SQL building blocks retrieved using the intent graph for lightweight assembly.</td></tr><tr><td>Authority boundary</td><td>SQL syntax-tree (AST), schema, policy, timeout, and execution-limit checks.</td></tr></tbody></table>
-<div>
+<div class="system-details">
 <article>
 
-<h3>Representation and retrieval</h3>
+<h3 data-editable-key="semantic-model-development-heading-v4">How the semantic model was developed</h3>
+<ul class="training-story">
+<li><span class="editable-lead" data-editable-key="semantic-model-amr-parent-v4">SQLHarness borrows a central idea from Abstract Meaning Representation (AMR): represent meaning as concepts connected by relationships.</span>
 <ul>
-<li>Teacher-model output distribution → semantic intent graph</li>
-<li>Intent-graph fragments → retrieval of SQL building blocks</li>
-<li>Component-removal tests (ablations) isolate parser, retriever, and assembler errors</li>
+<li data-editable-key="semantic-model-amr-adaptation-v4">I adapted that idea to database work, creating a smaller SQL-oriented graph that preserves what the user means in a form the rest of the system can inspect and act on.</li>
+</ul>
+</li>
+<li><span class="editable-lead" data-editable-key="semantic-model-generator-parent-v4">GPT-6 Astra currently turns each request and its database context into that intent graph.</span>
+<ul>
+<li data-editable-key="semantic-model-generator-boundary-v4">The study tests whether this intermediate representation is useful; replacing the frontier-model call with a dedicated smaller model remains future work.</li>
+</ul>
+</li>
+<li><span class="editable-lead" data-editable-key="semantic-model-bird-parent-v6">The <a class="term-link" href="https://bird-bench.github.io/">BIRD dataset</a> provided the training data for the fragment ranker and the held-out data used to test whether each intent graph preserved enough meaning for SQL generation.</span>
+<ul>
+<li data-editable-key="semantic-model-bird-learning-v6">The training data connected each business question to its correct SQL. The held-out examples exposed gaps in the graph’s vocabulary, relationships, and grounding rules.</li>
+</ul>
+</li>
 </ul>
 </article>
 <article>
 
-<h3>Execution constraints</h3>
+<h3 data-editable-key="fragment-ranker-training-heading-v4">How the fragment ranker was developed</h3>
+<ul class="training-story">
+<li><span class="editable-lead" data-editable-key="fragment-ranker-role-parent-v4">The ranker connects each concept in the intent graph to reusable SQL pieces that can express it.</span>
 <ul>
-<li>Model proposes; governed boundary decides</li>
-<li>Read-only SQLite execution with time and row limits</li>
-<li>Every proposal, decision, and result becomes a trace</li>
+<li data-editable-key="fragment-ranker-role-boundary-v4">This gives the assembler relevant building blocks instead of asking another model to generate the entire query from scratch.</li>
+</ul>
+</li>
+<li><span class="editable-lead" data-editable-key="fragment-ranker-data-parent-v6">The fragment ranker was trained on the BIRD dataset.</span>
+<ul>
+<li data-editable-key="fragment-ranker-signals-v6">Each training example connected a business question to its correct SQL, showing the ranker which reusable SQL fragments matched each intent-graph concept and which plausible alternatives were incorrect.</li>
+</ul>
+</li>
+<li><span class="editable-lead" data-editable-key="fragment-ranker-results-parent-v5">The learned ranker was compared with a dense retriever, a simpler baseline that ranked fragments only by their embedding similarity to the intent concept.</span>
+<ul>
+<li data-editable-key="fragment-ranker-interpretation-v5">Training improved the ranker’s first suggestion, but the dense retriever still returned the stronger candidate set overall. That result shifted the next priority toward expanding the fragment catalog and training evidence before adding more ranking complexity.</li>
+</ul>
+</li>
 </ul>
 </article>
+</div>
 </div>
 </section>
 
 <section id="implementation">
-<h2>Making each query stage inspectable</h2>
+<h2 data-editable-key="body:section-3.h2-1">Making each query stage inspectable</h2>
 <p>A generated query can be valid SQL and still answer the wrong question. SQLHarness separates the request’s meaning, the SQL structures available for retrieval, and permission to execute. This makes a failure attributable to a stage instead of treating every wrong result as a prompt problem.</p>
 <h3>Following one request through the representation</h3>
 <p>The repository’s version 0.2 example represents “Which region has the most customers?” with a customer entity, a region attribute, a count operation grouped by region, and an argmax operation limited to one result. Directed edges connect the count to its customer target and region grouping; the output returns the region constrained by that maximum.</p>
@@ -216,7 +276,182 @@ API cost because it runs through the authenticated Codex product runtime.
 </section>
 </main>
 
+<script>
+const editableBodySelector = [
+  'main h1',
+  'main h2',
+  'main h3',
+  'main h4',
+  'main h5',
+  'main h6',
+  'main th',
+  'main p:not(.byline)',
+  'main td:not(.stage-tree-cell)',
+  'main .stage-tree-label',
+  'main ul:not(.hero-actions):not(.technical-brief-link) > li:not(:has(> ul))',
+  'main .editable-lead',
+  'main ol > li',
+  'main blockquote',
+  'main pre code',
+  'main caption',
+  'main figcaption',
+  'main .query-caption'
+].join(',');
 
+function structuralEditableKey(element) {
+  const path = [];
+  const root = document.querySelector('main');
+  let current = element;
+
+  while (current && current !== root) {
+    const parent = current.parentElement;
+    if (!parent) break;
+    const matchingSiblings = [...parent.children].filter(
+      (sibling) => sibling.tagName === current.tagName
+    );
+    path.unshift(`${current.tagName.toLowerCase()}-${matchingSiblings.indexOf(current) + 1}`);
+    current = parent;
+  }
+
+  return `body:${path.join('.')}`;
+}
+
+document.querySelectorAll(editableBodySelector).forEach((element) => {
+  element.contentEditable = 'true';
+  element.spellcheck = element.matches('pre code') ? false : true;
+  if (!element.dataset.editableKey) element.dataset.editableKey = structuralEditableKey(element);
+});
+
+const editableDrafts = [...document.querySelectorAll('[contenteditable="true"][data-editable-key]')];
+
+function editableStorageKey(element) {
+  return `sqlharness-edit:${element.dataset.editableKey}`;
+}
+
+function editableHistoryStorageKey(element) {
+  return `${editableStorageKey(element)}:history`;
+}
+
+function normalizeEditableMarkup(content) {
+  return content.replace(
+    /<em>intent normalization and code generation<\/em>/gi,
+    '<em>intent normalization</em> and <em>code generation</em>'
+  );
+}
+
+function saveEditableDraft(element) {
+  localStorage.setItem(editableStorageKey(element), element.innerHTML);
+}
+
+function saveEditableHistory(element, state) {
+  localStorage.setItem(
+    editableHistoryStorageKey(element),
+    JSON.stringify({ undo: state.undo.slice(-100), redo: state.redo.slice(-100) })
+  );
+}
+
+function restoreEditableHistory(element) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(editableHistoryStorageKey(element)) || '{}');
+    return {
+      undo: Array.isArray(saved.undo) ? saved.undo : [],
+      redo: Array.isArray(saved.redo) ? saved.redo : []
+    };
+  } catch {
+    return { undo: [], redo: [] };
+  }
+}
+
+function placeCaretAtEnd(element) {
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(element);
+  range.collapse(false);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+function saveAllEditableDrafts() {
+  editableDrafts.forEach(saveEditableDraft);
+}
+
+editableDrafts.forEach((element) => {
+  const sourceContent = normalizeEditableMarkup(element.innerHTML);
+  const savedContent = localStorage.getItem(editableStorageKey(element));
+  const history = restoreEditableHistory(element);
+
+  if (savedContent !== null) {
+    element.innerHTML = normalizeEditableMarkup(savedContent);
+    saveEditableDraft(element);
+  }
+
+  if (element.innerHTML !== sourceContent && !history.undo.includes(sourceContent)) {
+    history.undo.unshift(sourceContent);
+  }
+
+  const state = {
+    undo: history.undo.slice(-100),
+    redo: history.redo.slice(-100),
+    applyingHistory: false
+  };
+
+  function applyHistory(content) {
+    state.applyingHistory = true;
+    element.innerHTML = content;
+    saveEditableDraft(element);
+    saveEditableHistory(element, state);
+    placeCaretAtEnd(element);
+    state.applyingHistory = false;
+  }
+
+  element.addEventListener('beforeinput', (event) => {
+    if (state.applyingHistory || event.inputType.startsWith('history')) return;
+    const current = element.innerHTML;
+    if (state.undo.at(-1) !== current) state.undo.push(current);
+    state.undo = state.undo.slice(-100);
+    state.redo = [];
+    saveEditableHistory(element, state);
+  });
+
+  element.addEventListener('keydown', (event) => {
+    const modifier = event.metaKey || event.ctrlKey;
+    if (!modifier) return;
+
+    const wantsUndo = event.key.toLowerCase() === 'z' && !event.shiftKey;
+    const wantsRedo =
+      (event.key.toLowerCase() === 'z' && event.shiftKey) ||
+      (event.ctrlKey && event.key.toLowerCase() === 'y');
+
+    if (wantsUndo && state.undo.length) {
+      event.preventDefault();
+      const current = element.innerHTML;
+      const previous = state.undo.pop();
+      if (state.redo.at(-1) !== current) state.redo.push(current);
+      applyHistory(previous);
+    } else if (wantsRedo && state.redo.length) {
+      event.preventDefault();
+      const current = element.innerHTML;
+      const next = state.redo.pop();
+      if (state.undo.at(-1) !== current) state.undo.push(current);
+      applyHistory(next);
+    }
+  });
+
+  element.addEventListener('input', () => {
+    saveEditableDraft(element);
+    saveEditableHistory(element, state);
+  });
+  element.addEventListener('blur', () => {
+    saveEditableDraft(element);
+    saveEditableHistory(element, state);
+  });
+});
+
+window.addEventListener('pagehide', saveAllEditableDrafts);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') saveAllEditableDrafts();
+});
+</script>
 
 </body>
 </html>
