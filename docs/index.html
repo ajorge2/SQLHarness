@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
 <title>SQLHarness — Research system and execution harness</title>
-<link rel="stylesheet" href="analysis-plain.css?v=research-plain-66" />
+<link rel="stylesheet" href="analysis-plain.css?v=research-plain-93" />
 </head>
 <body>
 <main id="top">
 <section>
 
-<h1><span class="project-name">SQLHarness</span><span class="headline-detail">: Convert Business Instructions from Plain English to Executable SQL.</span></h1>
+<div class="hero-title" role="heading" aria-level="1"><span class="project-name">SQLHarness</span><span class="headline-tagline">: Talk to your business data.</span></div>
 <p class="byline">By <a href="https://andrewjorge.com/" rel="author">Andrew Jorge</a></p>
 <h2 data-editable-key="implementation-overview-heading">Overview</h2>
 <div class="hero-columns">
@@ -19,7 +19,8 @@
 <div class="query-example" aria-label="Example business instruction translated into SQL">
 <div class="query-box">
 <div class="query-prompt">
-<blockquote>“Which region has the most customers?”</blockquote>
+<blockquote data-editable-key="hero-query-prompt-v2">User Input:
+“Which region has the most customers?”</blockquote>
 <div class="query-arrow" aria-hidden="true">↓</div>
 </div>
 <pre><code>SELECT r.name, COUNT(*) AS customer_count
@@ -29,13 +30,10 @@ GROUP BY r.name
 ORDER BY customer_count DESC
 LIMIT 1;</code></pre>
 <div class="query-arrow query-arrow--output" aria-hidden="true">↓</div>
-<div class="query-output">Northeast · 3 customers</div>
+<div class="query-output">System Output:<br>Northeast (3 customers)</div>
 </div>
 <footer class="query-caption">Example of English-to-SQL translation</footer>
 </div>
-<ul class="technical-brief-link">
-<li><a href="share.html">Want more details? View technical writeup →</a></li>
-</ul>
 </aside>
 <div class="hero-copy-column">
 <p class="hero-copy" contenteditable="true" data-editable-key="project-objective-v2" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project objective">
@@ -50,13 +48,11 @@ the request calibrated around SQL primitives. This answers the question of “Wh
 this request without the specific business jargon?”. Afterwards, it translates the resulting normalized intent into
 real code through a governed boundary, minimizing the probabilistic effect of the model as much as possible.
 </p>
-<p class="hero-copy" contenteditable="true" data-editable-key="project-purpose" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project purpose">
-The purpose of this brief is to demonstrate my research process of whether SQLHarness’ proposed architecture can
-improve the accuracy–cost frontier over direct LLM generation.
+<p class="hero-copy" contenteditable="true" data-editable-key="project-purpose-v2" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project purpose">
+The purpose of this brief is to demonstrate the intuition behind SQLHarness’ proposed architecture.
 </p>
-<ul class="hero-actions">
-<li><a href="#trace">↓ View execution proof</a></li>
-<li><a href="#research">↓ View study finding</a></li>
+<ul class="technical-brief-link">
+<li><a href="share.html">Want more details? View technical writeup →</a></li>
 </ul>
 </div>
 </div>
@@ -80,8 +76,9 @@ improve the accuracy–cost frontier over direct LLM generation.
 </tbody>
 </table>
 </div>
-<div class="system-details">
-<article>
+<div class="system-details" data-system-carousel role="region" aria-roledescription="carousel" aria-label="System development notes">
+<div class="system-details-viewport">
+<article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="1 of 2: How the semantic model was developed">
 
 <h3 data-editable-key="semantic-model-development-heading-v4">How the semantic model was developed</h3>
 <ul class="training-story">
@@ -91,7 +88,7 @@ improve the accuracy–cost frontier over direct LLM generation.
 <li data-editable-key="semantic-model-validator-purpose-v10">A language model can draft the graph, while a separate validator rejects anything incomplete, disconnected, or tied to database fields that do not exist. That keeps the request's structure visible and checkable even if the model changes.</li>
 </ul>
 </article>
-<article>
+<article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="2 of 2: How SQL fragments are selected" hidden>
 
 <h3 data-editable-key="fragment-selection-heading-v10">How SQL fragments are selected</h3>
 <ul class="training-story">
@@ -101,6 +98,15 @@ improve the accuracy–cost frontier over direct LLM generation.
 </ul>
 </article>
 </div>
+<div class="system-details-controls" aria-label="Carousel controls">
+<span class="system-details-status" data-carousel-status aria-live="polite" aria-atomic="true">1 / 2</span>
+<div class="system-details-buttons">
+<button type="button" data-carousel-previous aria-label="Show previous page" disabled>←</button>
+<button type="button" data-carousel-next aria-label="Show next page">→</button>
+</div>
+</div>
+</div>
+<section class="worked-example-group" aria-label="Worked example">
 <figure class="intent-graph-diagram intent-normalization-example" aria-labelledby="intent-graph-diagram-title">
 <figcaption id="intent-graph-diagram-title" contenteditable="true" data-editable-key="intent-diagram-title" spellcheck="true">How SQLHarness understands one request</figcaption>
 <div class="example-intent-input">
@@ -119,31 +125,31 @@ improve the accuracy–cost frontier over direct LLM generation.
 <path d="M0 0 L8 4 L0 8" fill="none" stroke="currentColor" stroke-width="1"></path>
 </marker>
 </defs>
-<path class="example-intent-edge" d="M247 102 C220 175 165 268 110 370" marker-end="url(#example-intent-arrowhead)"></path>
+<path class="example-intent-edge" d="M110 370 C165 268 220 175 247 102" marker-end="url(#example-intent-arrowhead)"></path>
 <path class="example-intent-edge" d="M307 102 L386 156" marker-end="url(#example-intent-arrowhead)"></path>
 <path class="example-intent-edge" d="M386 218 L304 250" marker-end="url(#example-intent-arrowhead)"></path>
 <path class="example-intent-edge" d="M242 309 L128 370" marker-end="url(#example-intent-arrowhead)"></path>
 <path class="example-intent-edge" d="M302 309 L417 370" marker-end="url(#example-intent-arrowhead)"></path>
-<g class="example-intent-edge-label" transform="translate(171 229)"><rect x="-29" y="-10" width="58" height="20"></rect><text>returns</text></g>
+<g class="example-intent-edge-label" transform="translate(171 229)"><rect x="-40" y="-10" width="80" height="20"></rect><text>returned as</text></g>
 <g class="example-intent-edge-label" transform="translate(355 129)"><rect x="-46" y="-10" width="92" height="20"></rect><text>constrained by</text></g>
 <g class="example-intent-edge-label" transform="translate(346 235)"><rect x="-30" y="-10" width="60" height="20"></rect><text>measure</text></g>
 <g class="example-intent-edge-label" transform="translate(177 341)"><rect x="-32" y="-10" width="64" height="20"></rect><text>group by</text></g>
 <g class="example-intent-edge-label" transform="translate(367 341)"><rect x="-24" y="-10" width="48" height="20"></rect><text>theme</text></g>
 </svg>
-<div class="example-intent-node example-intent-node--output" contenteditable="true" data-editable-key="intent-example-output-v5" spellcheck="true">
-<span>output format</span><strong>answer</strong><small>Return the requested result</small>
+<div class="example-intent-node example-intent-node--output" contenteditable="true" data-editable-key="intent-example-output-v7" spellcheck="true">
+<span>output format</span><strong>name</strong>
 </div>
-<div class="example-intent-node example-intent-node--argmax" contenteditable="true" data-editable-key="intent-example-argmax-v5" spellcheck="true">
-<span>operation</span><strong>most</strong><small>Choose the largest group</small>
+<div class="example-intent-node example-intent-node--argmax" contenteditable="true" data-editable-key="intent-example-argmax-v6" spellcheck="true">
+<span>operation</span><strong>most</strong>
 </div>
-<div class="example-intent-node example-intent-node--count" contenteditable="true" data-editable-key="intent-example-count-v5" spellcheck="true">
-<span>operation</span><strong>count</strong><small>Count the customers</small>
+<div class="example-intent-node example-intent-node--count" contenteditable="true" data-editable-key="intent-example-count-v6" spellcheck="true">
+<span>operation</span><strong>count</strong>
 </div>
-<div class="example-intent-node example-intent-node--region" contenteditable="true" data-editable-key="intent-example-region-v5" spellcheck="true">
-<span>data</span><strong>region</strong><small>regions.name</small>
+<div class="example-intent-node example-intent-node--region" contenteditable="true" data-editable-key="intent-example-region-v6" spellcheck="true">
+<span>data</span><strong>region</strong>
 </div>
-<div class="example-intent-node example-intent-node--customers" contenteditable="true" data-editable-key="intent-example-customers-v5" spellcheck="true">
-<span>data</span><strong>customers</strong><small>customers</small>
+<div class="example-intent-node example-intent-node--customers" contenteditable="true" data-editable-key="intent-example-customers-v6" spellcheck="true">
+<span>data</span><strong>customers</strong>
 </div>
 </div>
 </figure>
@@ -166,7 +172,7 @@ improve the accuracy–cost frontier over direct LLM generation.
 <strong contenteditable="true" data-editable-key="code-generation-example-retrieval-heading-v2" spellcheck="true">Rank compatible SQL fragments</strong>
 <div class="code-generation-fragment-map" aria-label="Selected SQL fragments grouped by intent graph node">
 <div class="code-generation-fragment-row">
-<div class="code-generation-fragment-node" contenteditable="true" data-editable-key="code-generation-example-node-answer-v1" spellcheck="true"><span>output format</span><strong>answer</strong></div>
+<div class="code-generation-fragment-node" contenteditable="true" data-editable-key="code-generation-example-node-name-v1" spellcheck="true"><span>output format</span><strong>name</strong></div>
 <span class="code-generation-fragment-link" aria-hidden="true">→</span>
 <div class="code-generation-fragment-matches">
 <code contenteditable="true" data-editable-key="code-generation-example-fragment-select-v1" spellcheck="false">SELECT regions.name</code>
@@ -219,15 +225,15 @@ improve the accuracy–cost frontier over direct LLM generation.
 <path class="intent-diagram-arrow-head" d="M268 21 L272 26 L276 21"></path>
 </svg>
 
-<div class="code-generation-result" contenteditable="true" data-editable-key="code-generation-example-result-v2" spellcheck="true">
-<strong>Attempt a run and return the result</strong>
-<span>Northeast · 3 customers</span>
+<div class="code-generation-result" contenteditable="true" data-editable-key="code-generation-example-result-v4" spellcheck="true">
+<span class="code-generation-result-label">Returned result</span>
+<code>{"columns":["name","customer_count"],"rows":[["Northeast",3]]}</code>
 </div>
 </figure>
+</section>
 <section class="workflow-pattern-group" id="general-pattern" aria-labelledby="general-pattern-title">
 <div class="workflow-pattern-heading">
-<span>General pattern</span>
-<h3 id="general-pattern-title" data-editable-key="workflow-pattern-heading-v1">How any request follows the same two stages</h3>
+<h3 id="general-pattern-title" data-editable-key="workflow-pattern-heading-v2">General pattern: how any request follows the same two stages</h3>
 </div>
 <figure class="intent-graph-diagram intent-graph-diagram--general general-intent-workflow" aria-labelledby="general-intent-graph-diagram-title">
 <figcaption id="general-intent-graph-diagram-title" contenteditable="true" data-editable-key="general-intent-diagram-title-v4" spellcheck="true">How every request becomes an intent graph</figcaption>
@@ -304,7 +310,7 @@ improve the accuracy–cost frontier over direct LLM generation.
 <span contenteditable="true" data-editable-key="general-intent-connect-pattern-compare-v2" spellcheck="true"><b>condition</b> → compare → <b>data / operation</b></span>
 <span contenteditable="true" data-editable-key="general-intent-connect-pattern-filter-v2" spellcheck="true"><b>data / operation / output format</b> → filter → <b>condition</b></span>
 <span contenteditable="true" data-editable-key="general-intent-connect-pattern-order-by-v2" spellcheck="true"><b>operation / output format</b> → order by → <b>data / operation</b></span>
-<span contenteditable="true" data-editable-key="general-intent-connect-pattern-returns-v2" spellcheck="true"><b>output format</b> → returns → <b>data / operation</b></span>
+<span contenteditable="true" data-editable-key="general-intent-connect-pattern-returned-as-v1" spellcheck="true"><b>data / operation</b> → returned as → <b>output format</b></span>
 <span contenteditable="true" data-editable-key="general-intent-connect-pattern-constrained-by-v2" spellcheck="true"><b>output format</b> → constrained by → <b>condition</b></span>
 <span contenteditable="true" data-editable-key="general-intent-connect-pattern-optional-v2" spellcheck="true"><b>operation / output format</b> → optional → <b>data / operation</b></span>
 <span contenteditable="true" data-editable-key="general-intent-connect-pattern-tie-breaker-v2" spellcheck="true"><b>operation</b> → tie breaker → <b>data / operation</b></span>
@@ -386,6 +392,7 @@ improve the accuracy–cost frontier over direct LLM generation.
 <div class="fragment-workflow-step">
 <strong contenteditable="true" data-editable-key="fragment-workflow-authority-heading-v1" spellcheck="true">Check before running</strong>
 <p contenteditable="true" data-editable-key="fragment-workflow-authority-copy-v3" spellcheck="true">Parse the SQL, block writes and invalid table or field names, then attach a deadline and row cap to approved reads.</p>
+<a class="fragment-workflow-detail-link" href="safety-model.md">Execution rules and limits</a>
 </div>
 
 <svg class="fragment-workflow-arrow" viewBox="0 0 545 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -403,13 +410,11 @@ improve the accuracy–cost frontier over direct LLM generation.
 
 <div class="closing-columns">
 <section id="trace">
-<h2 data-editable-key="execution-proof-heading-v12">Execution proof</h2>
-<p data-editable-key="execution-proof-intro-v12">The guarded executor handled two opposite cases:</p>
+<h2 data-editable-key="execution-proof-heading-v13">Example of two opposite cases</h2>
 <table><thead><tr><th data-editable-key="execution-proof-request-label-v12">Request</th><th data-editable-key="execution-proof-decision-label-v12">Decision</th><th data-editable-key="execution-proof-outcome-label-v12">Outcome</th></tr></thead><tbody>
 <tr><td data-editable-key="execution-proof-allowed-request-v12">Which region has the most customers?</td><td data-editable-key="execution-proof-allowed-decision-v12">Allowed read</td><td data-editable-key="execution-proof-allowed-outcome-v12">Northeast · 3 customers · 0.21 ms</td></tr>
 <tr><td data-editable-key="execution-proof-blocked-request-v12">Clean up purchases below $10</td><td data-editable-key="execution-proof-blocked-decision-v12">Blocked write</td><td data-editable-key="execution-proof-blocked-outcome-v12">Database untouched</td></tr>
 </tbody></table>
-<p data-editable-key="execution-proof-link-v12"><a href="safety-model.md">See the execution rules and their limits.</a></p>
 </section>
 
 <section id="research">
@@ -603,6 +608,87 @@ if (!textEditingEnabled) {
       element.removeAttribute('aria-label');
     }
   });
+}
+
+const systemCarousel = document.querySelector('[data-system-carousel]');
+
+if (systemCarousel) {
+  const slides = [...systemCarousel.querySelectorAll('[data-carousel-slide]')];
+  const previousButton = systemCarousel.querySelector('[data-carousel-previous]');
+  const nextButton = systemCarousel.querySelector('[data-carousel-next]');
+  const status = systemCarousel.querySelector('[data-carousel-status]');
+  let currentSlide = 0;
+  let carouselIsAnimating = false;
+
+  function updateSystemCarouselControls() {
+    status.textContent = `${currentSlide + 1} / ${slides.length}`;
+    previousButton.disabled = carouselIsAnimating || currentSlide === 0;
+    nextButton.disabled = carouselIsAnimating || currentSlide === slides.length - 1;
+  }
+
+  async function showSystemCarouselSlide(index, { animate = true } = {}) {
+    const nextSlide = Math.max(0, Math.min(index, slides.length - 1));
+    if (nextSlide === currentSlide || carouselIsAnimating) return;
+
+    const previousSlide = currentSlide;
+    const direction = nextSlide > previousSlide ? 1 : -1;
+    const outgoing = slides[previousSlide];
+    const incoming = slides[nextSlide];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    currentSlide = nextSlide;
+    incoming.hidden = false;
+    incoming.setAttribute('aria-hidden', 'false');
+    outgoing.setAttribute('aria-hidden', 'true');
+    carouselIsAnimating = true;
+    updateSystemCarouselControls();
+
+    if (!animate || reduceMotion || typeof incoming.animate !== 'function') {
+      outgoing.hidden = true;
+      carouselIsAnimating = false;
+      updateSystemCarouselControls();
+      return;
+    }
+
+    const options = {
+      duration: 280,
+      easing: 'cubic-bezier(.22,.61,.36,1)',
+      fill: 'both',
+    };
+    const outgoingAnimation = outgoing.animate(
+      [
+        { opacity: 1, transform: 'translateX(0)' },
+        { opacity: 0, transform: `translateX(${-direction * 42}px)` },
+      ],
+      options,
+    );
+    const incomingAnimation = incoming.animate(
+      [
+        { opacity: 0, transform: `translateX(${direction * 42}px)` },
+        { opacity: 1, transform: 'translateX(0)' },
+      ],
+      options,
+    );
+
+    try {
+      await Promise.all([outgoingAnimation.finished, incomingAnimation.finished]);
+    } finally {
+      outgoingAnimation.cancel();
+      incomingAnimation.cancel();
+      outgoing.hidden = true;
+      carouselIsAnimating = false;
+      updateSystemCarouselControls();
+    }
+  }
+
+  previousButton.addEventListener('click', () => showSystemCarouselSlide(currentSlide - 1));
+  nextButton.addEventListener('click', () => showSystemCarouselSlide(currentSlide + 1));
+  slides.forEach((slide, slideIndex) => {
+    const active = slideIndex === currentSlide;
+    slide.hidden = !active;
+    slide.setAttribute('aria-hidden', String(!active));
+  });
+  updateSystemCarouselControls();
 }
 
 const intentDiagram = document.querySelector('.intent-graph-diagram[data-draggable-diagram="true"]');
