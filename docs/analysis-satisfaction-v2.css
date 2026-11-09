@@ -1,0 +1,919 @@
+/* The reader preview pairs each example with its explanation at every width. */
+body.satisfaction-preview .workflow-comparison-heading {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  margin: 136px 0 20px;
+}
+
+body.satisfaction-preview .workflow-stage-list {
+  --workflow-panel-inset: 18px;
+  --workflow-column-gap: calc(64px + 2 * var(--workflow-panel-inset));
+  --workflow-column-bg: #d6c5bd;
+  position: relative;
+  isolation: isolate;
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 44px;
+  width: calc(100% + 2 * var(--workflow-panel-inset));
+  min-width: 0;
+  margin: 0 calc(-1 * var(--workflow-panel-inset));
+  padding-block: 18px;
+  padding-inline: var(--workflow-panel-inset);
+}
+
+/* Keep each column together while leaving the handoff arrow in a clear lane. */
+body.satisfaction-preview .workflow-stage-list::before,
+body.satisfaction-preview .workflow-stage-list::after {
+  position: absolute;
+  inset-block: 0;
+  z-index: -1;
+  width: calc((100% - 64px) / 2);
+  border-radius: 0;
+  background: var(--workflow-column-bg);
+  pointer-events: none;
+  content: "";
+}
+
+body.satisfaction-preview .workflow-stage-list::before {
+  left: 0;
+}
+
+body.satisfaction-preview .workflow-stage-list::after {
+  right: 0;
+}
+
+body.satisfaction-preview .workflow-column-headings {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--workflow-column-gap);
+  padding: 0 0 8px;
+  font-size: 17px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+body.satisfaction-preview .workflow-stage-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 20px var(--workflow-column-gap);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  scroll-margin-top: 28px;
+}
+
+body.satisfaction-preview .workflow-stage-title {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0 18px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+body.satisfaction-preview .stage-focus-toggle {
+  /* Keyboard equivalent of the whole example's pointer interaction. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.satisfaction-preview .workflow-stage-example,
+body.satisfaction-preview .workflow-stage-explanation {
+  position: relative;
+  grid-column: auto;
+  grid-row: auto;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  transform: none;
+}
+
+body.satisfaction-preview .workflow-stage-example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 581px;
+  padding: 18px;
+}
+
+body.satisfaction-preview .workflow-stage-explanation {
+  display: block;
+  align-self: start;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 18px;
+}
+
+body.satisfaction-preview [data-stage="intent"] .workflow-stage-explanation {
+  padding-top: 0;
+}
+
+body.satisfaction-preview .workflow-cell-label {
+  display: none;
+}
+
+body.satisfaction-preview .workflow-stage-continuation {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--workflow-column-gap);
+  width: 100%;
+  margin: 0;
+}
+
+body.satisfaction-preview .workflow-stage-arrow {
+  display: block;
+  width: 100%;
+  height: 36px;
+  color: #4f535c;
+}
+
+body.satisfaction-preview .workflow-stage-example > :is(.example-intent-input, .code-generation-step--retrieval, .code-generation-step--query, .code-generation-authority-band) {
+  width: 100%;
+  margin: 0;
+  background: var(--intent-graph-bg);
+}
+
+body.satisfaction-preview .workflow-stage-example .example-intent-input {
+  min-height: 108px;
+  padding: 18px;
+}
+
+body.satisfaction-preview .workflow-stage-example .intent-diagram-node--request {
+  width: min(246px, 100%);
+  color: #e9eeff;
+  background: #170071;
+}
+
+body.satisfaction-preview .workflow-stage-example .example-intent-graph {
+  width: 100%;
+  height: 460px;
+  margin: 0;
+  background: transparent;
+}
+
+body.satisfaction-preview .workflow-stage-example .example-intent-graph::before {
+  inset: -18px;
+  background: var(--intent-graph-bg);
+}
+
+body.satisfaction-preview .workflow-stage-example .example-intent-node {
+  color: #e9eeff;
+  background: #7a563f;
+}
+
+body.satisfaction-preview .workflow-stage-example .example-intent-node :is(span, strong, small) {
+  color: inherit;
+}
+
+body.satisfaction-preview .workflow-stage-example .example-intent-node--output {
+  color: #fff;
+  background: var(--preview-pink);
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-step--retrieval {
+  padding: 16px 18px;
+  border-radius: 0;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-step--query {
+  padding: 18px;
+  border-radius: 0;
+}
+
+body.satisfaction-preview .workflow-stage-example :is(.code-generation-step--retrieval, .code-generation-step--query) code,
+body.satisfaction-preview .workflow-stage-example .code-generation-fragment-rank {
+  color: var(--ink);
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-fragment-relation-name {
+  color: #573886;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-fragment-relation-name::before {
+  border-top-color: #4f535c;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-fragment-relation-name::after {
+  border-left-color: #4f535c;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-fragment-candidate--selected :is(code, .code-generation-fragment-rank) {
+  color: #fff;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-step--query .code-generation-assembly-added {
+  color: #823300;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-authority-band {
+  min-height: 108px;
+  padding: 18px;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-step--authority {
+  width: min(246px, 100%);
+  margin: 0;
+  border: 2px solid #7a563f;
+  color: #633e29;
+  background: transparent;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-step--authority strong {
+  color: inherit;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-result {
+  width: min(246px, 100%);
+  margin: 0;
+  transform: none;
+  color: #fff;
+  background: var(--preview-pink);
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-result * {
+  color: inherit;
+}
+
+body.satisfaction-preview .workflow-stage-example > :is(.example-intent-entry, .code-generation-transition, .code-generation-arrow) {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  transform: none;
+  color: #4f535c;
+}
+
+body.satisfaction-preview .workflow-stage-example .code-generation-assembly-query,
+body.satisfaction-preview .workflow-stage-example .code-generation-assembly-query * {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+body.satisfaction-preview .workflow-stage-explanation :is(.general-workflow-state, .general-workflow-link-card, .general-workflow-stage-card, .fragment-workflow-step) {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 0;
+  corner-shape: initial;
+  color: #e9eeff;
+  background: #7a563f;
+  text-align: left;
+}
+
+body.satisfaction-preview .workflow-stage-explanation :is(.general-workflow-state, .general-workflow-link-card, .general-workflow-stage-card, .fragment-workflow-step) :is(strong, p, b, span, li, aside, a) {
+  color: inherit;
+}
+
+body.satisfaction-preview .workflow-stage-explanation :is(.general-workflow-state, .general-workflow-link-card, .general-workflow-stage-card, .fragment-workflow-step) > strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+body.satisfaction-preview .workflow-stage-explanation :is(p, li) {
+  max-width: none;
+  margin: 7px 0 0;
+  padding-top: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-stage-card li::before {
+  color: #fff;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-state-arrow {
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  color: #4f535c;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-node-return {
+  display: none;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-inputs {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-inputs div {
+  padding: 12px 8px;
+  border: 0;
+  border-radius: 14px;
+  corner-shape: squircle;
+  color: #e9eeff;
+  background: #170071;
+}
+
+body.satisfaction-preview .workflow-stage-explanation :is(.workflow-input-label, .workflow-stage-label) {
+  color: var(--preview-caption-pink);
+  font-size: 12px;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .fragment-workflow-result {
+  width: min(280px, 100%);
+  min-height: 72px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 28.5px;
+  corner-shape: squircle;
+  color: #fff;
+  background: var(--preview-pink);
+  text-align: center;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .fragment-workflow-result strong {
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .workflow-detail {
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid #8f7f80;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .workflow-detail > summary {
+  width: fit-content;
+  color: var(--preview-link);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .workflow-detail[open] > summary {
+  margin-bottom: 12px;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-connections {
+  color: inherit;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .general-workflow-connections span {
+  border-top-color: rgba(233, 238, 255, .28);
+}
+
+body.satisfaction-preview .workflow-stage-explanation .workflow-detail .general-workflow-connections,
+body.satisfaction-preview .workflow-stage-explanation .workflow-detail .general-workflow-connections :is(b, span) {
+  color: var(--ink);
+}
+
+body.satisfaction-preview .workflow-stage-explanation .workflow-detail .general-workflow-connections span {
+  border-top-color: #8f7f80;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .workflow-validation-note {
+  margin: 12px 0 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+body.satisfaction-preview .ranking-why {
+  margin: 14px 0 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+body.satisfaction-preview .study-scope {
+  max-width: 600px;
+  margin: 18px 0 0 15px;
+  padding: 12px 0 0;
+  border-top: 1px solid #8f7f80;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* Positional pairing carries the comparison; focus is optional and reversible. */
+body.satisfaction-preview .workflow-stage-list [data-workflow-match],
+body.satisfaction-preview .workflow-stage-list .workflow-match--preview {
+  opacity: 1 !important;
+  filter: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.satisfaction-preview .workflow-stage-list .workflow-stage-row.is-focused .workflow-stage-explanation {
+  outline: 2px solid var(--preview-link);
+  outline-offset: 7px;
+}
+
+body.satisfaction-preview .workflow-stage-list:not([data-focused-stage]) .workflow-stage-row.is-previewed .workflow-stage-explanation {
+  outline: 1px solid var(--preview-link);
+  outline-offset: 7px;
+}
+
+body.satisfaction-preview .workflow-stage-list[data-focused-stage] .workflow-stage-row:not(.is-focused) {
+  opacity: 1;
+  filter: none;
+}
+
+body.satisfaction-preview .workflow-stage-row:focus-within .workflow-stage-title {
+  color: var(--preview-link);
+}
+
+body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visible) .workflow-stage-example {
+  outline: 2px solid var(--preview-link);
+  outline-offset: 4px;
+}
+
+@media (max-width: 1100px) and (min-width: 761px) {
+  body.satisfaction-preview .workflow-stage-example .code-generation-fragment-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  body.satisfaction-preview .workflow-comparison-heading {
+    grid-column: 1;
+    grid-row: auto;
+    margin: 100px 0 8px;
+  }
+  body.satisfaction-preview .workflow-stage-list {
+    --workflow-panel-inset: 0px;
+    grid-column: 1;
+    max-width: 620px;
+    margin: 0 auto;
+    gap: 52px;
+    padding-block: 0;
+  }
+  body.satisfaction-preview .workflow-stage-list::before,
+  body.satisfaction-preview .workflow-stage-list::after {
+    display: none;
+  }
+  body.satisfaction-preview .workflow-column-headings {
+    display: none;
+  }
+  body.satisfaction-preview .workflow-stage-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  body.satisfaction-preview .workflow-stage-title {
+    grid-column: 1;
+    padding: 0;
+  }
+  body.satisfaction-preview .workflow-stage-example {
+    max-width: none;
+  }
+  body.satisfaction-preview .workflow-stage-explanation {
+    padding: 0 18px;
+  }
+  body.satisfaction-preview .workflow-cell-label {
+    position: relative;
+    z-index: 3;
+    display: block;
+    align-self: flex-start;
+    color: #433d45;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  body.satisfaction-preview .workflow-stage-example > .workflow-cell-label {
+    margin: 0 0 24px;
+  }
+  body.satisfaction-preview .workflow-stage-explanation > .workflow-cell-label {
+    margin: 0 0 10px;
+  }
+  body.satisfaction-preview .workflow-stage-continuation {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body.satisfaction-preview .workflow-stage-arrow + .workflow-stage-arrow {
+    display: none;
+  }
+  body.satisfaction-preview .workflow-stage-explanation .general-workflow-stage-card ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  body.satisfaction-preview .workflow-stage-list {
+    gap: 42px;
+  }
+  body.satisfaction-preview .workflow-stage-example {
+    padding: 14px;
+  }
+  body.satisfaction-preview .workflow-stage-example .example-intent-graph {
+    height: 520px;
+  }
+  body.satisfaction-preview .workflow-stage-example .example-intent-graph::before {
+    inset: -14px;
+  }
+  body.satisfaction-preview .workflow-stage-explanation {
+    padding: 0 14px;
+  }
+  body.satisfaction-preview .workflow-stage-example .code-generation-fragment-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  body.satisfaction-preview .workflow-stage-example .code-generation-fragment-row + .code-generation-fragment-row {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(32, 33, 36, .22);
+  }
+  body.satisfaction-preview .workflow-stage-example .code-generation-fragment-row + .code-generation-fragment-row > :is(.code-generation-fragment-relation, .code-generation-fragment-matches) {
+    padding-top: 0;
+    border-top: 0;
+  }
+  body.satisfaction-preview .workflow-stage-example .code-generation-step--query {
+    padding: 14px;
+  }
+  body.satisfaction-preview .workflow-stage-example .code-generation-step--query code {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  body.satisfaction-preview .study-scope {
+    margin-left: 0;
+  }
+}
+
+@media (pointer: coarse) {
+  body.satisfaction-preview .workflow-detail > summary,
+  body.satisfaction-preview .clear-workflow-selection {
+    min-height: 44px;
+  }
+}
+
+/* Keep the fixture available beside the question without interrupting its flow. */
+body.satisfaction-preview .workflow-stage-example #example-request {
+  flex-direction: column;
+  gap: 14px;
+}
+
+body.satisfaction-preview .example-data-context {
+  width: 100%;
+  min-width: 0;
+  color: var(--ink);
+  text-align: left;
+}
+
+body.satisfaction-preview .example-data-context,
+body.satisfaction-preview .example-data-context * {
+  user-select: text;
+  -webkit-user-select: text;
+  caret-color: auto;
+  cursor: text;
+}
+
+body.satisfaction-preview .example-data-context p {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+body.satisfaction-preview .example-data-details {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .example-data-details > summary {
+  width: fit-content;
+  color: var(--preview-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+body.satisfaction-preview .example-data-details[open] > summary {
+  margin-bottom: 12px;
+}
+
+body.satisfaction-preview .example-data-tables {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-width: 0;
+}
+
+body.satisfaction-preview .example-data-tables table {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  border-color: #8f7f80;
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .example-data-tables caption {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+body.satisfaction-preview .example-data-tables :is(th, td) {
+  padding: 5px 7px;
+  border-color: #8f7f80;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-family: inherit;
+  line-height: 1.5;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+body.satisfaction-preview .example-data-context .example-data-key {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* The completed graph is the output of the entire four-step construction. */
+body.satisfaction-preview .workflow-stage-row[data-stage="intent"] {
+  position: relative;
+  column-gap: var(--workflow-column-gap);
+}
+
+body.satisfaction-preview .workflow-stage-row[data-stage="intent"] > .workflow-stage-explanation {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+body.satisfaction-preview .workflow-stage-row[data-stage="intent"] > .workflow-stage-example {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+}
+
+body.satisfaction-preview .intent-output-connector {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+body.satisfaction-preview .intent-output-connector path {
+  fill: none;
+  stroke: #4f535c;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+body.satisfaction-preview .intent-output-connector text {
+  fill: var(--ink);
+  font: 400 12px/1.3 "Maitree", Georgia, serif;
+  text-anchor: middle;
+}
+
+body.satisfaction-preview .intent-graph-output-label {
+  position: relative;
+  z-index: 3;
+  align-self: flex-start;
+  margin: 0 0 24px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .intent-graph-reference {
+  grid-column: 2;
+  grid-row: 3;
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  transform: none;
+}
+
+body.satisfaction-preview .intent-graph-reference .workflow-validation-note {
+  max-width: none;
+  margin: 12px 0 0;
+  padding: 0;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+body.satisfaction-preview .intent-graph-reference .workflow-detail {
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid #8f7f80;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .intent-graph-reference .workflow-detail > summary {
+  width: fit-content;
+  color: var(--preview-link);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+body.satisfaction-preview .intent-graph-reference .workflow-detail[open] > summary {
+  margin-bottom: 12px;
+}
+
+body.satisfaction-preview .intent-graph-reference .general-workflow-connections,
+body.satisfaction-preview .intent-graph-reference .general-workflow-connections :is(b, span) {
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .intent-graph-reference .general-workflow-connections span {
+  border-top-color: #8f7f80;
+}
+
+body.satisfaction-preview .intent-graph-reference .general-workflow-stage-card li {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .intent-graph-reference .workflow-detail > ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: var(--ink);
+}
+
+body.satisfaction-preview .intent-graph-reference .workflow-detail > ul > li {
+  margin: 5px 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  body.satisfaction-preview .workflow-stage-row[data-stage="intent"] {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+  }
+  body.satisfaction-preview .workflow-stage-row[data-stage="intent"] > :is(.workflow-stage-explanation, .workflow-stage-example, .intent-graph-reference) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  body.satisfaction-preview .intent-output-connector {
+    position: static;
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+    height: 36px;
+  }
+  body.satisfaction-preview .intent-graph-reference {
+    padding-inline: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  body.satisfaction-preview .example-data-tables {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body.satisfaction-preview .intent-graph-reference {
+    padding-inline: 14px;
+  }
+}
+
+@media (pointer: coarse) {
+  body.satisfaction-preview .example-data-details > summary,
+  body.satisfaction-preview .intent-graph-reference .workflow-detail > summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+/* One connection follows a visible path from meaning to a ranked SQL piece. */
+body.satisfaction-preview .retrieval-walkthrough {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .retrieval-walkthrough > .fragment-workflow-step {
+  margin: 0;
+}
+
+body.satisfaction-preview .retrieval-lesson-arrow {
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  color: #4f535c;
+}
+
+body.satisfaction-preview .retrieval-lesson-arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+body.satisfaction-preview .retrieval-connection-example {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 8px 0;
+  color: #e9eeff;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+body.satisfaction-preview .retrieval-connection-example code {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+body.satisfaction-preview .retrieval-template-options {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  color: #e9eeff;
+  background: rgba(255, 255, 255, .06);
+}
+
+body.satisfaction-preview .retrieval-template-options code {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+body.satisfaction-preview .workflow-stage-explanation .retrieval-binding {
+  display: block;
+  max-width: 100%;
+  margin: 10px 0 0;
+  padding: 0;
+  border: 0;
+  color: #e9eeff;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

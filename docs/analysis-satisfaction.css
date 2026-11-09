@@ -1,0 +1,302 @@
+/* Preview-only repairs layered over analysis-plain.css and the locked palette. */
+body.satisfaction-preview {
+  --muted: #433d45;
+  --preview-link: #173879;
+  --preview-pink: #d81570;
+  --preview-caption-pink: #82063e;
+}
+
+body.satisfaction-preview a {
+  color: var(--preview-link);
+}
+
+body.satisfaction-preview .technical-brief-link a {
+  color: var(--preview-link);
+}
+
+body.satisfaction-preview .reading-links {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px 22px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 14px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .byline { font-size: 12.5px; }
+body.satisfaction-preview .hero-actions a { font-weight: 400; }
+body.satisfaction-preview .query-caption { font-size: 12px; }
+body.satisfaction-preview .system-details-status { color: var(--muted); font-size: 11.5px; }
+body.satisfaction-preview .note { color: var(--muted); }
+body.satisfaction-preview th { font-size: 12.5px; }
+
+/* White text keeps the same pink family with sufficient contrast at small sizes. */
+body.satisfaction-preview .intent-normalization-example .example-intent-node--output,
+body.satisfaction-preview .code-generation-example .code-generation-result,
+body.satisfaction-preview .code-generation-fragment-candidate--selected,
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-result, .fragment-workflow-result) {
+  background-color: var(--preview-pink);
+  color: #fff;
+}
+
+body.satisfaction-preview .intent-normalization-example .example-intent-node--output *,
+body.satisfaction-preview .code-generation-example .code-generation-result *,
+body.satisfaction-preview .code-generation-example .code-generation-step--retrieval .code-generation-fragment-candidate--selected :is(code, .code-generation-fragment-rank),
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-result, .fragment-workflow-result) * {
+  color: #fff;
+}
+
+body.satisfaction-preview :is(.example-intent-graph-label, .workflow-input-label),
+body.satisfaction-preview :is(.code-generation-stage-label, .workflow-stage-label) > span {
+  color: var(--preview-caption-pink);
+  font-size: 12.5px;
+  line-height: 1.3;
+}
+
+body.satisfaction-preview :is(.example-intent-input, .code-generation-input) > span,
+body.satisfaction-preview .code-generation-step > span {
+  font-size: 12.5px;
+  line-height: 1.3;
+}
+
+body.satisfaction-preview .code-generation-example .code-generation-step code .code-generation-assembly-added {
+  color: #823300;
+}
+
+body.satisfaction-preview .code-generation-example .code-generation-authority-band .code-generation-step--authority {
+  color: #633e29;
+  border-color: #7a563f;
+}
+
+body.satisfaction-preview .code-generation-fragment-rank { font-size: 11.5px; }
+body.satisfaction-preview .code-generation-result-label { font-size: 12.5px; }
+
+body.satisfaction-preview .code-generation-example .ranking-caption {
+  margin: 0 0 12px;
+  padding: 0;
+  color: #433d45;
+  font-size: 13px;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+/* Make the algorithm readable without changing the example graph's scale. */
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-state, .general-workflow-branch, .general-workflow-link-card, .general-workflow-step, .fragment-workflow-step) p,
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-stage-card, .general-workflow-step) li {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-pattern-group .general-workflow-stage-card li::before {
+  color: #fff;
+}
+
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-state, .general-workflow-branch, .general-workflow-link-card, .general-workflow-stage-card, .fragment-workflow-step) > strong,
+body.satisfaction-preview .workflow-pattern-group .general-workflow-step-copy > strong {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-inputs, .fragment-workflow-inputs),
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-result, .fragment-workflow-result),
+body.satisfaction-preview .workflow-pattern-group :is(.general-workflow-result, .fragment-workflow-result) strong,
+body.satisfaction-preview .workflow-pattern-group :is(.fragment-workflow-catalog-link, .fragment-workflow-detail-link) {
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-pattern-group :is(.fragment-workflow-catalog-link, .fragment-workflow-detail-link) {
+  color: #fff;
+  text-decoration: underline;
+}
+
+body.satisfaction-preview .workflow-pattern-group .relation-reference {
+  margin-top: 7px;
+  color: inherit;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-pattern-group .relation-reference summary {
+  width: fit-content;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+body.satisfaction-preview .workflow-pattern-group .general-workflow-connections {
+  color: inherit;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .workflow-explanation {
+  max-width: 600px;
+  margin: 10px auto 0;
+  padding: 0;
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Keep every stage legible during both transient and pinned comparisons. */
+body.satisfaction-preview .system-columns :is([data-workflow-hover="request"], [data-workflow-hover="retrieval"], [data-workflow-hover="assembly"], [data-workflow-hover="authority"]) {
+  background-color: var(--intent-graph-bg);
+}
+
+body.satisfaction-preview .system-columns .example-intent-graph::before {
+  background-color: var(--intent-graph-bg);
+}
+
+body.satisfaction-preview .system-columns .example-intent-graph .example-intent-edge-label rect {
+  fill: var(--intent-graph-bg);
+}
+
+body.satisfaction-preview .system-columns [data-workflow-match] {
+  opacity: 1 !important;
+  filter: none !important;
+  outline-color: var(--preview-link) !important;
+  box-shadow: none !important;
+  scroll-margin-top: 24px;
+}
+
+body.satisfaction-preview .system-columns .workflow-match--preview {
+  position: relative;
+  z-index: 10;
+  outline: 2px solid var(--preview-link);
+  outline-offset: 4px;
+  box-shadow: none;
+}
+
+body.satisfaction-preview .stage-actions {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  width: 100%;
+  margin: 0 0 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .stage-compare {
+  appearance: none;
+  padding: 3px 5px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--preview-link);
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+body.satisfaction-preview .stage-compare[aria-pressed="true"] {
+  outline: 2px solid var(--preview-link);
+  outline-offset: 2px;
+}
+
+body.satisfaction-preview .counterpart-link {
+  display: none;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+body.satisfaction-preview .clear-workflow-selection {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  padding: 7px 10px;
+  border: 1px solid #76696d;
+  border-radius: 3px;
+  background: var(--carousel-button);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12.5px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+body.satisfaction-preview .clear-workflow-selection[hidden] { display: none; }
+
+body.satisfaction-preview :is(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--preview-link);
+  outline-offset: 3px;
+}
+
+body.satisfaction-preview .workflow-pattern-group :is(a, summary):focus-visible {
+  outline-color: #fff;
+}
+
+body.satisfaction-preview .code-generation-example :is(code, code *),
+body.satisfaction-preview .query-box--sql :is(pre, code) {
+  user-select: text;
+  -webkit-user-select: text;
+  caret-color: auto;
+  cursor: text;
+}
+
+body.satisfaction-preview .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1360px) {
+  body.satisfaction-preview .counterpart-link { display: inline; }
+}
+
+@media (pointer: coarse) {
+  body.satisfaction-preview .stage-compare {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 8px 5px;
+  }
+}
+
+@media (pointer: coarse) and (max-width: 1360px) {
+  body.satisfaction-preview .counterpart-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 8px 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.satisfaction-preview *,
+  body.satisfaction-preview *::before,
+  body.satisfaction-preview *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
