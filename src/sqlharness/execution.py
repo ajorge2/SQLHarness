@@ -24,6 +24,8 @@ def execute_sqlite_readonly(
 
     try:
         with sqlite3.connect(uri, uri=True, timeout=timeout_seconds) as connection:
+            # Bound allocations before SQLite evaluates a large scalar/blob.
+            connection.setlimit(sqlite3.SQLITE_LIMIT_LENGTH, 1_000_000)
             connection.execute("PRAGMA query_only = ON")
 
             def interrupt_if_expired() -> int:

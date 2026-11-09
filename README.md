@@ -1,5 +1,7 @@
 # SQLHarness
 
+**[MCP quick start and privacy contract](docs/mcp.md)** — use your existing AI chat with synthetic sample data or an explicitly selected local database. No model credentials or server-side model calls.
+
 SQLHarness tests whether an explicit semantic pipeline can move the accuracy-cost frontier for natural-language-to-SQL generation.
 
 > **Project status:** complete reproducible development study and governed execution system. On a frozen 20-train / 5-held-out BIRD Mini-Dev slice, direct GPT-6 Astra scored 4/5 while SQLHarness scored 3/5 with either generic dense retrieval or its learned ranker. The structured path exposed exactly where it lost—a parser timeout and a semantic result mismatch—but did not improve accuracy, latency, or token use. This is five-example development evidence, not a leaderboard claim.

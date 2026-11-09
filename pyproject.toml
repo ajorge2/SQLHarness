@@ -22,7 +22,7 @@ retrieval = [
   "fastembed>=0.7.0,<1.0",
 ]
 mcp = [
-  "mcp[cli]>=2.0.0,<3.0",
+  "mcp[cli]==2.3.0",
 ]
 
 [project.scripts]

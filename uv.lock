@@ -441,36 +441,6 @@ wheels = [
 ]
 
 [[package]]
-name = "sqlharness"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "openai" },
-    { name = "sqlglot" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-]
-mcp = [
-    { name = "mcp", extra = ["cli"] },
-]
-retrieval = [
-    { name = "fastembed" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "fastembed", marker = "extra == 'retrieval'", specifier = ">=0.7.0,<1.0" },
-    { name = "mcp", extras = ["cli"], marker = "extra == 'mcp'", specifier = ">=2.0.0,<3.0" },
-    { name = "openai", specifier = ">=2.0.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
-    { name = "sqlglot", specifier = ">=27.0.0" },
-]
-provides-extras = ["dev", "retrieval", "mcp"]
-
-[[package]]
 name = "h11"
 version = "0.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1838,6 +1808,36 @@ sdist = { url = "https://files.pythonhosted.org/packages/11/c0/cd761f018601bf954
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7e/93/acaa0862f841051e490326c1fc8c61d618d2df26f9e7aed26c331419ab15/sqlglot-30.21.0-py3-none-any.whl", hash = "sha256:816d1a4815b7562b3976efcc0b561c928a743f976efd0fb8ad6db7a5b96c069e", size = 763892, upload-time = "2026-09-30T17:35:07.976Z" },
 ]
+
+[[package]]
+name = "sqlharness"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "openai" },
+    { name = "sqlglot" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+]
+mcp = [
+    { name = "mcp", extra = ["cli"] },
+]
+retrieval = [
+    { name = "fastembed" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastembed", marker = "extra == 'retrieval'", specifier = ">=0.7.0,<1.0" },
+    { name = "mcp", extras = ["cli"], marker = "extra == 'mcp'", specifier = "==2.3.0" },
+    { name = "openai", specifier = ">=2.0.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
+    { name = "sqlglot", specifier = ">=27.0.0" },
+]
+provides-extras = ["dev", "retrieval", "mcp"]
 
 [[package]]
 name = "sse-starlette"

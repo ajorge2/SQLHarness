@@ -39,6 +39,10 @@ def validate_readonly_sql(
     blocked = sorted({node.key.upper() for node in expression.walk() if isinstance(node, blocked_types)})
     if blocked:
         errors.append(f"non_readonly_operations: {', '.join(blocked)}")
+    elif not isinstance(expression, exp.Query):
+        # SQLite's query_only pragma does not make administrative statements
+        # such as ATTACH an acceptable part of a governed query interface.
+        errors.append("expected_readonly_query")
 
     schema_by_lower = {table.lower(): {column.lower() for column in columns} for table, columns in schema.items()}
     cte_names = {

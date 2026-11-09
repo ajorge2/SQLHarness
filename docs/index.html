@@ -5,7 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
 <title>SQLHarness — Research system and execution harness</title>
-<link rel="stylesheet" href="analysis-plain.css?v=research-plain-93" />
+<link rel="stylesheet" href="analysis-plain.css?v=research-plain-163" />
+  <style id="locked-workflow-palette">
+    .intent-normalization-example .intent-diagram-node--request,
+    .code-generation-example .code-generation-source {
+      color: #e9eeff;
+      background-color: #170071;
+    }
+
+    .intent-normalization-example .example-intent-node--output,
+    .code-generation-example .code-generation-result {
+      color: #e9eeff;
+      background-color: #f72688;
+    }
+
+    .intent-normalization-example .example-intent-node--output *,
+    .code-generation-example .code-generation-result * {
+      color: inherit;
+    }
+
+    .intent-normalization-example .example-intent-node--region,
+    .intent-normalization-example .example-intent-node--argmax,
+    .intent-normalization-example .example-intent-node--count,
+    .intent-normalization-example .example-intent-node--customers,
+    .code-generation-example .code-generation-step {
+      color: #e9eeff;
+      background-color: #7a563f;
+    }
+
+    .intent-normalization-example .example-intent-node--region *,
+    .intent-normalization-example .example-intent-node--argmax *,
+    .intent-normalization-example .example-intent-node--count *,
+    .intent-normalization-example .example-intent-node--customers * {
+      color: inherit;
+    }
+
+    .code-generation-example .code-generation-step > strong,
+    .code-generation-example .code-generation-step > span,
+    .code-generation-example .code-generation-step > p {
+      color: #e9eeff;
+    }
+
+    .code-generation-example .code-generation-step code {
+      color: #e9eeff;
+    }
+
+    .code-generation-example .code-generation-step code .code-generation-assembly-added {
+      color: #e68a51;
+    }
+
+    .code-generation-example .code-generation-step--retrieval,
+    .code-generation-example .code-generation-step--query {
+      color: #202124;
+      background-color: #c8bbbb;
+    }
+
+    .code-generation-example .code-generation-step--retrieval code,
+    .code-generation-example .code-generation-step--query code,
+    .code-generation-example .code-generation-step--retrieval .code-generation-fragment-rank {
+      color: #202124;
+    }
+
+    .code-generation-example .code-generation-step--retrieval .code-generation-fragment-relation-name {
+      color: #573886;
+    }
+
+    .code-generation-example .code-generation-step--retrieval .code-generation-fragment-relation-name::before {
+      border-top-color: #4f535c;
+    }
+
+    .code-generation-example .code-generation-step--retrieval .code-generation-fragment-relation-name::after {
+      border-left-color: #4f535c;
+    }
+
+    .code-generation-example .code-generation-step--retrieval .code-generation-fragment-candidate--selected code,
+    .code-generation-example .code-generation-step--retrieval .code-generation-fragment-candidate--selected .code-generation-fragment-rank {
+      color: #fff;
+    }
+
+    main [contenteditable="true"] {
+      cursor: text;
+    }
+
+    main [contenteditable="true"]:focus-visible {
+      outline: 1px dashed rgba(247, 38, 136, 0.8);
+      outline-offset: 2px;
+    }
+
+    .research-fill {
+      color: inherit;
+    }
+
+  </style>
 </head>
 <body>
 <main id="top">
@@ -16,43 +107,47 @@
 <h2 data-editable-key="implementation-overview-heading">Overview</h2>
 <div class="hero-columns">
 <aside class="hero-aside" aria-label="Technical writeup">
-<div class="query-example" aria-label="Example business instruction translated into SQL">
-<div class="query-box">
-<div class="query-prompt">
+<div class="query-example" aria-label="Example business instruction translated into SQL and a natural-language answer">
+<div class="query-caption query-caption--top" data-editable-key="hero-query-caption-top-v1">Example of English-to-SQL translation</div>
+<div class="query-stack">
+<div class="query-box query-box--input">
 <blockquote data-editable-key="hero-query-prompt-v2">User Input:
 “Which region has the most customers?”</blockquote>
-<div class="query-arrow" aria-hidden="true">↓</div>
 </div>
-<pre><code>SELECT r.name, COUNT(*) AS customer_count
+<div class="query-arrow" aria-hidden="true">↓</div>
+<div class="query-box query-box--sql">
+<pre><code data-editable-key="body:section-1.div-2.aside-1.div-1.div-1.pre-1.code-1">SELECT r.name, COUNT(*) AS customer_count
 FROM customers c
 JOIN regions r ON c.region_id = r.id
 GROUP BY r.name
 ORDER BY customer_count DESC
 LIMIT 1;</code></pre>
-<div class="query-arrow query-arrow--output" aria-hidden="true">↓</div>
-<div class="query-output">System Output:<br>Northeast (3 customers)</div>
 </div>
-<footer class="query-caption">Example of English-to-SQL translation</footer>
+<div class="query-arrow" aria-hidden="true">↓</div>
+<div class="query-box query-box--retrieved">
+<div class="query-output" data-editable-key="body:section-1.div-2.aside-1.div-1.div-1.div-3"><span class="query-output-label">Retrieved Answer:</span><br>Northeast (3 customers)</div>
+</div>
+<div class="query-arrow" aria-hidden="true">↓</div>
+<div class="query-box query-box--response">
+<div class="query-output query-output--response" data-editable-key="body:section-1.div-2.aside-1.div-1.div-1.div-5"><span class="query-output-label">System Output:</span><br>“The Northeast region has the most customers, totaling 3.”</div>
+</div>
+</div>
+<footer class="query-caption" data-editable-key="body:section-1.div-2.aside-1.div-1.footer-1">Example of English-to-SQL translation</footer>
 </div>
 </aside>
 <div class="hero-copy-column">
-<p class="hero-copy" contenteditable="true" data-editable-key="project-objective-v2" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project objective">
-This project gives even the busiest professionals a simple way to extract any specific detail from their data—using
-only their own words. Ideally, decisions can be made instantly and with
-confidence, without needing to know anything about SQL.
+<!-- Keep these editable keys stable: browser drafts are stored against them. -->
+<p class="hero-copy" contenteditable="true" data-editable-key="project-objective-part-1-v1" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project objective, first paragraph">
+Running a business is hard. In retail, you might find yourself with 2 hours to restock today's most popular item before customers find empty shelves. Your mind is already balancing the staffing schedule for tonight and the recent arrival of that large overseas delivery—and as soon as you switch focus, the house of cards will collapse, and you're spending extra time rebuilding the lost details.
 </p>
-<p class="hero-copy" contenteditable="true" data-editable-key="project-approach" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project approach">
-SQLHarness approaches this in two parts: <em>intent normalization</em> and <em>code generation</em>.
-First the system translates the user's plain-English business request into a normalized semantic representation of
-the request calibrated around SQL primitives. This answers the question of “What's the universal way to describe
-this request without the specific business jargon?”. Afterwards, it translates the resulting normalized intent into
-real code through a governed boundary, minimizing the probabilistic effect of the model as much as possible.
+<p class="hero-copy" contenteditable="true" data-editable-key="project-objective-part-2-v1" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project objective, second paragraph">
+Imagine if AI could help you mentally pick up right a task right where you left it. I built SQLHarness to help professionals automate the data retrieval part of that problem. If Claude Code can put together a working search bar for your website in less than 30 minutes, AI is clearly advanced enough to answer a simple question about your store data, right?
 </p>
 <p class="hero-copy" contenteditable="true" data-editable-key="project-purpose-v2" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Editable project purpose">
 The purpose of this brief is to demonstrate the intuition behind SQLHarness’ proposed architecture.
 </p>
 <ul class="technical-brief-link">
-<li><a href="share.html">Want more details? View technical writeup →</a></li>
+<li><a href="share.html">Experimentation results recorded on technical writeup</a></li>
 </ul>
 </div>
 </div>
@@ -70,7 +165,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 <tr><td>Intent graph</td><td>Organizes the request into a clear, structured plan.</td></tr>
 </tbody>
 <tbody>
-<tr><td class="stage-tree-cell stage-tree-cell--three" rowspan="3"><span class="stage-tree-label">Code generation</span><span class="stage-tree-rail" aria-hidden="true"></span><span class="stage-tree-branch" aria-hidden="true"></span><span class="stage-tree-root" aria-hidden="true"></span></td><td>Fragment retrieval</td><td>Finds the reusable SQL pieces needed to build the query.</td></tr>
+<tr><td class="stage-tree-cell stage-tree-cell--three" rowspan="3"><span class="stage-tree-label">Code generation</span><span class="stage-tree-rail" aria-hidden="true"></span><span class="stage-tree-branch" aria-hidden="true"></span><span class="stage-tree-root" aria-hidden="true"></span></td><td>Fragment retrieval</td><td data-editable-key="stage-fragment-retrieval-responsibility-v2">Ranks reusable SQL fragments for each labeled connection between two intent-graph nodes.</td></tr>
 <tr><td data-editable-key="stage-query-assembly">Query assembly</td><td data-editable-key="stage-query-assembly-responsibility">Weaves the retrieved fragments into a complete SQL query.</td></tr>
 <tr><td data-editable-key="stage-authority-boundary">Authority boundary</td><td data-editable-key="stage-authority-boundary-responsibility">Checks that the completed SQL is safe and allowed to run.</td></tr>
 </tbody>
@@ -82,19 +177,22 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 
 <h3 data-editable-key="semantic-model-development-heading-v4">How the semantic model was developed</h3>
 <ul class="training-story">
-<li data-editable-key="semantic-model-amr-parent-v10">SQLHarness begins with a simple idea borrowed from Abstract Meaning Representation (AMR): describe meaning as connected concepts instead of one block of text.</li>
-<li data-editable-key="semantic-model-four-questions-v10">For a database request, those concepts answer four practical questions: What data is involved? What should happen to it? What rules apply? What should the answer look like?</li>
-<li data-editable-key="semantic-model-design-choice-v10">The key design choice was to define this shared vocabulary—and the ways its parts may connect—before choosing the model that creates the graph.</li>
-<li data-editable-key="semantic-model-validator-purpose-v10">A language model can draft the graph, while a separate validator rejects anything incomplete, disconnected, or tied to database fields that do not exist. That keeps the request's structure visible and checkable even if the model changes.</li>
+<li class="amr-role-bridge"><span class="editable-lead" data-editable-key="semantic-model-amr-parent-v16">Abstract Meaning Representation (AMR) looks past word order and keeps the underlying event: what happened, who or what caused it, and who or what it affected.</span>
+<ul class="amr-role-map">
+<li data-editable-key="semantic-model-role-data-v4">“A manager approved the budget” becomes three connected ideas: <em>approve</em> is the event, <em>manager</em> is the doer, and <em>budget</em> is the thing approved.</li>
+<li data-editable-key="semantic-model-role-operations-v4">“The budget was approved by a manager” produces the same map because the meaning is the same.</li>
+</ul>
+</li>
+<li data-editable-key="semantic-model-design-choice-v16">SQLHarness applies the same idea to database questions. Its intent graph captures the data, calculation, rules, and requested answer in one stable map that can be checked against the database and translated into SQL.</li>
 </ul>
 </article>
 <article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="2 of 2: How SQL fragments are selected" hidden>
 
 <h3 data-editable-key="fragment-selection-heading-v10">How SQL fragments are selected</h3>
 <ul class="training-story">
-<li data-editable-key="fragment-selection-search-v10">Once the intent graph is ready, the system uses each concept to search a catalog of reusable SQL pieces.</li>
-<li data-editable-key="fragment-selection-ranking-v10">A small ranking model then orders the matches from strongest to weakest. It considers their meaning, shared words, the kind of SQL operation, and the fragment type.</li>
-<li data-editable-key="fragment-selection-priority-v10">The catalog comes first: the ranker can choose among existing pieces, but it cannot recover a SQL pattern that is missing. Development therefore focuses on making the catalog broad and reliable before making the ranking model more complex.</li>
+<li data-editable-key="fragment-selection-search-v12">The intent graph becomes a parts list for the SQL query. Each labeled connection between two nodes describes one job, such as count customers, group them by region, or return a region name.</li>
+<li data-editable-key="fragment-selection-ranking-v12">For each connection, SQLHarness searches a catalog of ready-made SQL pieces. It scores the candidates and keeps the piece that best fits both nodes, their relationship, and the database.</li>
+<li data-editable-key="fragment-selection-priority-v11">The selected pieces are joined into one query. If the catalog lacks a needed piece, the query cannot be completed—so the catalog must cover the SQL patterns the system may need.</li>
 </ul>
 </article>
 </div>
@@ -106,19 +204,21 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 </div>
 </div>
 </div>
+<header class="workflow-comparison-heading">
+<h3 id="workflow-comparison-title" contenteditable="true" data-editable-key="workflow-comparison-title-v1" spellcheck="true">How SQLHarness processes a request</h3>
+</header>
+<div class="workflow-column-label workflow-column-label--example" contenteditable="true" data-editable-key="workflow-column-example-label-v1" spellcheck="true">Example from above</div>
+<div class="workflow-column-label workflow-column-label--algorithm" contenteditable="true" data-editable-key="workflow-column-algorithm-label-v1" spellcheck="true">SQLHarness algorithm</div>
 <section class="worked-example-group" aria-label="Worked example">
-<figure class="intent-graph-diagram intent-normalization-example" aria-labelledby="intent-graph-diagram-title">
-<figcaption id="intent-graph-diagram-title" contenteditable="true" data-editable-key="intent-diagram-title" spellcheck="true">How SQLHarness understands one request</figcaption>
-<div class="example-intent-input">
-<span>Business request</span>
+<figure class="intent-graph-diagram intent-normalization-example" aria-label="Intent normalization example">
+<div class="example-intent-input" data-workflow-hover="request">
 <div class="intent-diagram-node intent-diagram-node--request" contenteditable="true" data-editable-key="intent-diagram-request-v5" spellcheck="true">“Which region has the most customers?”</div>
 </div>
 <svg class="example-intent-entry" viewBox="0 0 545 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 46"></path>
-<path class="intent-diagram-arrow-head" d="M268 41 L272 46 L276 41"></path>
+<path class="intent-diagram-arrow-path" d="M272 0 L272 40"></path>
+<path class="intent-diagram-arrow-head" d="M268 35 L272 40 L276 35"></path>
 </svg>
-<div class="example-intent-graph" aria-label="Intent graph for finding the region with the most customers">
-<div class="example-intent-graph-label">Intent graph</div>
+<div class="example-intent-graph" data-workflow-hover="intent" aria-label="Intent graph for finding the region with the most customers">
 <svg class="example-intent-edges" viewBox="0 0 545 460" preserveAspectRatio="none" aria-hidden="true" focusable="false">
 <defs>
 <marker id="example-intent-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
@@ -153,93 +253,115 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 </div>
 </div>
 </figure>
-<figure class="intent-graph-diagram code-generation-example" aria-labelledby="code-generation-example-title">
-<figcaption id="code-generation-example-title" contenteditable="true" data-editable-key="code-generation-example-title-v1" spellcheck="true">Code generation example:</figcaption>
-
-<div class="code-generation-input">
-<span>Intent graph</span>
-<div class="code-generation-source" contenteditable="true" data-editable-key="code-generation-example-source-v1" spellcheck="true">Intent graph above</div>
-</div>
-
-<svg class="code-generation-entry" viewBox="0 0 545 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 46"></path>
-<path class="intent-diagram-arrow-head" d="M268 41 L272 46 L276 41"></path>
+<figure class="intent-graph-diagram code-generation-example" aria-label="Code generation example">
+<svg class="code-generation-transition" viewBox="0 0 545 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+<path class="intent-diagram-arrow-path" d="M272 0 L272 40"></path>
+<path class="intent-diagram-arrow-head" d="M268 35 L272 40 L276 35"></path>
 </svg>
 
-<div class="code-generation-stage-label"><span>Fragment retrieval</span></div>
-
-<section class="code-generation-step">
-<strong contenteditable="true" data-editable-key="code-generation-example-retrieval-heading-v2" spellcheck="true">Rank compatible SQL fragments</strong>
-<div class="code-generation-fragment-map" aria-label="Selected SQL fragments grouped by intent graph node">
+<section class="code-generation-step code-generation-step--retrieval" data-workflow-hover="retrieval">
+<div class="code-generation-fragment-map" aria-label="Selected SQL fragments grouped by relationships between intent graph nodes">
 <div class="code-generation-fragment-row">
-<div class="code-generation-fragment-node" contenteditable="true" data-editable-key="code-generation-example-node-name-v1" spellcheck="true"><span>output format</span><strong>name</strong></div>
-<span class="code-generation-fragment-link" aria-hidden="true">→</span>
-<div class="code-generation-fragment-matches">
-<code contenteditable="true" data-editable-key="code-generation-example-fragment-select-v1" spellcheck="false">SELECT regions.name</code>
+<div class="code-generation-fragment-relation" contenteditable="true" data-editable-key="code-generation-example-relation-region-name-v1" spellcheck="true">
+<span class="code-generation-fragment-endpoint"><span>data</span><strong>region</strong></span>
+<span class="code-generation-fragment-relation-name">returned as</span>
+<span class="code-generation-fragment-endpoint"><span>output format</span><strong>name</strong></span>
 </div>
-</div>
-<div class="code-generation-fragment-row">
-<div class="code-generation-fragment-node" contenteditable="true" data-editable-key="code-generation-example-node-count-v1" spellcheck="true"><span>operation</span><strong>count</strong></div>
-<span class="code-generation-fragment-link" aria-hidden="true">→</span>
+<span class="code-generation-fragment-link" aria-hidden="true"></span>
 <div class="code-generation-fragment-matches">
-<code contenteditable="true" data-editable-key="code-generation-example-fragment-count-v2" spellcheck="false">COUNT(customers.id)</code>
-<code contenteditable="true" data-editable-key="code-generation-example-fragment-group-v2" spellcheck="false">GROUP BY regions.name</code>
+<div class="code-generation-fragment-candidate code-generation-fragment-candidate--selected"><span class="code-generation-fragment-rank">1</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-select-combined-v1" spellcheck="false">SELECT regions.name, COUNT(customers.id)</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">2</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-select-v2" spellcheck="false">SELECT regions.name</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">3</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-select-distinct-v1" spellcheck="false">SELECT DISTINCT regions.name</code></div>
 </div>
 </div>
 <div class="code-generation-fragment-row">
-<div class="code-generation-fragment-node" contenteditable="true" data-editable-key="code-generation-example-node-most-v1" spellcheck="true"><span>operation</span><strong>most</strong></div>
-<span class="code-generation-fragment-link" aria-hidden="true">→</span>
+<div class="code-generation-fragment-relation" contenteditable="true" data-editable-key="code-generation-example-relation-count-customers-v1" spellcheck="true">
+<span class="code-generation-fragment-endpoint"><span>operation</span><strong>count</strong></span>
+<span class="code-generation-fragment-relation-name">theme</span>
+<span class="code-generation-fragment-endpoint"><span>data</span><strong>customers</strong></span>
+</div>
+<span class="code-generation-fragment-link" aria-hidden="true"></span>
 <div class="code-generation-fragment-matches">
-<code contenteditable="true" data-editable-key="code-generation-example-fragment-order-v2" spellcheck="false">ORDER BY customer_count DESC</code>
-<code contenteditable="true" data-editable-key="code-generation-example-fragment-limit-v2" spellcheck="false">LIMIT 1</code>
+<div class="code-generation-fragment-candidate code-generation-fragment-candidate--selected"><span class="code-generation-fragment-rank">1</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-count-v3" spellcheck="false">COUNT(customers.id)</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">2</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-count-all-v1" spellcheck="false">COUNT(*)</code></div>
+</div>
+</div>
+<div class="code-generation-fragment-row">
+<div class="code-generation-fragment-relation" contenteditable="true" data-editable-key="code-generation-example-relation-count-region-v1" spellcheck="true">
+<span class="code-generation-fragment-endpoint"><span>operation</span><strong>count</strong></span>
+<span class="code-generation-fragment-relation-name">group by</span>
+<span class="code-generation-fragment-endpoint"><span>data</span><strong>region</strong></span>
+</div>
+<span class="code-generation-fragment-link" aria-hidden="true"></span>
+<div class="code-generation-fragment-matches">
+<div class="code-generation-fragment-candidate code-generation-fragment-candidate--selected"><span class="code-generation-fragment-rank">1</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-group-v3" spellcheck="false">GROUP BY regions.name</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">2</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-group-id-v1" spellcheck="false">GROUP BY regions.id</code></div>
+</div>
+</div>
+<div class="code-generation-fragment-row">
+<div class="code-generation-fragment-relation" contenteditable="true" data-editable-key="code-generation-example-relation-name-most-v1" spellcheck="true">
+<span class="code-generation-fragment-endpoint"><span>output format</span><strong>name</strong></span>
+<span class="code-generation-fragment-relation-name">constrained by</span>
+<span class="code-generation-fragment-endpoint"><span>operation</span><strong>most</strong></span>
+</div>
+<span class="code-generation-fragment-link" aria-hidden="true"></span>
+<div class="code-generation-fragment-matches">
+<div class="code-generation-fragment-candidate code-generation-fragment-candidate--selected"><span class="code-generation-fragment-rank">1</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-order-v3" spellcheck="false">ORDER BY COUNT(customers.id) DESC</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">2</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-order-alias-v1" spellcheck="false">ORDER BY customer_count DESC</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">3</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-order-name-v1" spellcheck="false">ORDER BY regions.name</code></div>
+</div>
+</div>
+<div class="code-generation-fragment-row">
+<div class="code-generation-fragment-relation" contenteditable="true" data-editable-key="code-generation-example-relation-most-count-v1" spellcheck="true">
+<span class="code-generation-fragment-endpoint"><span>operation</span><strong>most</strong></span>
+<span class="code-generation-fragment-relation-name">measure</span>
+<span class="code-generation-fragment-endpoint"><span>operation</span><strong>count</strong></span>
+</div>
+<span class="code-generation-fragment-link" aria-hidden="true"></span>
+<div class="code-generation-fragment-matches">
+<div class="code-generation-fragment-candidate code-generation-fragment-candidate--selected"><span class="code-generation-fragment-rank">1</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-limit-v3" spellcheck="false">LIMIT 1</code></div>
+<div class="code-generation-fragment-candidate"><span class="code-generation-fragment-rank">2</span><code contenteditable="true" data-editable-key="code-generation-example-fragment-fetch-first-v1" spellcheck="false">FETCH FIRST 1 ROW ONLY</code></div>
 </div>
 </div>
 </div>
 </section>
 
 <svg class="code-generation-arrow" viewBox="0 0 545 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 26"></path>
-<path class="intent-diagram-arrow-head" d="M268 21 L272 26 L276 21"></path>
+<path class="intent-diagram-arrow-path" d="M272 2 L272 21"></path>
+<path class="intent-diagram-arrow-head" d="M267 15 L272 21 L277 15"></path>
 </svg>
 
-<div class="code-generation-stage-label"><span>Query assembly</span></div>
-
-<section class="code-generation-step">
-<strong contenteditable="true" data-editable-key="code-generation-example-assembly-heading-v2" spellcheck="true">Combine into one complete SQL code block</strong>
-<code>SELECT regions.name, COUNT(customers.id)<br /><span class="code-generation-assembly-added">FROM customers JOIN regions ON customers.region_id = regions.id</span>GROUP BY regions.name · ORDER BY COUNT(customers.id) DESC · LIMIT 1</code>
+<section class="code-generation-step code-generation-step--query" data-workflow-hover="assembly">
+<code class="code-generation-assembly-query" contenteditable="true" data-editable-key="code-generation-example-assembly-query-v2" spellcheck="false"><span>SELECT regions.name, COUNT(customers.id)</span><span class="code-generation-assembly-added">FROM customers JOIN regions ON customers.region_id = regions.id</span><span>GROUP BY regions.name</span><span>ORDER BY COUNT(customers.id) DESC</span><span>LIMIT 1</span></code>
 </section>
 
 <svg class="code-generation-arrow" viewBox="0 0 545 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 26"></path>
-<path class="intent-diagram-arrow-head" d="M268 21 L272 26 L276 21"></path>
+<path class="intent-diagram-arrow-path" d="M272 2 L272 21"></path>
+<path class="intent-diagram-arrow-head" d="M267 15 L272 21 L277 15"></path>
 </svg>
 
-<div class="code-generation-stage-label"><span>Authority boundary</span></div>
-
-<section class="code-generation-step">
-<strong contenteditable="true" data-editable-key="code-generation-example-authority-heading-v2" spellcheck="true">Check before running</strong>
+<div class="code-generation-authority-band" data-workflow-hover="authority">
+<section class="code-generation-step code-generation-step--authority">
+<strong contenteditable="true" data-editable-key="code-generation-example-authority-heading-v4" spellcheck="true">authority boundary</strong>
 </section>
+</div>
 
 <svg class="code-generation-arrow" viewBox="0 0 545 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 26"></path>
-<path class="intent-diagram-arrow-head" d="M268 21 L272 26 L276 21"></path>
+<path class="intent-diagram-arrow-path" d="M272 2 L272 21"></path>
+<path class="intent-diagram-arrow-head" d="M267 15 L272 21 L277 15"></path>
 </svg>
 
-<div class="code-generation-result" contenteditable="true" data-editable-key="code-generation-example-result-v4" spellcheck="true">
+<div class="code-generation-result" data-workflow-hover="result" contenteditable="true" data-editable-key="code-generation-example-result-v4" spellcheck="true">
 <span class="code-generation-result-label">Returned result</span>
 <code>{"columns":["name","customer_count"],"rows":[["Northeast",3]]}</code>
 </div>
 </figure>
 </section>
-<section class="workflow-pattern-group" id="general-pattern" aria-labelledby="general-pattern-title">
-<div class="workflow-pattern-heading">
-<h3 id="general-pattern-title" data-editable-key="workflow-pattern-heading-v2">General pattern: how any request follows the same two stages</h3>
-</div>
-<figure class="intent-graph-diagram intent-graph-diagram--general general-intent-workflow" aria-labelledby="general-intent-graph-diagram-title">
-<figcaption id="general-intent-graph-diagram-title" contenteditable="true" data-editable-key="general-intent-diagram-title-v4" spellcheck="true">How every request becomes an intent graph</figcaption>
+<section class="workflow-pattern-group" id="general-pattern" aria-label="General pattern: how any request follows the same two stages">
+<figure class="intent-graph-diagram intent-graph-diagram--general general-intent-workflow" aria-label="How every request becomes an intent graph">
 
 <div class="workflow-input-label">Business request + context</div>
-<div class="general-workflow-inputs" aria-label="Information the system reads">
+<div class="general-workflow-inputs" data-workflow-match="request" aria-label="Information the system reads">
 <div contenteditable="true" data-editable-key="general-intent-input-request-v3" spellcheck="true">Your request</div>
 <span aria-hidden="true">+</span>
 <div contenteditable="true" data-editable-key="general-intent-input-schema-v3" spellcheck="true">A map of the database</div>
@@ -253,7 +375,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 </svg>
 
 <div class="workflow-stage-label"><span>Intent graph</span></div>
-<div class="general-workflow-state-flow" aria-label="The four stages used to understand a request">
+<div class="general-workflow-state-flow" data-workflow-match="intent" aria-label="The four stages used to understand a request">
 <div class="general-workflow-state-stack">
 <div class="general-workflow-node-build-flow">
 <section class="general-workflow-state">
@@ -299,7 +421,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 <path class="intent-diagram-arrow-head" d="M268 27 L272 32 L276 27"></path>
 </svg>
 
-<section class="general-workflow-link-card">
+<section class="general-workflow-link-card" data-workflow-match="intent">
 <strong contenteditable="true" data-editable-key="general-intent-connect-heading-v7" spellcheck="true">Connect the steps into one meaning map</strong>
 <p contenteditable="true" data-editable-key="general-intent-connect-copy-v8" spellcheck="true">These are all 20 relationship types supported by the intent graph.</p>
 <div class="general-workflow-connections" aria-label="Complete list of supported connection roles">
@@ -331,7 +453,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 <path class="intent-diagram-arrow-head" d="M268 19 L272 24 L276 19"></path>
 </svg>
 
-<section class="general-workflow-stage-card general-workflow-stage-card--check">
+<section class="general-workflow-stage-card general-workflow-stage-card--check" data-workflow-match="intent">
 <strong contenteditable="true" data-editable-key="general-intent-step-check-heading-v5" spellcheck="true">Check the graph before using it</strong>
 <ul>
 <li contenteditable="true" data-editable-key="general-intent-check-output-v5" spellcheck="true">There is exactly one output format node.</li>
@@ -342,31 +464,15 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 </ul>
 </section>
 
-<svg class="general-workflow-transition" viewBox="0 0 545 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 24"></path>
-<path class="intent-diagram-arrow-head" d="M268 19 L272 24 L276 19"></path>
-</svg>
-
-<div class="general-workflow-result" contenteditable="true" data-editable-key="general-intent-result-v5" spellcheck="true">
-<strong>Handoff to fragment retrieval</strong>
-<span>Each searchable node becomes a description containing its meaning, any source words and database matches, and any directly connected data, operations, conditions, or output formats with their relationship labels.</span>
-</div>
 </figure>
-<figure class="intent-graph-diagram fragment-retrieval-workflow" aria-labelledby="fragment-retrieval-workflow-title">
-<figcaption id="fragment-retrieval-workflow-title" contenteditable="true" data-editable-key="fragment-workflow-title-v1" spellcheck="true">How fragment retrieval finds SQL building blocks</figcaption>
-
-<div class="workflow-input-label">Intent graph</div>
-<div class="fragment-workflow-inputs fragment-workflow-inputs--single" aria-label="Information used for fragment retrieval">
-<div contenteditable="true" data-editable-key="fragment-workflow-input-graph-v1" spellcheck="true">Validated intent graph</div>
-</div>
-
-<svg class="fragment-workflow-arrow" viewBox="0 0 545 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-<path class="intent-diagram-arrow-path" d="M272 0 L272 30"></path>
-<path class="intent-diagram-arrow-head" d="M268 25 L272 30 L276 25"></path>
+<figure class="intent-graph-diagram fragment-retrieval-workflow" aria-label="How fragment retrieval finds SQL building blocks">
+<svg class="fragment-workflow-transition" viewBox="0 0 545 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+<path class="intent-diagram-arrow-path" d="M272 0 L272 40"></path>
+<path class="intent-diagram-arrow-head" d="M268 35 L272 40 L276 35"></path>
 </svg>
 
 <div class="workflow-stage-label"><span>Fragment retrieval</span></div>
-<div class="fragment-workflow-step">
+<div class="fragment-workflow-step fragment-workflow-step--retrieval" data-workflow-match="retrieval">
 <strong contenteditable="true" data-editable-key="fragment-workflow-rank-heading-v1" spellcheck="true">Rank compatible SQL fragments</strong>
 <p contenteditable="true" data-editable-key="fragment-workflow-rank-copy-v3" spellcheck="true">Keep the strongest distinct matches.</p>
 <a class="fragment-workflow-catalog-link" href="https://github.com/ajorge2/SQLHarness/blob/main/artifacts/fragment-corpus-train-20.json" target="_blank" rel="noopener noreferrer">Reusable SQL-fragment catalog</a>
@@ -378,7 +484,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 </svg>
 
 <div class="workflow-stage-label"><span>Query assembly</span></div>
-<div class="fragment-workflow-step">
+<div class="fragment-workflow-step fragment-workflow-step--assembly" data-workflow-match="assembly">
 <strong contenteditable="true" data-editable-key="fragment-workflow-assembly-heading-v2" spellcheck="true">Weave selected fragments into one complete query</strong>
 <p contenteditable="true" data-editable-key="fragment-workflow-assembly-copy-v2" spellcheck="true">Add the joins and other SQL structure they require.</p>
 </div>
@@ -389,7 +495,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 </svg>
 
 <div class="workflow-stage-label"><span>Authority boundary</span></div>
-<div class="fragment-workflow-step">
+<div class="fragment-workflow-step fragment-workflow-step--authority" data-workflow-match="authority">
 <strong contenteditable="true" data-editable-key="fragment-workflow-authority-heading-v1" spellcheck="true">Check before running</strong>
 <p contenteditable="true" data-editable-key="fragment-workflow-authority-copy-v3" spellcheck="true">Parse the SQL, block writes and invalid table or field names, then attach a deadline and row cap to approved reads.</p>
 <a class="fragment-workflow-detail-link" href="safety-model.md">Execution rules and limits</a>
@@ -400,7 +506,7 @@ The purpose of this brief is to demonstrate the intuition behind SQLHarness’ p
 <path class="intent-diagram-arrow-head" d="M268 25 L272 30 L276 25"></path>
 </svg>
 
-<div class="fragment-workflow-result" contenteditable="true" data-editable-key="fragment-workflow-result-v3" spellcheck="true">
+<div class="fragment-workflow-result" data-workflow-match="result" contenteditable="true" data-editable-key="fragment-workflow-result-v3" spellcheck="true">
 <strong>Run safely and return the result</strong>
 </div>
 </figure>
@@ -444,6 +550,8 @@ const editableBodySelector = [
   'main ol > li',
   'main blockquote',
   'main pre code',
+  'main .query-output',
+  'main .code-generation-step > code',
   'main caption',
   'main figcaption',
   'main .query-caption'
@@ -474,6 +582,13 @@ document.querySelectorAll(editableBodySelector).forEach((element) => {
 });
 
 const editableDrafts = [...document.querySelectorAll('[contenteditable="true"][data-editable-key]')];
+
+if (textEditingEnabled) {
+  editableDrafts.forEach((element) => {
+    element.setAttribute('role', 'textbox');
+    element.setAttribute('aria-multiline', 'true');
+  });
+}
 
 function editableStorageKey(element) {
   return `sqlharness-edit:${element.dataset.editableKey}`;
@@ -533,6 +648,10 @@ editableDrafts.forEach((element) => {
 
   if (savedContent !== null) {
     element.innerHTML = normalizeEditableMarkup(savedContent);
+    if (element.classList.contains('code-generation-fragment-relation')) {
+      const relationName = element.querySelector('.code-generation-fragment-relation-name');
+      if (relationName) relationName.textContent = relationName.textContent.replace(/→/g, '').trim();
+    }
     saveEditableDraft(element);
   }
 
@@ -902,11 +1021,374 @@ if (intentDiagram) {
   new ResizeObserver(drawIntentDiagramConnectors).observe(intentDiagram);
 }
 
+const exampleIntentGraph = document.querySelector('.example-intent-graph');
+if (exampleIntentGraph) {
+  const layoutStorageKey = 'sqlharness.intent-example.layout.v1';
+  const layoutNodes = [...exampleIntentGraph.querySelectorAll('.example-intent-node')];
+  const nodeKey = (node) => [...node.classList].find((name) => name.startsWith('example-intent-node--'));
+  const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
+  let savedLayout = {};
+
+  try {
+    savedLayout = JSON.parse(localStorage.getItem(layoutStorageKey) || '{}');
+  } catch (_error) {
+    savedLayout = {};
+  }
+
+  const placeLayoutNode = (node, x, y) => {
+    const maxX = Math.max(0, exampleIntentGraph.clientWidth - node.offsetWidth);
+    const maxY = Math.max(0, exampleIntentGraph.clientHeight - node.offsetHeight);
+    const nextX = clamp(x, 0, maxX);
+    const nextY = clamp(y, 0, maxY);
+    node.style.left = `${nextX}px`;
+    node.style.top = `${nextY}px`;
+    node.style.transform = 'none';
+    node.dataset.layoutX = String(maxX ? nextX / maxX : 0);
+    node.dataset.layoutY = String(maxY ? nextY / maxY : 0);
+  };
+
+  const saveLayout = () => {
+    const positions = {};
+    layoutNodes.forEach((node) => {
+      positions[nodeKey(node)] = {
+        x: Number(node.dataset.layoutX || 0),
+        y: Number(node.dataset.layoutY || 0)
+      };
+    });
+    localStorage.setItem(layoutStorageKey, JSON.stringify(positions));
+  };
+
+  exampleIntentGraph.classList.add('example-intent-graph--layout');
+  const graphRect = exampleIntentGraph.getBoundingClientRect();
+  layoutNodes.forEach((node) => {
+    const nodeRect = node.getBoundingClientRect();
+    const stored = savedLayout[nodeKey(node)];
+    node.setAttribute('contenteditable', textEditingEnabled ? 'true' : 'false');
+    if (stored && Number.isFinite(stored.x) && Number.isFinite(stored.y)) {
+      placeLayoutNode(
+        node,
+        stored.x * Math.max(0, exampleIntentGraph.clientWidth - node.offsetWidth),
+        stored.y * Math.max(0, exampleIntentGraph.clientHeight - node.offsetHeight)
+      );
+    } else {
+      placeLayoutNode(node, nodeRect.left - graphRect.left, nodeRect.top - graphRect.top);
+    }
+  });
+
+  let activeLayoutDrag = null;
+  layoutNodes.forEach((node) => {
+    node.addEventListener('pointerdown', (event) => {
+      if (textEditingEnabled) return;
+      if (event.button !== 0) return;
+      event.preventDefault();
+      const graphRect = exampleIntentGraph.getBoundingClientRect();
+      const nodeRect = node.getBoundingClientRect();
+      activeLayoutDrag = {
+        node,
+        pointerId: event.pointerId,
+        offsetX: event.clientX - nodeRect.left,
+        offsetY: event.clientY - nodeRect.top,
+        graphRect
+      };
+      node.dataset.dragging = 'true';
+      node.setPointerCapture(event.pointerId);
+    });
+  });
+
+  window.addEventListener('pointermove', (event) => {
+    if (!activeLayoutDrag || event.pointerId !== activeLayoutDrag.pointerId) return;
+    placeLayoutNode(
+      activeLayoutDrag.node,
+      event.clientX - activeLayoutDrag.graphRect.left - activeLayoutDrag.offsetX,
+      event.clientY - activeLayoutDrag.graphRect.top - activeLayoutDrag.offsetY
+    );
+  });
+
+  const finishLayoutDrag = (event) => {
+    if (!activeLayoutDrag || event.pointerId !== activeLayoutDrag.pointerId) return;
+    activeLayoutDrag.node.removeAttribute('data-dragging');
+    if (activeLayoutDrag.node.hasPointerCapture(event.pointerId)) {
+      activeLayoutDrag.node.releasePointerCapture(event.pointerId);
+    }
+    activeLayoutDrag = null;
+    saveLayout();
+  };
+
+  window.addEventListener('pointerup', finishLayoutDrag);
+  window.addEventListener('pointercancel', finishLayoutDrag);
+  window.addEventListener('resize', () => {
+    layoutNodes.forEach((node) => {
+      placeLayoutNode(
+        node,
+        Number(node.dataset.layoutX || 0) * Math.max(0, exampleIntentGraph.clientWidth - node.offsetWidth),
+        Number(node.dataset.layoutY || 0) * Math.max(0, exampleIntentGraph.clientHeight - node.offsetHeight)
+      );
+    });
+  });
+}
+
 window.addEventListener('pagehide', saveAllEditableDrafts);
+window.addEventListener('beforeunload', saveAllEditableDrafts);
+window.setInterval(saveAllEditableDrafts, 1000);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') saveAllEditableDrafts();
 });
 </script>
+
+  <script>
+    (() => {
+      const lockIntentGraph = () => {
+        const liveGraph = document.querySelector('.example-intent-graph');
+        if (!liveGraph) return;
+
+        // The earlier layout editor has already restored the user's saved positions.
+        // Cloning preserves those inline positions while removing every drag listener.
+        const graph = textEditingEnabled ? liveGraph : liveGraph.cloneNode(true);
+        if (!textEditingEnabled) liveGraph.replaceWith(graph);
+        graph.classList.remove('example-intent-graph--layout');
+
+        const nodes = [...graph.querySelectorAll('.example-intent-node')];
+        nodes.forEach((node) => {
+          if (textEditingEnabled) node.setAttribute('contenteditable', 'true');
+          else node.removeAttribute('contenteditable');
+          node.removeAttribute('tabindex');
+          node.removeAttribute('draggable');
+          node.removeAttribute('data-dragging');
+          node.style.cursor = 'default';
+          node.style.touchAction = 'auto';
+          node.style.userSelect = 'text';
+        });
+
+        const svg = graph.querySelector('.example-intent-edges');
+        if (!svg) return;
+        svg.style.display = '';
+
+        const node = (name) => graph.querySelector(`.example-intent-node--${name}`);
+        const connections = [
+          [node('region'), node('output')],
+          [node('output'), node('argmax')],
+          [node('argmax'), node('count')],
+          [node('count'), node('region')],
+          [node('count'), node('customers')],
+        ];
+        const paths = [...svg.querySelectorAll('.example-intent-edge')];
+        const labels = [...svg.querySelectorAll('.example-intent-edge-label')];
+        const labelSides = [-1, -1, 1, 1, -1];
+        const labelPadding = { x: 7.5, y: 4.5 };
+        const labelGap = 9;
+        const arrowTipGap = 7;
+
+        const pointOnNode = (rect, toward) => {
+          const center = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          };
+          const dx = toward.x - center.x;
+          const dy = toward.y - center.y;
+          const divisor = Math.max(
+            Math.abs(dx) / Math.max(rect.width / 2, 1),
+            Math.abs(dy) / Math.max(rect.height / 2, 1),
+            0.0001,
+          );
+          return { x: center.x + dx / divisor, y: center.y + dy / divisor };
+        };
+
+        const draw = () => {
+          const graphRect = graph.getBoundingClientRect();
+          svg.setAttribute('viewBox', `0 0 ${graphRect.width} ${graphRect.height}`);
+
+          const relativeRect = (element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              left: rect.left - graphRect.left,
+              top: rect.top - graphRect.top,
+              width: rect.width,
+              height: rect.height,
+            };
+          };
+          const nodeRects = nodes.map(relativeRect);
+          const placedLabelBoxes = [];
+          const intersects = (box, obstacle, gap = 0) =>
+            box.left < obstacle.left + obstacle.width + gap &&
+            box.left + box.width > obstacle.left - gap &&
+            box.top < obstacle.top + obstacle.height + gap &&
+            box.top + box.height > obstacle.top - gap;
+
+          connections.forEach(([fromNode, toNode], index) => {
+            if (!fromNode || !toNode || !paths[index]) return;
+            const fromRect = relativeRect(fromNode);
+            const toRect = relativeRect(toNode);
+            const fromCenter = {
+              x: fromRect.left + fromRect.width / 2,
+              y: fromRect.top + fromRect.height / 2,
+            };
+            const toCenter = {
+              x: toRect.left + toRect.width / 2,
+              y: toRect.top + toRect.height / 2,
+            };
+            const start = pointOnNode(fromRect, toCenter);
+            const nodeEdge = pointOnNode(toRect, fromCenter);
+            const edgeDx = nodeEdge.x - start.x;
+            const edgeDy = nodeEdge.y - start.y;
+            const edgeLength = Math.hypot(edgeDx, edgeDy) || 1;
+            const end = {
+              x: nodeEdge.x - (edgeDx / edgeLength) * arrowTipGap,
+              y: nodeEdge.y - (edgeDy / edgeLength) * arrowTipGap,
+            };
+            paths[index].setAttribute('d', `M ${start.x} ${start.y} L ${end.x} ${end.y}`);
+
+            const label = labels[index];
+            if (!label) return;
+            const text = label.querySelector('text') || label;
+            const dx = end.x - start.x;
+            const dy = end.y - start.y;
+            const length = Math.hypot(dx, dy) || 1;
+            const normalX = -dy / length;
+            const normalY = dx / length;
+            const side = labelSides[index] || 1;
+
+            label.removeAttribute('transform');
+            text.setAttribute('x', 0);
+            text.setAttribute('y', 0);
+            text.setAttribute('text-anchor', 'middle');
+            const textBounds = text.getBBox();
+            const halfWidth = textBounds.width / 2 + labelPadding.x;
+            const halfHeight = textBounds.height / 2 + labelPadding.y;
+            const clearance =
+              Math.abs(normalX) * halfWidth +
+              Math.abs(normalY) * halfHeight +
+              labelGap;
+            const progressCandidates = [0.5, 0.4, 0.6, 0.3, 0.7, 0.2, 0.8];
+            const extraClearanceCandidates = [0, 12, 24, 36, 54, 78, 108];
+            const sideCandidates = [side, -side];
+            const obstacles = [...nodeRects, ...placedLabelBoxes];
+            let position = null;
+
+            for (const extraClearance of extraClearanceCandidates) {
+              for (const candidateSide of sideCandidates) {
+                for (const progress of progressCandidates) {
+                  const candidateX =
+                    start.x + dx * progress +
+                    normalX * candidateSide * (clearance + extraClearance);
+                  const candidateY =
+                    start.y + dy * progress +
+                    normalY * candidateSide * (clearance + extraClearance);
+                  const candidateBox = {
+                    left: candidateX - halfWidth,
+                    top: candidateY - halfHeight,
+                    width: halfWidth * 2,
+                    height: halfHeight * 2,
+                  };
+                  const fitsGraph =
+                    candidateBox.left >= 0 &&
+                    candidateBox.top >= 0 &&
+                    candidateBox.left + candidateBox.width <= graphRect.width &&
+                    candidateBox.top + candidateBox.height <= graphRect.height;
+                  const isClear = obstacles.every(
+                    (obstacle) => !intersects(candidateBox, obstacle, 7.5)
+                  );
+
+                  if (fitsGraph && isClear) {
+                    position = { x: candidateX, y: candidateY, box: candidateBox };
+                    break;
+                  }
+                }
+                if (position) break;
+              }
+              if (position) break;
+            }
+
+            if (!position) {
+              const fallbackX = (start.x + end.x) / 2 + normalX * side * clearance;
+              const fallbackY = (start.y + end.y) / 2 + normalY * side * clearance;
+              const x = Math.min(Math.max(fallbackX, halfWidth), graphRect.width - halfWidth);
+              const y = Math.min(Math.max(fallbackY, halfHeight), graphRect.height - halfHeight);
+              position = {
+                x,
+                y,
+                box: {
+                  left: x - halfWidth,
+                  top: y - halfHeight,
+                  width: halfWidth * 2,
+                  height: halfHeight * 2,
+                },
+              };
+            }
+
+            const { x, y } = position;
+            placedLabelBoxes.push(position.box);
+
+            text.setAttribute('x', x);
+            text.setAttribute('y', y);
+
+            let background = label.querySelector('rect');
+            if (!background) {
+              background = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+              label.insertBefore(background, text);
+            }
+            background.setAttribute('x', x - halfWidth);
+            background.setAttribute('y', y - halfHeight);
+            background.setAttribute('width', halfWidth * 2);
+            background.setAttribute('height', halfHeight * 2);
+            background.setAttribute('rx', 2);
+          });
+        };
+
+        draw();
+        window.addEventListener('resize', draw, { passive: true });
+      };
+
+      lockIntentGraph();
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const comparison = document.querySelector('.system-columns');
+      if (!comparison) return;
+
+      const controls = [...comparison.querySelectorAll('[data-workflow-hover]')];
+      const setActiveStage = (stage) => {
+        const nextStage = comparison.dataset.workflowActive === stage ? '' : stage;
+        if (nextStage) comparison.dataset.workflowActive = nextStage;
+        else delete comparison.dataset.workflowActive;
+
+        controls.forEach((control) => {
+          control.setAttribute(
+            'aria-pressed',
+            String(Boolean(nextStage) && control.dataset.workflowHover === nextStage),
+          );
+        });
+      };
+
+      controls.forEach((control) => {
+        const stage = control.dataset.workflowHover;
+        control.setAttribute('role', 'button');
+        control.setAttribute('tabindex', '0');
+        control.setAttribute('aria-pressed', 'false');
+        control.setAttribute('aria-label', `Highlight the ${stage} stage`);
+        control.querySelectorAll('[contenteditable="true"]').forEach((editable) => {
+          editable.setAttribute('tabindex', '-1');
+        });
+
+        control.addEventListener('pointerdown', (event) => {
+          event.preventDefault();
+        });
+
+        control.addEventListener('click', (event) => {
+          event.preventDefault();
+          window.getSelection()?.removeAllRanges();
+          setActiveStage(stage);
+        });
+
+        control.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          setActiveStage(stage);
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
