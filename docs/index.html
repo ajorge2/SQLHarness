@@ -29,7 +29,7 @@
     document.documentElement.classList.add('workflow-fragment-preview');
   }
 </script>
-<link rel="stylesheet" href="analysis-plain.css?v=research-plain-183" />
+<link rel="stylesheet" href="analysis-plain.css?v=research-plain-184" />
   <style id="locked-workflow-palette">
     .intent-normalization-example .intent-diagram-node--request,
     .code-generation-example .code-generation-source {
@@ -858,13 +858,19 @@ if (systemCarousel) {
           [node('count'), node('customers')],
         ];
         const paths = [...svg.querySelectorAll('.example-intent-edge')];
+        const arrowheads = paths.map((path) => {
+          path.removeAttribute('marker-end');
+          const arrowhead = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          arrowhead.setAttribute('class', 'example-intent-arrowhead');
+          path.after(arrowhead);
+          return arrowhead;
+        });
         const labels = [...svg.querySelectorAll('.example-intent-edge-label')];
         const labelSides = [-1, -1, 1, 1, -1];
-        const labelClearanceBoosts = [4, 58, 8, 8, 8];
+        const labelClearanceBoosts = [4, 0, 8, 8, 8];
         const labelPadding = { x: 6, y: 3 };
         const labelGap = 15;
         const labelObstacleGap = 12;
-        const arrowTipGap = 7;
 
         const pointOnNode = (rect, toward) => {
           const center = {
@@ -924,24 +930,35 @@ if (systemCarousel) {
             const edgeDx = nodeEdge.x - sourceEdge.x;
             const edgeDy = nodeEdge.y - sourceEdge.y;
             const edgeLength = Math.hypot(edgeDx, edgeDy) || 1;
-            const start = {
-              x: sourceEdge.x - (edgeDx / edgeLength) * 3,
-              y: sourceEdge.y - (edgeDy / edgeLength) * 3,
+            const unitX = edgeDx / edgeLength;
+            const unitY = edgeDy / edgeLength;
+            const normalX = -unitY;
+            const normalY = unitX;
+            const arrowTip = {
+              x: nodeEdge.x - unitX * 4,
+              y: nodeEdge.y - unitY * 4,
             };
-            const end = {
-              x: nodeEdge.x - (edgeDx / edgeLength) * Math.min(2, arrowTipGap),
-              y: nodeEdge.y - (edgeDy / edgeLength) * Math.min(2, arrowTipGap),
+            const arrowBase = {
+              x: arrowTip.x - unitX * 10,
+              y: arrowTip.y - unitY * 10,
             };
-            paths[index].setAttribute('d', `M ${start.x} ${start.y} L ${end.x} ${end.y}`);
+
+            // Run the line beneath both cards so it always meets their edges. The
+            // separate arrowhead remains outside the destination card and visible.
+            paths[index].setAttribute('d', `M ${fromCenter.x} ${fromCenter.y} L ${toCenter.x} ${toCenter.y}`);
+            arrowheads[index]?.setAttribute(
+              'd',
+              `M ${arrowBase.x + normalX * 5} ${arrowBase.y + normalY * 5} L ${arrowTip.x} ${arrowTip.y} L ${arrowBase.x - normalX * 5} ${arrowBase.y - normalY * 5}`,
+            );
 
             const label = labels[index];
             if (!label) return;
             const text = label.querySelector('text') || label;
+            const start = sourceEdge;
+            const end = nodeEdge;
             const dx = end.x - start.x;
             const dy = end.y - start.y;
             const length = Math.hypot(dx, dy) || 1;
-            const normalX = -dy / length;
-            const normalY = dx / length;
             const side = labelSides[index] || 1;
 
             label.removeAttribute('transform');
@@ -962,7 +979,22 @@ if (systemCarousel) {
             const obstacles = [...nodeRects, ...placedLabelBoxes];
             let position = null;
 
-            for (const extraClearance of extraClearanceCandidates) {
+            if (index === 1) {
+              const x = start.x + dx * .65 - normalX * 35;
+              const y = start.y + dy * .65 - normalY * 35;
+              position = {
+                x,
+                y,
+                box: {
+                  left:x - halfWidth,
+                  top:y - halfHeight,
+                  width:halfWidth * 2,
+                  height:halfHeight * 2,
+                },
+              };
+            }
+
+            for (const extraClearance of position ? [] : extraClearanceCandidates) {
               for (const candidateSide of sideCandidates) {
                 for (const progress of progressCandidates) {
                   const candidateX =
