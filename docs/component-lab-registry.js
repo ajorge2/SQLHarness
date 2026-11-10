@@ -46,7 +46,7 @@
         table: {
           styleParam: 'table-style',
           selectionKey: 'sqlharnessStageTableStyle',
-          defaultStyle: 'baseline',
+          defaultStyle: 'workflow-canvas',
           slotKey: 'sqlharnessStageTableSlot',
           savedKey: 'sqlharnessSavedStageTableVariants',
           seenKey: 'sqlharnessSeenStageTableVariants',
@@ -67,7 +67,7 @@
         query: {
           styleParam: 'query-style',
           selectionKey: 'sqlharnessQueryExampleStyle',
-          defaultStyle: 'baseline',
+          defaultStyle: 'hierarchy-stack',
           slotKey: 'sqlharnessQueryExampleSlot',
           savedKey: 'sqlharnessSavedQueryExampleVariants',
           seenKey: 'sqlharnessSeenQueryExampleVariants',
@@ -88,7 +88,7 @@
         workflow: {
           styleParam: 'workflow-style',
           selectionKey: 'sqlharnessWorkflowComparisonStyle',
-          defaultStyle: 'baseline',
+          defaultStyle: 'technical-folio',
           slotKey: 'sqlharnessWorkflowComparisonSlot',
           savedKey: 'sqlharnessSavedWorkflowComparisonVariants',
           seenKey: 'sqlharnessSeenWorkflowComparisonVariants',
@@ -110,7 +110,7 @@
         masthead:{
           styleParam:'masthead-style',
           selectionKey:'sqlharnessMastheadStyle',
-          defaultStyle:'baseline',
+          defaultStyle:'brutalist-title-block',
           slotKey:'sqlharnessMastheadSlot',
           savedKey:'sqlharnessSavedMastheadVariants',
           seenKey:'sqlharnessSeenMastheadVariants',
@@ -132,7 +132,7 @@
         'section-heading':{
           styleParam:'section-heading-style',
           selectionKey:'sqlharnessOverviewHeadingStyle',
-          defaultStyle:'baseline',
+          defaultStyle:'pattern-shadow',
           slotKey:'sqlharnessOverviewHeadingSlot',
           savedKey:'sqlharnessSavedOverviewHeadingVariants',
           seenKey:'sqlharnessSeenOverviewHeadingVariants',
@@ -154,7 +154,7 @@
         'overview-layout':{
           styleParam:'overview-layout-style',
           selectionKey:'sqlharnessOverviewCompositionStyle',
-          defaultStyle:'baseline',
+          defaultStyle:'drawer-stack',
           slotKey:'sqlharnessOverviewCompositionSlot',
           savedKey:'sqlharnessSavedOverviewCompositionVariants',
           seenKey:'sqlharnessSeenOverviewCompositionVariants',
@@ -164,7 +164,7 @@
     },
   };
 
-  function workflowFragmentDefinition({ id, title, selector, mode, preview }) {
+  function workflowFragmentDefinition({ id, title, selector, mode, preview, defaultStyle = 'baseline' }) {
     const prefix = id
       .split('-')
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
@@ -183,7 +183,7 @@
         [mode]:{
           styleParam:`${mode}-style`,
           selectionKey:`sqlharness${prefix}Style`,
-          defaultStyle:'baseline',
+          defaultStyle,
           slotKey:`sqlharness${prefix}Slot`,
           savedKey:`sqlharnessSaved${prefix}Variants`,
           seenKey:`sqlharnessSeen${prefix}Variants`,
@@ -199,6 +199,7 @@
       title:'SQLHarness — Request sources lab',
       selector:'#explanation-request',
       mode:'request',
+      defaultStyle:'isometric-blocks',
       preview:{ width:900, height:420 },
     }),
     'intent-explanation': workflowFragmentDefinition({
@@ -206,6 +207,7 @@
       title:'SQLHarness — Intent explanation lab',
       selector:'#explanation-intent',
       mode:'panel',
+      defaultStyle:'stacked-cards',
       preview:{ width:760, height:980 },
     }),
     'retrieval-explanation': workflowFragmentDefinition({
@@ -213,6 +215,7 @@
       title:'SQLHarness — Retrieval explanation lab',
       selector:'#explanation-retrieval',
       mode:'panel',
+      defaultStyle:'stacked-cards',
       preview:{ width:760, height:980 },
     }),
     'assembly-explanation': workflowFragmentDefinition({
@@ -220,6 +223,7 @@
       title:'SQLHarness — Assembly explanation lab',
       selector:'#explanation-assembly',
       mode:'panel',
+      defaultStyle:'split-outline',
       preview:{ width:760, height:420 },
     }),
     'authority-card': workflowFragmentDefinition({
@@ -227,6 +231,7 @@
       title:'SQLHarness — Authority card lab',
       selector:'#explanation-authority .fragment-workflow-step--authority',
       mode:'panel',
+      defaultStyle:'command-trace',
       preview:{ width:760, height:440 },
     }),
     'result-explanation': workflowFragmentDefinition({
@@ -241,6 +246,7 @@
       title:'SQLHarness — Intent graph edges lab',
       selector:'#example-intent .example-intent-edges',
       mode:'edges',
+      defaultStyle:'ink-and-accent',
       preview:{ width:760, height:720 },
     }),
     'retrieval-example': workflowFragmentDefinition({
@@ -248,6 +254,7 @@
       title:'SQLHarness — Candidate ranking lab',
       selector:'#example-retrieval',
       mode:'example',
+      defaultStyle:'index-cards',
       preview:{ width:760, height:1040 },
     }),
   });

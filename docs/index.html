@@ -197,9 +197,9 @@ LIMIT 1;</code></pre>
 <div class="system-details-page">
 <div class="system-details" data-system-carousel data-lab-id="system-notes-carousel" role="region" aria-roledescription="carousel" aria-label="System development notes">
 <div class="system-details-viewport">
-<article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="1 of 2: How the semantic model was developed">
+<article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="1 of 2: How the intent model works">
 
-<h3 data-editable-key="semantic-model-development-heading-v4">How the semantic model was developed</h3>
+<h3 data-editable-key="semantic-model-development-heading-v4">How the intent model works</h3>
 <ul class="training-story">
 <li class="amr-role-bridge"><span class="editable-lead" data-editable-key="semantic-model-amr-parent-v16">The graph structure was inspired by Abstract Meaning Representation (AMR). AMR looks past word order and keeps the underlying event: what happened, who or what caused it, and who or what it affected.</span>
 <ul class="amr-role-map">
@@ -210,9 +210,9 @@ LIMIT 1;</code></pre>
 <li data-editable-key="semantic-model-design-choice-v16">SQLHarness applies the same idea to database questions. Its intent graph captures the data, calculation, rules, and requested answer in a shared graph format that can be checked against the database and translated into SQL.</li>
 </ul>
 </article>
-<article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="2 of 2: How SQL fragments are selected" hidden>
+<article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="2 of 2: How the SQL model works" hidden>
 
-<h3 data-editable-key="fragment-selection-heading-v10">How SQL fragments are selected</h3>
+<h3 data-editable-key="fragment-selection-heading-v10">How the SQL model works</h3>
 <ul class="training-story">
 <li data-editable-key="fragment-selection-search-v12">The intent graph becomes a parts list for the SQL query. Each labeled connection between two nodes describes one job, such as count customers, group them by region, or return a region name.</li>
 <li data-editable-key="fragment-selection-ranking-v12">For each connection, SQLHarness searches a catalog of ready-made SQL pieces. It scores the candidates and keeps the piece that best fits both nodes, their relationship, and the database.</li>
@@ -525,8 +525,8 @@ LIMIT 1;</code></pre>
 <div class="sr-only" id="intent-relationships">Intent graph connections: region is returned as name; name is ordered by most; most measures count; count is grouped by region; count applies to customers.</div>
 </main>
 
-<script src="carousel-style.js?v=2"></script>
-<script src="component-lab-registry.js?v=5"></script>
+<script src="carousel-style.js?v=3"></script>
+<script src="component-lab-registry.js?v=6"></script>
 <script>
 const textEditingEnabled = false;
 const workflowComparison = document.querySelector('.workflow-stage-list');
@@ -537,7 +537,7 @@ if (workflowComparison) {
     'numbered-spine', 'process-pillars', 'split-comparison', 'revision-log',
     'blueprint-grid', 'alternating-ledger', 'technical-folio',
   ]);
-  const storedWorkflowStyle = window.localStorage.getItem('sqlharnessWorkflowComparisonStyle') || 'baseline';
+  const storedWorkflowStyle = window.localStorage.getItem('sqlharnessWorkflowComparisonStyle') || 'technical-folio';
   const requestedWorkflowStyle = workflowParams.get('workflow-style') || storedWorkflowStyle;
   workflowComparison.dataset.workflowStyle = availableWorkflowStyles.has(requestedWorkflowStyle)
     ? requestedWorkflowStyle
@@ -603,7 +603,7 @@ if (queryExample) {
     'project-milestones', 'phase-overview', 'order-status',
     'sync-status-list', 'pinned-process',
   ]);
-  const storedQueryExampleStyle = window.localStorage.getItem('sqlharnessQueryExampleStyle') || 'baseline';
+  const storedQueryExampleStyle = window.localStorage.getItem('sqlharnessQueryExampleStyle') || 'hierarchy-stack';
   const requestedQueryExampleStyle = queryExampleParams.get('query-style') || storedQueryExampleStyle;
   queryExample.dataset.queryStyle = availableQueryExampleStyles.has(requestedQueryExampleStyle)
     ? requestedQueryExampleStyle
@@ -619,7 +619,7 @@ if (stageTable) {
     'isometric-pipeline', 'deploy-status', 'horizontal-timeline',
     'sankey-flow', 'workflow-canvas', 'alternating-milestones',
   ]);
-  const storedStageTableStyle = window.localStorage.getItem('sqlharnessStageTableStyle') || 'baseline';
+  const storedStageTableStyle = window.localStorage.getItem('sqlharnessStageTableStyle') || 'workflow-canvas';
   const requestedStageTableStyle = stageTableQuery.get('table-style') || storedStageTableStyle;
   stageTable.dataset.tableStyle = availableStageTableStyles.has(requestedStageTableStyle)
     ? requestedStageTableStyle
@@ -637,14 +637,14 @@ if (systemCarousel) {
       </div>`,
     chapters: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
-      <button class="system-details-chapter" type="button" data-carousel-slide-to="0"><span>01</span><strong>MODEL</strong></button>
-      <button class="system-details-chapter" type="button" data-carousel-slide-to="1"><span>02</span><strong>SQL FRAGMENTS</strong></button>`,
+      <button class="system-details-chapter" type="button" data-carousel-slide-to="0"><span>01</span><strong>INTENT MODEL</strong></button>
+      <button class="system-details-chapter" type="button" data-carousel-slide-to="1"><span>02</span><strong>SQL MODEL</strong></button>`,
     rail: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
       <div class="system-details-rail-label"><strong data-carousel-current>01</strong><span>/ 02</span></div>
       <div class="system-details-rail" aria-label="Carousel pages">
-        <button type="button" data-carousel-slide-to="0" aria-label="Show model page"></button>
-        <button type="button" data-carousel-slide-to="1" aria-label="Show SQL fragments page"></button>
+        <button type="button" data-carousel-slide-to="0" aria-label="Show intent model page"></button>
+        <button type="button" data-carousel-slide-to="1" aria-label="Show SQL model page"></button>
       </div>
       <div class="system-details-buttons">
         <button type="button" data-carousel-previous aria-label="Show previous page">←</button>
@@ -664,25 +664,25 @@ if (systemCarousel) {
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
       <div class="system-details-outline-pages">
         <button type="button" data-carousel-previous aria-label="Show previous page">←</button>
-        <button type="button" data-carousel-slide-to="0" aria-label="Show model page">01</button>
-        <button type="button" data-carousel-slide-to="1" aria-label="Show SQL fragments page">02</button>
+        <button type="button" data-carousel-slide-to="0" aria-label="Show intent model page">01</button>
+        <button type="button" data-carousel-slide-to="1" aria-label="Show SQL model page">02</button>
         <button type="button" data-carousel-next aria-label="Show next page">→</button>
       </div>`,
     underline: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
-      <button class="system-details-underline-tab" type="button" data-carousel-slide-to="0"><span>01</span>MODEL</button>
-      <button class="system-details-underline-tab" type="button" data-carousel-slide-to="1"><span>02</span>SQL FRAGMENTS</button>`,
+      <button class="system-details-underline-tab" type="button" data-carousel-slide-to="0"><span>01</span>INTENT MODEL</button>
+      <button class="system-details-underline-tab" type="button" data-carousel-slide-to="1"><span>02</span>SQL MODEL</button>`,
     stepper: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
       <button class="system-details-floating-control system-details-floating-control--previous" type="button" data-carousel-previous aria-label="Show previous page">←</button>
-      <button class="system-details-step" type="button" data-carousel-slide-to="0"><i></i><span>MODEL</span></button>
-      <button class="system-details-step" type="button" data-carousel-slide-to="1"><i></i><span>SQL FRAGMENTS</span></button>
+      <button class="system-details-step" type="button" data-carousel-slide-to="0"><i></i><span>INTENT MODEL</span></button>
+      <button class="system-details-step" type="button" data-carousel-slide-to="1"><i></i><span>SQL MODEL</span></button>
       <button class="system-details-floating-control system-details-floating-control--next" type="button" data-carousel-next aria-label="Show next page">→</button>`,
     pill: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
       <div class="system-details-pill-track">
-        <button type="button" data-carousel-slide-to="0"><span>01</span>MODEL</button>
-        <button type="button" data-carousel-slide-to="1"><span>02</span>SQL FRAGMENTS</button>
+        <button type="button" data-carousel-slide-to="0"><span>01</span>INTENT MODEL</button>
+        <button type="button" data-carousel-slide-to="1"><span>02</span>SQL MODEL</button>
       </div>`,
     brackets: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
@@ -691,8 +691,8 @@ if (systemCarousel) {
       <button class="system-details-bracket-command" type="button" data-carousel-next aria-label="Show next page">[ → ]</button>`,
     stacked: `
       <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
-      <button class="system-details-stacked-tab" type="button" data-carousel-slide-to="0"><span>01</span><strong>MODEL</strong></button>
-      <button class="system-details-stacked-tab" type="button" data-carousel-slide-to="1"><span>02</span><strong>SQL FRAGMENTS</strong></button>`,
+      <button class="system-details-stacked-tab" type="button" data-carousel-slide-to="0"><span>01</span><strong>INTENT MODEL</strong></button>
+      <button class="system-details-stacked-tab" type="button" data-carousel-slide-to="1"><span>02</span><strong>SQL MODEL</strong></button>`,
   };
   const storedCarouselStyle = window.SQLHARNESS_CAROUSEL_STYLE || {};
   const carouselQuery = new URLSearchParams(window.location.search);
