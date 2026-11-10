@@ -7,16 +7,19 @@ body.satisfaction-preview .workflow-comparison-heading {
 
 body.satisfaction-preview .workflow-stage-list {
   --workflow-panel-inset: 18px;
+  --workflow-outer-extension: 37px;
+  --workflow-panel-overhang: calc(var(--workflow-panel-inset) + var(--workflow-outer-extension));
   --workflow-column-gap: calc(64px + 2 * var(--workflow-panel-inset));
   --workflow-column-bg: #d6c5bd;
+  --workflow-stage-row-bg: #f4ebe7;
   position: relative;
   isolation: isolate;
   grid-column: 1 / -1;
   display: grid;
   gap: 44px;
-  width: calc(100% + 2 * var(--workflow-panel-inset));
+  width: calc(100% + 2 * var(--workflow-panel-overhang));
   min-width: 0;
-  margin: 0 calc(-1 * var(--workflow-panel-inset));
+  margin: 0 calc(-1 * var(--workflow-panel-overhang));
   padding-block: 18px;
   padding-inline: var(--workflow-panel-inset);
 }
@@ -24,14 +27,7 @@ body.satisfaction-preview .workflow-stage-list {
 /* Keep each column together while leaving the handoff arrow in a clear lane. */
 body.satisfaction-preview .workflow-stage-list::before,
 body.satisfaction-preview .workflow-stage-list::after {
-  position: absolute;
-  inset-block: 0;
-  z-index: -1;
-  width: calc((100% - 64px) / 2);
-  border-radius: 0;
-  background: var(--workflow-column-bg);
-  pointer-events: none;
-  content: "";
+  content: none;
 }
 
 body.satisfaction-preview .workflow-stage-list::before {
@@ -64,6 +60,8 @@ body.satisfaction-preview .workflow-stage-row {
 }
 
 body.satisfaction-preview .workflow-stage-title {
+  position: relative;
+  isolation: isolate;
   grid-column: 1 / -1;
   margin: 0;
   padding: 0 18px;
@@ -72,17 +70,9 @@ body.satisfaction-preview .workflow-stage-title {
   line-height: 1.45;
 }
 
-body.satisfaction-preview .stage-focus-toggle {
-  /* Keyboard equivalent of the whole example's pointer interaction. */
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* Let each numbered stage read as one shared row across both columns. */
+body.satisfaction-preview .workflow-stage-title::before {
+  content: none;
 }
 
 body.satisfaction-preview .workflow-stage-example,
@@ -101,7 +91,7 @@ body.satisfaction-preview .workflow-stage-example {
   flex-direction: column;
   align-items: center;
   gap: 0;
-  max-width: 581px;
+  max-width: none;
   padding: 18px;
 }
 
@@ -140,9 +130,25 @@ body.satisfaction-preview .workflow-stage-arrow {
 }
 
 body.satisfaction-preview .workflow-stage-example > :is(.example-intent-input, .code-generation-step--retrieval, .code-generation-step--query, .code-generation-authority-band) {
+  position: relative;
+  isolation: isolate;
   width: 100%;
   margin: 0;
+  background: transparent;
+}
+
+body.satisfaction-preview .workflow-stage-example > :is(.example-intent-input, .code-generation-step--retrieval, .code-generation-step--query, .code-generation-authority-band)::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: var(--intent-graph-bg);
+  pointer-events: none;
+  content: "";
+}
+
+body.satisfaction-preview .workflow-stage-example > :is(.example-intent-input, .code-generation-step--retrieval, .code-generation-step--query, .code-generation-authority-band)::before,
+body.satisfaction-preview .workflow-stage-example .example-intent-graph::before {
+  content:none;
 }
 
 body.satisfaction-preview .workflow-stage-example .example-intent-input {
@@ -157,9 +163,9 @@ body.satisfaction-preview .workflow-stage-example .intent-diagram-node--request 
 }
 
 body.satisfaction-preview .workflow-stage-example .example-intent-graph {
-  width: 100%;
+  width: calc(100% - 36px);
   height: 460px;
-  margin: 0;
+  margin: 0 auto;
   background: transparent;
 }
 
@@ -419,37 +425,13 @@ body.satisfaction-preview .study-scope {
   text-align: left;
 }
 
-/* Positional pairing carries the comparison; focus is optional and reversible. */
+/* Positional pairing carries the comparison without an extra focus mode. */
 body.satisfaction-preview .workflow-stage-list [data-workflow-match],
 body.satisfaction-preview .workflow-stage-list .workflow-match--preview {
   opacity: 1 !important;
   filter: none !important;
   outline: none !important;
   box-shadow: none !important;
-}
-
-body.satisfaction-preview .workflow-stage-list .workflow-stage-row.is-focused .workflow-stage-explanation {
-  outline: 2px solid var(--preview-link);
-  outline-offset: 7px;
-}
-
-body.satisfaction-preview .workflow-stage-list:not([data-focused-stage]) .workflow-stage-row.is-previewed .workflow-stage-explanation {
-  outline: 1px solid var(--preview-link);
-  outline-offset: 7px;
-}
-
-body.satisfaction-preview .workflow-stage-list[data-focused-stage] .workflow-stage-row:not(.is-focused) {
-  opacity: 1;
-  filter: none;
-}
-
-body.satisfaction-preview .workflow-stage-row:focus-within .workflow-stage-title {
-  color: var(--preview-link);
-}
-
-body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visible) .workflow-stage-example {
-  outline: 2px solid var(--preview-link);
-  outline-offset: 4px;
 }
 
 @media (max-width: 1100px) and (min-width: 761px) {
@@ -467,6 +449,7 @@ body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visi
   }
   body.satisfaction-preview .workflow-stage-list {
     --workflow-panel-inset: 0px;
+    --workflow-outer-extension: 0px;
     grid-column: 1;
     max-width: 620px;
     margin: 0 auto;
@@ -487,6 +470,9 @@ body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visi
   body.satisfaction-preview .workflow-stage-title {
     grid-column: 1;
     padding: 0;
+  }
+  body.satisfaction-preview .workflow-stage-title::before {
+    display: none;
   }
   body.satisfaction-preview .workflow-stage-example {
     max-width: none;
@@ -528,6 +514,7 @@ body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visi
     padding: 14px;
   }
   body.satisfaction-preview .workflow-stage-example .example-intent-graph {
+    width: calc(100% - 28px);
     height: 520px;
   }
   body.satisfaction-preview .workflow-stage-example .example-intent-graph::before {
@@ -562,8 +549,7 @@ body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visi
 }
 
 @media (pointer: coarse) {
-  body.satisfaction-preview .workflow-detail > summary,
-  body.satisfaction-preview .clear-workflow-selection {
+  body.satisfaction-preview .workflow-detail > summary {
     min-height: 44px;
   }
 }
@@ -572,6 +558,41 @@ body.satisfaction-preview .workflow-stage-row:has(.stage-focus-toggle:focus-visi
 body.satisfaction-preview .workflow-stage-example #example-request {
   flex-direction: column;
   gap: 14px;
+}
+
+body.satisfaction-preview #example-request .example-request-nodes {
+  display:grid;
+  width:100%;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  gap:16px;
+  align-items:stretch;
+}
+
+body.satisfaction-preview #example-request .example-request-node {
+  display:grid;
+  width:100%;
+  min-height:58px;
+  margin:0;
+  place-items:center;
+  padding:10px 14px;
+  border:0;
+  border-radius:14px;
+  corner-shape:squircle;
+  color:#e9eeff;
+  background:#170071;
+  box-shadow:7px 7px 0 #8a756b;
+  font:400 13px/1.5 "Maitree",Georgia,serif;
+  text-align:center;
+}
+
+body.satisfaction-preview #example-request .example-request-node--data {
+  font-weight:400;
+}
+
+body.satisfaction-preview #example-request .example-request-plus {
+  align-self:center;
+  color:#4f535c;
+  font:400 13px/1 "Maitree",Georgia,serif;
 }
 
 body.satisfaction-preview .example-data-context {
@@ -599,7 +620,7 @@ body.satisfaction-preview .example-data-context p {
 }
 
 body.satisfaction-preview .example-data-details {
-  margin-top: 6px;
+  margin-top: 0;
   font-size: 13px;
   line-height: 1.5;
 }
@@ -916,4 +937,197 @@ body.satisfaction-preview .workflow-stage-explanation .retrieval-binding {
   line-height: 1.55;
   white-space: normal;
   overflow-wrap: anywhere;
+}
+
+/* The comparison is one horizontal carousel; stage contents remain unchanged. */
+body.satisfaction-preview .workflow-stage-list.workflow-stage-carousel {
+  display:grid;
+  grid-template-columns:64px minmax(0,1fr);
+  grid-template-rows:auto auto;
+  gap:18px 20px;
+  padding:18px;
+  margin-bottom:400px;
+  background:transparent;
+}
+
+html.sticky-scroll-stages-enabled body.satisfaction-preview .scroll-sticky-track--workflow .workflow-stage-list.workflow-stage-carousel {
+  margin-bottom:0;
+}
+
+body.satisfaction-preview .workflow-stage-carousel .workflow-column-headings {
+  grid-column:2;
+  grid-row:1;
+  padding:0 18px 10px;
+}
+
+body.satisfaction-preview .workflow-carousel-viewport {
+  position:relative;
+  grid-column:2;
+  grid-row:2;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+  transition:height .28s ease;
+}
+
+body.satisfaction-preview .workflow-carousel-track {
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  align-items:flex-start;
+  transition:transform .34s cubic-bezier(.22,.61,.36,1);
+  will-change:transform;
+}
+
+body.satisfaction-preview .workflow-carousel-track > .workflow-stage-row {
+  flex:0 0 auto;
+  width:100%;
+  min-width:100%;
+  padding-inline:0;
+}
+
+body.satisfaction-preview .workflow-carousel-track > .workflow-stage-row:not(.is-carousel-active) {
+  visibility:hidden;
+}
+
+body.satisfaction-preview .workflow-carousel-track .workflow-stage-continuation {
+  display:none;
+}
+
+body.satisfaction-preview .workflow-carousel-controls {
+  grid-column:1;
+  grid-row:1 / span 2;
+  display:flex;
+  width:64px;
+  height:234px;
+  min-height:234px;
+  max-height:234px;
+  flex-direction:column;
+  align-self:start;
+  align-items:center;
+  gap:12px;
+  padding:0 12px 0 0;
+  margin-bottom:0;
+  border-top:0;
+  border-right:0;
+  border-bottom:0;
+}
+
+body.satisfaction-preview .workflow-carousel-arrow {
+  display:grid;
+  width:38px;
+  height:38px;
+  place-items:center;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  color:#fffaf6;
+  background:#685044;
+  box-shadow:0 0 20px rgba(104,80,68,.34);
+  font:500 17px/1 "IBM Plex Mono",ui-monospace,monospace;
+  cursor:pointer;
+}
+
+body.satisfaction-preview .workflow-carousel-arrow:hover:not(:disabled) {
+  background:#7a563f;
+  box-shadow:0 0 25px rgba(104,80,68,.48);
+}
+
+body.satisfaction-preview .workflow-carousel-arrow:disabled {
+  cursor:default;
+  opacity:.3;
+  box-shadow:0 0 12px rgba(104,80,68,.16);
+}
+
+body.satisfaction-preview .workflow-carousel-position {
+  min-width:42px;
+  color:#685044;
+  font:600 10px/1 "IBM Plex Mono",ui-monospace,monospace;
+  letter-spacing:.06em;
+}
+
+body.satisfaction-preview .workflow-carousel-dots {
+  display:flex;
+  min-height:0;
+  flex:1;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+}
+
+body.satisfaction-preview .workflow-carousel-dot {
+  width:8px;
+  height:8px;
+  padding:0;
+  border:1px solid #685044;
+  border-radius:50%;
+  background:transparent;
+  cursor:pointer;
+}
+
+body.satisfaction-preview .workflow-carousel-dot[aria-current="true"] {
+  background:#685044;
+}
+
+/* Lab directions affect only the carousel shell and navigation. */
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="paired-rail"] .workflow-carousel-viewport { border-top:1px solid #8a756b; border-bottom:1px solid #8a756b; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="paired-rail"] .workflow-carousel-controls { border-right:0; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="paired-rail"] .workflow-carousel-track { transition-duration:.42s; transition-timing-function:cubic-bezier(.22,.61,.36,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="completion-path"] .workflow-carousel-dots { position:relative; justify-content:space-between; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="completion-path"] .workflow-carousel-dots::before { content:""; position:absolute; top:4px; bottom:4px; left:50%; z-index:-1; border-left:1px solid #8a756b; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="completion-path"] .workflow-carousel-dot { width:16px; height:16px; border:4px solid var(--page-bg); box-shadow:0 0 0 1px #685044; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="completion-path"] .workflow-carousel-track { transition-duration:.52s; transition-timing-function:cubic-bezier(.16,1,.3,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-cards"] .workflow-carousel-viewport { padding:18px; border:1px solid #8a756b; background:rgba(210,197,197,.34); }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-cards"] .workflow-carousel-controls { padding:12px; border:1px solid #8a756b; border-right:0; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-cards"] .workflow-carousel-track { transition-duration:.38s; transition-timing-function:cubic-bezier(.2,.8,.2,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="numbered-spine"] { padding-left:58px; border-left:10px solid #685044; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="numbered-spine"] .workflow-carousel-position { font-size:18px; letter-spacing:-.04em; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="numbered-spine"] .workflow-carousel-track { transition-duration:.3s; transition-timing-function:cubic-bezier(.4,0,.2,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-pillars"] .workflow-carousel-dots { gap:4px; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-pillars"] .workflow-carousel-dot { width:8px; height:auto; flex:1; border:0; border-radius:0; background:#c8bbbb; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-pillars"] .workflow-carousel-dot[aria-current="true"] { background:#685044; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="process-pillars"] .workflow-carousel-track { transition-duration:.46s; transition-timing-function:cubic-bezier(.33,1,.68,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="split-comparison"] .workflow-carousel-viewport::after { content:""; position:absolute; top:0; bottom:0; left:50%; z-index:3; border-left:2px solid #8a756b; pointer-events:none; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="split-comparison"] .workflow-column-headings { border-bottom:2px solid #685044; font-weight:600; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="split-comparison"] .workflow-carousel-track { transition-duration:.42s; transition-timing-function:cubic-bezier(.65,0,.35,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="revision-log"] { border-top:1px solid #685044; border-bottom:1px solid #685044; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="revision-log"] .workflow-carousel-controls { font-family:"IBM Plex Mono",ui-monospace,monospace; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="revision-log"] .workflow-carousel-dot { border-radius:0; transform:rotate(45deg); }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="revision-log"] .workflow-carousel-track { transition-duration:.28s; transition-timing-function:steps(4,end); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="blueprint-grid"] { padding:28px; border:1px solid #8a756b; background-color:#c8bbbb; background-image:radial-gradient(circle,rgba(104,80,68,.25) 1px,transparent 1.4px); background-size:16px 16px; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="blueprint-grid"] .workflow-carousel-viewport { padding:18px; border:1px solid #8a756b; background:var(--page-bg); }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="blueprint-grid"] .workflow-carousel-controls { padding:12px; background:var(--page-bg); }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="blueprint-grid"] .workflow-carousel-track { transition-duration:.44s; transition-timing-function:cubic-bezier(.22,.61,.36,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="alternating-ledger"] { border:1px solid #685044; box-shadow:9px 9px 0 #b9aaaa,10px 10px 0 #685044; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="alternating-ledger"] .workflow-column-headings { border-bottom:1px solid #8a756b; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="alternating-ledger"] .workflow-carousel-track { transition-duration:.36s; transition-timing-function:cubic-bezier(.34,1.56,.64,1); }
+
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="technical-folio"] { padding:30px; border:4px double #685044; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="technical-folio"] .workflow-column-headings { font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="technical-folio"] .workflow-carousel-controls { border-right:0; }
+body.satisfaction-preview .workflow-stage-list[data-workflow-style="technical-folio"] .workflow-carousel-track { transition-duration:.5s; transition-timing-function:linear; }
+
+/* Keep graph relationship labels legible without adding cards on top of the diagram. */
+body.satisfaction-preview .example-intent-edge-label rect {
+  display:none;
+}
+
+body.satisfaction-preview .example-intent-edge-label text {
+  stroke:var(--page-bg);
+  stroke-width:5px;
+  stroke-linejoin:round;
+  paint-order:stroke fill;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.satisfaction-preview .workflow-carousel-track { transition:none !important; }
 }

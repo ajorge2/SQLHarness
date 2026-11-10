@@ -44,6 +44,10 @@ def test_mcp_server_enforces_authority_boundary(tmp_path):
         "inspect_schema",
         "list_databases",
         "validate_sql",
+        "workflow_contract",
+        "prepare_query",
+        "execute_workflow",
+        "query_database",
     }
     assert blocked.structured_content["decision"] == "blocked"
     assert blocked.structured_content["database_touched"] is False

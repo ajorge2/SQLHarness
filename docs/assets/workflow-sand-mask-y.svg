@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="1000" viewBox="0 0 180 1000" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="sand-top" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.2" stop-color="#fff" stop-opacity="0.08" />
+      <stop offset="0.45" stop-color="#fff" stop-opacity="0.36" />
+      <stop offset="0.7" stop-color="#fff" stop-opacity="0.72" />
+      <stop offset="1" stop-color="#fff" />
+    </linearGradient>
+    <linearGradient id="sand-bottom" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.2" stop-color="#fff" stop-opacity="0.08" />
+      <stop offset="0.45" stop-color="#fff" stop-opacity="0.36" />
+      <stop offset="0.7" stop-color="#fff" stop-opacity="0.72" />
+      <stop offset="1" stop-color="#fff" />
+    </linearGradient>
+    <filter id="sand-grain" x="0" y="0" width="180" height="1000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72 0.19" numOctaves="2" seed="31" result="noise" />
+      <feColorMatrix
+        in="noise"
+        type="matrix"
+        values="0 0 0 0 1
+                0 0 0 0 1
+                0 0 0 0 1
+                0.333 0.333 0.333 0 0"
+        result="noise-alpha"
+      />
+      <feComposite
+        in="SourceGraphic"
+        in2="noise-alpha"
+        operator="arithmetic"
+        k1="0"
+        k2="1"
+        k3="0.06"
+        k4="-0.03"
+      />
+    </filter>
+  </defs>
+
+  <rect width="180" height="32" fill="url(#sand-top)" filter="url(#sand-grain)" />
+  <rect y="968" width="180" height="32" fill="url(#sand-bottom)" filter="url(#sand-grain)" />
+  <rect y="24" width="180" height="952" fill="#fff" />
+</svg>

@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "project": {
+    "name": "sqlharness-ui",
+    "productType": "editorial technical research brief",
+    "stack": ["static HTML", "CSS", "vanilla JavaScript"]
+  },
+  "sources": {
+    "tokens": ["docs/analysis-plain.css"],
+    "components": ["docs/index.html#system", "docs/carousel-lab.html"],
+    "assets": [],
+    "instructions": ["Use the saved component as the fixed control and query 21st before every creative carousel batch."]
+  },
+  "design": {
+    "colorMode": "light",
+    "colors": {
+      "ink": "#202124",
+      "canvas": "#b9aaaa",
+      "surface": "#c8bbbb",
+      "control": "#d2c5c5",
+      "paper": "#fffaf6",
+      "accent": "#685044",
+      "line": "#8a756b"
+    },
+    "typography": {
+      "body": "IBM Plex Sans",
+      "technicalLabels": "IBM Plex Mono",
+      "editorialTableCopy": "serif"
+    },
+    "spacing": { "base": "8px", "componentDensity": "compact editorial" },
+    "radius": { "default": "0", "controls": "5px", "circularControls": "999px" },
+    "shadows": { "default": "none", "floatingControls": "soft accent glow only" },
+    "motion": { "duration": "160-180ms", "character": "restrained, scroll-linked sticky stages for major paired-page sections" },
+    "density": "compact"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": [
+      "Spec Sheet #39793: group headers, marked rows, compact technical density",
+      "Editorial Service List #37530: numbered editorial rows and directional affordances",
+      "Process Overview #4579: responsive process-card grid",
+      "Vertical How It Works #26902: dashed rail, numbered nodes, stacked step cards",
+      "Dark Matrix #29260: dashed matrix dividers and inverted comparison surface",
+      "Process Timeline #28381: ordered milestones with completion states",
+      "Comparison Table #26827: emphasized column and matrix hierarchy",
+      "ContributorsOverviewTable #2708: structured rows with status-like labels",
+      "Table of Content #22596: variable tick rail and compact indexed scanning",
+      "Feature Comparison Table #21218: grouped sections and emphasized cells"
+      ,"Feature Overview Bento #27082: mixed-span hairline lattice"
+      ,"Quarterly Roadmap Columns #29450: compact status columns"
+      ,"Ghost Accordion #29230: borderless numbered disclosure rows"
+      ,"Build Pipeline #36683: isometric stage stations"
+      ,"Deployment Pipeline #29359: status nodes and progress connectors"
+      ,"Timeline #28298: horizontal milestone route"
+      ,"ECharts Sankey #31570: staggered flow nodes and connecting bands"
+      ,"Interactive Workflow Blueprint #43113: dotted canvas and connected nodes"
+      ,"Milestone Timeline Feature #29502: alternating cards on a centered spine"
+      ,"Sticky Scroll Reveal: finite pinned section with scroll-driven content progress"
+    ]
+  },
+  "constraints": {
+    "must": [
+      "Preserve the exact five architecture stages and their responsibility copy.",
+      "Preserve the two semantic groups: Intent normalization and Code generation.",
+      "Use the existing muted mauve and brown palette.",
+      "Keep every option readable at the component lab's scaled preview size.",
+      "Treat the saved page component as a permanent no-slot control.",
+      "Query the live 21st catalog before creating every new creative-carousel batch and record the retrieved component lineage in each option."
+    ],
+    "avoid": [
+      "Generic SaaS dashboard cards",
+      "Bright colors outside the established palette",
+      "Decorative changes that obscure stage-to-responsibility mapping",
+      "Rounded-pill styling for the table itself"
+    ]
+  },
+  "decisions": [
+    "The system notes component uses an overline heading and route-stepper controls.",
+    "Creative exploration happens in the local two-panel carousel lab and is only published after explicit selection.",
+    "Paired-page sections use a restrained scroll-linked entrance: the pages fade in from opposite sides and converge into a 12px overlap with mirrored 1.4 degree inward tilts.",
+    "On desktop, each major paired-page object and the workflow carousel pins within a finite native-scroll track while its entrance resolves, then releases naturally into the next section; reduced-motion and narrow layouts remain unpinned."
+  ],
+  "evidence": [
+    "docs/index.html",
+    "docs/analysis-plain.css",
+    "docs/carousel-lab.html",
+    "21st search feedback 17dbed20-469d-4cd1-8334-f8402c5685f9",
+    "21st search feedback dac576a7-bed7-4dd1-a08f-209ab5fd62ea",
+    "21st search feedback 6d0e69b3-ff30-4c75-b264-07ed16e8967f"
+    ,"21st search feedback 62c601e3-5328-4e05-ab44-1c8d758feffa"
+    ,"21st search feedback 9c97c2c5-539c-42d2-a711-88460287eb4b"
+    ,"21st search feedback f2b83287-9c4a-4e01-bb6e-46a4e424ef5a"
+    ,"21st search feedback 0ed90b08-31b5-43cc-bbbf-ccabde4f5c4d"
+    ,"21st search feedback fd879c8b-fbea-4e8f-9790-c620305e5882"
+  ],
+  "generatedAt": "2026-11-10T00:33:34.780Z"
+}

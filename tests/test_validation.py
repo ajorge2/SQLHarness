@@ -40,3 +40,20 @@ def test_rejects_mutation_and_unknown_schema_references():
     assert mutation.errors == ("non_readonly_operations: DELETE",)
     assert not unknown.valid
     assert unknown.errors == ("unknown_column: missing",)
+
+
+def test_rejects_column_from_an_unreferenced_table():
+    result = validate_readonly_sql(
+        "SELECT amount_usd FROM customers",
+        {"customers": ("id", "name"), "orders": ("id", "amount_usd")},
+    )
+    assert not result.valid
+    assert any("invalid_column_scope" in error for error in result.errors)
+
+
+def test_resolves_cte_and_derived_table_columns():
+    for sql in (
+        "WITH names AS (SELECT name FROM customers) SELECT name FROM names",
+        "SELECT x.name FROM (SELECT name FROM customers) AS x",
+    ):
+        assert validate_readonly_sql(sql, SCHEMA).valid

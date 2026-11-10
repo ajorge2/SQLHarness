@@ -1,0 +1,12 @@
+.storybook-component-stage {
+  width: min(545px, 100%);
+  margin: 0 auto;
+}
+
+.storybook-component-stage .system-details {
+  grid-column: auto;
+  grid-row: auto;
+  max-width: 545px;
+  margin: 0;
+  transform: none;
+}

@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SQLHarness — Carousel component lab</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink:#252222;
+    --muted:#746761;
+    --paper:#fffaf6;
+    --canvas:#b9aaaa;
+    --accent:#685044;
+    --line:#d8cfca;
+  }
+  * { box-sizing:border-box; }
+  html,body { width:100%; min-width:0; height:100%; margin:0; overflow:hidden; }
+  body { color:var(--ink); background:var(--paper); font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+  button,a { font:inherit; }
+  button { color:inherit; }
+  .workspace { display:grid; grid-template-rows:minmax(250px,44%) minmax(0,56%); width:100%; height:100%; }
+  .saved { position:relative; display:grid; min-width:0; min-height:0; grid-template-rows:minmax(0,1fr); border-bottom:1px solid #a79790; background:var(--canvas); }
+  .saved__publish { position:absolute; z-index:3; top:14px; right:14px; display:none; height:38px; align-items:center; justify-content:center; padding:0 14px; border:1px solid var(--accent); border-radius:5px; color:var(--paper); background:var(--accent); font-size:12px; font-weight:700; text-decoration:none; }
+  .saved__stage { position:relative; min-width:0; min-height:0; overflow:hidden; }
+  .saved__frame,.lab__frame { position:absolute; top:50%; left:50%; width:var(--component-frame-width,780px); height:var(--component-frame-height,600px); border:0; background:transparent; transform:translate(-50%,-50%) scale(var(--frame-scale,.55)); transform-origin:center; }
+  .lab { display:grid; grid-template-rows:minmax(0,1fr) 38px; width:100%; min-width:0; min-height:0; overflow:hidden; transition:opacity .18s ease; }
+  .lab__actions { position:absolute; z-index:3; top:14px; right:14px; display:flex; gap:8px; }
+  .lab__keep,.lab__save,.lab__use { display:inline-flex; height:36px; align-items:center; justify-content:center; padding:0 13px; border:1px solid var(--accent); border-radius:5px; font-size:12px; font-weight:650; cursor:pointer; }
+  .lab__keep { color:var(--accent); background:rgba(234,223,218,.92); }
+  .lab__save { color:var(--accent); background:rgba(255,250,246,.9); }
+  .lab__save[data-saved="true"] { color:var(--paper); background:#8a756b; }
+  .lab__use { color:var(--paper); background:var(--accent); }
+  .lab__use[data-selected="true"] { color:var(--accent); background:#eadfda; }
+  .lab__stage { position:relative; display:grid; min-width:0; min-height:0; place-items:center; overflow:hidden; padding:18px 64px; background:var(--canvas); }
+  .lab__stage-arrow { position:absolute; z-index:2; top:50%; display:grid; width:44px; height:64px; place-items:center; border:0; border-radius:6px; background:rgba(255,250,246,.92); font-size:25px; transform:translateY(-50%); cursor:pointer; }
+  .lab__stage-arrow--previous { left:14px; }
+  .lab__stage-arrow--next { right:14px; }
+  .lab__footer { display:flex; align-items:center; justify-content:center; gap:5px; border-top:1px solid var(--line); background:var(--paper); }
+  .lab__dot { position:relative; display:grid; width:28px; height:24px; place-items:center; padding:0; border:1px solid #c8bbb5; border-radius:3px; color:var(--muted); background:#f3eeea; font:600 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace; cursor:pointer; }
+  .lab__dot[aria-current="true"] { color:var(--paper); border-color:var(--accent); background:var(--accent); }
+  .lab__dot[data-saved="true"]::after { content:""; position:absolute; top:2px; right:2px; width:5px; height:5px; border-radius:50%; background:#356df3; box-shadow:0 0 0 1px var(--paper); }
+  button:focus-visible,a:focus-visible { outline:2px solid #3054c1; outline-offset:2px; }
+  @media (max-width:780px) {
+    .workspace { grid-template-rows:minmax(220px,40%) minmax(0,60%); }
+    .lab { grid-template-rows:minmax(0,1fr) 36px; }
+    .lab__stage { padding-right:48px; padding-left:48px; }
+  }
+  .workspace.workspace--complete { grid-template-rows:minmax(0,1fr) 0; }
+  .workspace--complete .saved { border-bottom:0; }
+  .workspace--complete .saved__publish { display:inline-flex; }
+  .workspace--complete .lab { visibility:hidden; opacity:0; pointer-events:none; }
+</style>
+</head>
+<body>
+<div class="workspace">
+<section class="saved" aria-label="Saved component version">
+  <a class="saved__publish" href="index.html#system" target="_blank" data-publish>Use on Page</a>
+  <div class="saved__stage" data-saved-stage>
+    <iframe class="saved__frame" title="Saved carousel component" data-saved-preview></iframe>
+  </div>
+</section>
+<main class="lab">
+  <section class="lab__stage" aria-label="Component style preview">
+    <div class="lab__actions">
+      <button class="lab__keep" type="button" data-keep>Keep current style</button>
+      <button class="lab__save" type="button" data-save>Save slot</button>
+      <button class="lab__use" type="button" data-use>Use this style</button>
+    </div>
+    <button class="lab__stage-arrow lab__stage-arrow--previous" type="button" data-previous aria-label="Previous design">←</button>
+    <iframe class="lab__frame" title="Live carousel component preview" data-preview></iframe>
+    <button class="lab__stage-arrow lab__stage-arrow--next" type="button" data-next aria-label="Next design">→</button>
+  </section>
+  <footer class="lab__footer" aria-label="Choose a design" data-dots></footer>
+</main>
+</div>
+<script src="carousel-style.js?v=2"></script>
+<script src="component-lab-registry.js?v=5"></script>
+<script>
+  const variants = {
+    header: [
+      { key:'overline', name:'Saved overline', lineage:'Approved baseline', description:'The current editorial hierarchy remains available as the control.' },
+      { key:'editorial-split', name:'Editorial split', lineage:'21st · Editorial Hero #19075', description:'An asymmetric context label and offset headline create magazine-like tension.' },
+      { key:'doc-band', name:'Documentation band', lineage:'21st · Documentation Link Card #25352', description:'A separate metadata strip makes the title feel like a precise system artifact.' },
+      { key:'index-plaque', name:'Index plaque', lineage:'21st · Label and Note catalog results', description:'A numbered block turns the title into a cataloged exhibit.' },
+      { key:'stamped', name:'Stamped title', lineage:'21st · Neobrutalist card catalog results', description:'A framed title and offset shadow add physical emphasis without changing the palette.' },
+      { key:'corner-frame', name:'Corner frame', lineage:'21st · Corner Frame #35211', description:'Viewfinder brackets frame the title while leaving the surface open.' },
+      { key:'iso-slab', name:'Iso slab', lineage:'21st · Iso Card #40297', description:'A line-drawn offset gives the title a shallow architectural depth.' },
+      { key:'folio-number', name:'Folio number', lineage:'21st · Editorial Service List #37530', description:'An oversized sequence number turns the title into an editorial entry.' },
+      { key:'terminal', name:'Terminal prompt', lineage:'21st · Terminal #29817', description:'A command label and reversed title bar make the system context explicit.' },
+      { key:'switchboard', name:'Signal matrix', lineage:'21st · Switchboard Card #25295', description:'A restrained dot matrix introduces the title as a system signal.' },
+      { key:'centered-label', name:'Centered label', lineage:'21st · Header Section #29410', description:'A centered caption bridges two rules without adding another panel.' },
+    ],
+    controls: [
+      { key:'utility', name:'Swiss utility strip', lineage:'New Typography baseline', description:'A quiet counter paired with compact square commands.' },
+      { key:'chapters', name:'Indexed chapters', lineage:'Editorial chapter tabs', description:'The slides become named destinations rather than an abstract count.' },
+      { key:'rail', name:'Progress rail', lineage:'Industrial wayfinding', description:'A horizontal route makes position legible at a glance.' },
+      { key:'folio', name:'Centered folio', lineage:'Modernist book pagination', description:'Navigation reads like a composed page folio instead of app chrome.' },
+      { key:'split', name:'Split command bar', lineage:'Early digital control panels', description:'Back, position, and forward each occupy a clear physical zone.' },
+      { key:'outline', name:'Outline pagination', lineage:'21st · Outline Pagination #28330', description:'Separate bordered commands make every destination explicit.' },
+      { key:'underline', name:'Underline tabs', lineage:'21st · Underline Tabs #24956', description:'Named destinations stay light while a strong underline marks position.' },
+      { key:'stepper', name:'Route stepper', lineage:'21st · Stepper #3728', description:'A connected route emphasizes progression between the two pages.' },
+      { key:'pill', name:'Progress pill', lineage:'21st · Segmented Progress Pill #28550', description:'A compact sliding-pill composition turns the bar into one grouped control.' },
+      { key:'brackets', name:'Bracket commands', lineage:'21st · compact pagination results', description:'Monospaced bracket commands frame a centered position readout.' },
+      { key:'stacked', name:'Raised tab', lineage:'21st · tab and segmented-control results', description:'The active destination rises from the control rail like a physical index tab.' },
+    ],
+    shell: [
+      { key:'separated-panels', name:'Separated instrument frame', lineage:'21st · Frame #11474', description:'An outer chassis holds the reading surface and route controls as distinct inset panels.' },
+      { key:'focus-corners', name:'Focus-lock shell', lineage:'21st · Focus Frame Border #29885', description:'Four structural corner locks replace the continuous outer border and leave the surface visually open.' },
+      { key:'folded-sheet', name:'Folded technical sheet', lineage:'21st · Folded Card #34882', description:'A clipped upper corner makes the carousel read like a handled specification sheet.' },
+      { key:'iso-offset', name:'Isometric plate', lineage:'21st · Iso Card #40297', description:'A precise offset outline gives the full component shallow architectural depth.' },
+      { key:'double-rule', name:'Double-rule folio', lineage:'21st · Frame #11474', description:'A double perimeter turns the component into a formal editorial plate.' },
+      { key:'side-rail', name:'Bound dossier', lineage:'21st · Reshaped Card #17534', description:'A heavy left binding rail gives the shell directional weight without changing its contents.' },
+      { key:'offset-outline', name:'Offset registry', lineage:'21st · Iso Card #40297', description:'A detached perimeter line makes the container feel registered on an underlying drafting grid.' },
+      { key:'open-frame', name:'Open architectural frame', lineage:'21st · Corner Frame #35211', description:'Partial perimeter strokes define the shell while deliberately leaving its edges open.' },
+      { key:'split-shell', name:'Split reading chassis', lineage:'21st · Reshaped Card sections #17534', description:'The reading pane and navigation strip become two related but physically separate modules.' },
+      { key:'dossier-tab', name:'Indexed dossier', lineage:'21st · Folded Card #34882', description:'A compact filing tab extends the outer shell into a cataloged research artifact.' },
+    ],
+    query: [
+      { key:'agent-transcript', name:'Agent transcript rail', lineage:'21st · AI Agent Response #25442', description:'A single activity trunk with nested elbows makes the translation read like an inspectable agent execution trace.' },
+      { key:'waterfall-trace', name:'Waterfall trace', lineage:'21st · Agent Trace #26968', description:'Four staggered spans turn request-to-answer latency into a compact waterfall timeline.' },
+      { key:'cli-window', name:'SQL terminal session', lineage:'21st · Terminal #28361', description:'A restrained command window treats the input, query, rows, and answer as one continuous terminal exchange.' },
+      { key:'workflow-card', name:'Workflow builder card', lineage:'21st · Workflow Builder Card #8981', description:'The stages become a composed workflow artifact with an indexed header and a compact metadata footer.' },
+      { key:'project-milestones', name:'Translation milestones', lineage:'21st · ProjectProgressCard #8698', description:'A vertical milestone spine makes completion and sequence the primary visual structure.' },
+      { key:'phase-overview', name:'Four-phase overview', lineage:'21st · Process Overview #4579', description:'A balanced four-panel process overview gives every transformation state equal architectural weight.' },
+      { key:'order-status', name:'Delivery status path', lineage:'21st · Order Status Card #8597', description:'The generated answer becomes the delivered outcome at the end of a continuous completion path.' },
+      { key:'sync-status-list', name:'Synchronized records', lineage:'21st · Card Status List #2514', description:'Dense status rows present the four stages as synchronized records inside one operational surface.' },
+      { key:'hierarchy-stack', name:'Technical hierarchy stack', lineage:'21st · Connoisseur Stack Interactor #9906', description:'A layered hierarchy gives generated SQL the dominant central position and nests the evidence around it.' },
+      { key:'pinned-process', name:'Pinned process cards', lineage:'21st · How It Works #19861', description:'Offset pinned cards create a tactile process board while preserving the exact transformation sequence.' },
+    ],
+    workflow: [
+      { key:'paired-rail', name:'Paired timeline rail', lineage:'21st · Vertical How It Works Timeline #26902', description:'A restrained rail frame pairs with a long, fluid vertical glide between stages.' },
+      { key:'completion-path', name:'Completion checkpoints', lineage:'21st · Process Timeline #28381', description:'Connected checkpoints pair with a soft spring-settle motion that emphasizes progress.' },
+      { key:'process-cards', name:'Process card deck', lineage:'21st · Process Overview #4579', description:'A contained deck frame uses a lifted, slightly rotating card entrance.' },
+      { key:'numbered-spine', name:'Numbered editorial spine', lineage:'21st · How It Works Timeline #19863', description:'A strong index rail uses a quick directional wipe between numbered stages.' },
+      { key:'process-pillars', name:'Segmented process pillars', lineage:'21st · Process Pillars #3192', description:'Segmented progress controls pair with a measured horizontal expansion on arrival.' },
+      { key:'split-comparison', name:'Split-screen reveal', lineage:'21st · Before After Comparison #37527', description:'A firm center divider uses a directional half-screen reveal for each stage.' },
+      { key:'revision-log', name:'Revision log step', lineage:'21st · Great UI Revision Timeline #23363', description:'Diamond log markers pair with a deliberate stepped transition instead of a smooth glide.' },
+      { key:'blueprint-grid', name:'Blueprint focus', lineage:'21st · Interactive Workflow Blueprint #43113', description:'A dotted planning frame uses a subtle focus-and-scale transition.' },
+      { key:'alternating-ledger', name:'Elastic ledger', lineage:'21st · How It Works #19861', description:'An offset ledger frame uses a small sideways overshoot before settling.' },
+      { key:'technical-folio', name:'Technical folio fade', lineage:'21st · documentation comparison patterns', description:'A double-rule folio uses a quiet linear fade with minimal motion.' },
+    ],
+    masthead: [
+      { key:'report-rail', name:'Research report rail', lineage:'21st · Research Report #36561', description:'A variable tick rail and compact report metadata make the masthead feel like the entry point to a long-form technical reader.' },
+      { key:'metadata-path', name:'Metadata path', lineage:'21st · Page Header with Breadcrumbs #18149', description:'A breadcrumb-like path sits above a firm title row, separating document context from identity.' },
+      { key:'centered-kicker', name:'Centered research kicker', lineage:'21st · Header Section #29410', description:'A centered technical label, restrained headline, and author line create a quiet publication cover.' },
+      { key:'condensed-header', name:'Condensed document bar', lineage:'21st · Sticky Header #23562', description:'The entire identity compresses into a narrow persistent-looking bar with stable title and author zones.' },
+      { key:'ruled-journal', name:'Ruled journal', lineage:'21st · Classic Header with Sheet Menu #26888', description:'Strong horizontal rules frame the title like a journal masthead without adding a card.' },
+      { key:'editorial-index-row', name:'Editorial index row', lineage:'21st · Editorial Service List #37530', description:'A numbered row composition turns project, statement, and author into one editorial index entry.' },
+      { key:'brutalist-title-block', name:'Brutalist title block', lineage:'21st · Typography Portfolio Preloader #38995', description:'Hard edges, offset registration, and oversized project type create a more assertive typographic artifact.' },
+      { key:'reading-progress', name:'Reading progress masthead', lineage:'21st · Research Report #36561', description:'A visible progress rule and compact metadata introduce the page as an active research document.' },
+      { key:'citation-margin', name:'Citation margin', lineage:'21st · Page Header with Breadcrumbs #18149', description:'A narrow citation column holds document identity while the main title occupies the reading field.' },
+      { key:'type-remix', name:'Type specimen remix', lineage:'21st · Typography Portfolio Preloader #38995', description:'Contrasting type treatments separate the system name from its plain-language promise without changing the copy.' },
+    ],
+    'section-heading': [
+      { key:'eyebrow-split', name:'Eyebrow split', lineage:'21st · Editorial Not Found Split #29401', description:'A compact section badge and a large offset title create a two-column editorial threshold.' },
+      { key:'right-editorial', name:'Right editorial title', lineage:'21st · Editorial Image Hero #19077', description:'A quiet left-hand context label balances a right-aligned serif title.' },
+      { key:'divider-caption', name:'Divider caption', lineage:'21st · Reshaped Divider #17747', description:'The title interrupts a fine divider as a precise inline caption.' },
+      { key:'toc-register', name:'Contents register', lineage:'21st · Table of Contents #34517', description:'A live-looking vertical indicator and section number turn the heading into a document waypoint.' },
+      { key:'slit-display', name:'Slit display', lineage:'21st · FAQ Accordion Section #38218', description:'A hard horizontal slit cuts through oversized type for a controlled editorial gesture.' },
+      { key:'paper-ink-stack', name:'Paper and ink stack', lineage:'21st · Typography #37262', description:'A small technical label and a soft serif display line create hierarchy through type alone.' },
+      { key:'rule-ledger', name:'Ruled ledger', lineage:'21st · Horizontal Section Separator #29295', description:'A narrow metadata row and a full-width baseline make the section feel cataloged.' },
+      { key:'pattern-shadow', name:'Pattern shadow type', lineage:'21st · Pattern Text #7017', description:'A restrained striped shadow gives the word typographic depth while keeping the surface open.' },
+      { key:'hairline-destinations', name:'Hairline destinations', lineage:'21st · Editorial Not Found Split #29401', description:'The title leads into a compact run of hairline destination marks, suggesting the sections ahead.' },
+      { key:'nested-chapter', name:'Nested chapter marker', lineage:'21st · Table of Contents #34517', description:'An indented rule and active chapter mark give the heading a nested document hierarchy.' },
+    ],
+    'overview-layout': [
+      { key:'staggered-spans', name:'Staggered spans', lineage:'21st · Condition Grid #25300', description:'A seven/five grid uses unequal column spans and a lowered evidence field for a directional editorial read.' },
+      { key:'hairline-lattice', name:'Hairline lattice', lineage:'21st · Feature Overview Bento #27082', description:'Both columns occupy a single hairline lattice with one-pixel separation and deliberately unequal cell weights.' },
+      { key:'sticky-evidence', name:'Sticky evidence rail', lineage:'21st · Sticky Content Wrapper #26064', description:'The prose owns the main reading field while the translation artifact sits in a narrower anchored rail.' },
+      { key:'context-rail', name:'Context rail', lineage:'21st · Rail Panel Sidebar #44858', description:'A slim structural rail precedes the two-column field and makes the evidence side feel docked.' },
+      { key:'featured-plus', name:'Featured plus secondary', lineage:'21st · Bento Grid / Case Study #2201', description:'The prose spans the upper field and the translation artifact becomes a secondary block below and to the right.' },
+      { key:'drawer-stack', name:'Drawer stack', lineage:'21st · 3D Stacked Website Cards #44515', description:'The two wrappers overlap like filed sheets, with the evidence layer sitting slightly forward.' },
+      { key:'workspace-inset', name:'Workspace inset', lineage:'21st · Dashboard Sidebar #14941', description:'A narrow index strip and inset content frame recast the composition as a technical workspace.' },
+      { key:'framed-diptych', name:'Framed diptych', lineage:'21st · FAQ Two Column #26656', description:'A formal perimeter and central division turn the pair into one bounded editorial plate.' },
+      { key:'blog-register', name:'Blog register', lineage:'21st · Blog Section #7059', description:'Parallel registered columns use compact top rules and a shared baseline instead of a surrounding frame.' },
+      { key:'tilted-columns', name:'Tilted editorial columns', lineage:'21st · ScrollTiltedGrid #12434', description:'Subtle opposing rotations and vertical offsets give the two wrappers a print-layout tension.' },
+    ],
+    request: [
+      { key:'source-equation', name:'Source equation', lineage:'21st · Horizontal Form Fields', description:'Three squared source fields read as one precise input equation.' },
+      { key:'blueprint-flow', name:'Blueprint sources', lineage:'21st · Interactive Workflow Blueprint', description:'A dotted planning surface turns the inputs into connected workflow stations.' },
+      { key:'source-chips', name:'Source capsules', lineage:'21st · AI Sources', description:'Compact source chips make the three inputs feel like attachable context.' },
+      { key:'stacked-merge', name:'Indexed merge', lineage:'21st · AI Sources + process results', description:'Numbered stacked sources emphasize aggregation before execution.' },
+      { key:'editorial-equation', name:'Editorial equation', lineage:'21st · Horizontal Form Fields', description:'Serif labels and ruled zones make the source combination read like a printed formula.' },
+      { key:'terminal-inputs', name:'Terminal inputs', lineage:'21st · Input Bar catalog results', description:'A restrained terminal surface presents each source as explicit system context.' },
+      { key:'linked-rail', name:'Linked source rail', lineage:'21st · Interactive Workflow Blueprint', description:'Three stations sit on one continuous relationship line.' },
+      { key:'matrix-inputs', name:'Input matrix', lineage:'21st · AI Sources', description:'A hairline lattice gives each source equal architectural weight.' },
+      { key:'isometric-blocks', name:'Source blocks', lineage:'21st · Workflow Blueprint catalog results', description:'Offset source blocks add shallow physical depth without changing the palette.' },
+      { key:'minimal-connectors', name:'Minimal connectors', lineage:'21st · Horizontal Form Fields', description:'Only rules and plus signs remain, reducing the composition to its essential logic.' },
+    ],
+    panel: [
+      { key:'timeline-rail', name:'Process timeline rail', lineage:'21st · How It Works', description:'Numbered checkpoints make the explanation read as an ordered process.' },
+      { key:'stacked-cards', name:'Stacked reasoning cards', lineage:'21st · Cards Stack', description:'Offset cards give each reasoning step an independent physical layer.' },
+      { key:'chain-thread', name:'Reasoning thread', lineage:'21st · Chain of Thought', description:'A single thread and node markers connect the explanation without heavy panels.' },
+      { key:'indexed-ledger', name:'Indexed ledger', lineage:'21st · Agent Trace', description:'Ruled rows separate action labels from their supporting explanation.' },
+      { key:'approval-frame', name:'Approval frame', lineage:'21st · Approval Card', description:'A strong status cap turns the panel into a governed decision artifact.' },
+      { key:'step-deck', name:'Step deck', lineage:'21st · Step Card', description:'A heavy edge gives every step a clear sequence and scanning anchor.' },
+      { key:'technical-sheet', name:'Technical sheet', lineage:'21st · AI Planning', description:'A double-rule frame presents the explanation as a formal system specification.' },
+      { key:'command-trace', name:'Command trace', lineage:'21st · AI Thinking and Tool Calls', description:'A dark monospaced trace makes the explanation feel operational and inspectable.' },
+      { key:'split-outline', name:'Split outline cards', lineage:'21st · Card Status List', description:'Reversed card headings separate actions from details with minimal ornament.' },
+      { key:'status-list', name:'Verified status list', lineage:'21st · AI Approval', description:'Compact check states turn the explanation into a validated progression.' },
+    ],
+    edges: [
+      { key:'fine-gray', name:'Fine neutral graph', lineage:'21st · Knowledge Graph', description:'Hairline neutral edges defer to the node hierarchy.' },
+      { key:'violet-relations', name:'Violet relations', lineage:'21st · Note Graph', description:'Heavier violet connectors make semantic relationships the primary signal.' },
+      { key:'labeled-capsules', name:'Relation capsules', lineage:'21st · Status Edge', description:'Outlined label capsules make every relationship independently scannable.' },
+      { key:'dashed-map', name:'Dashed map', lineage:'21st · Branches', description:'Dashed routes give the graph a technical drafting character.' },
+      { key:'heavy-route', name:'Primary route', lineage:'21st · Status Edge', description:'Thick connectors and reversed labels emphasize the graph as an execution path.' },
+      { key:'soft-bands', name:'Soft relationship bands', lineage:'21st · ECharts Sankey Chart', description:'Broad translucent bands shift attention from lines to semantic flow.' },
+      { key:'status-route', name:'Status route', lineage:'21st · Status Edge', description:'Dotted edges and monospaced labels read like live relationship states.' },
+      { key:'hidden-labels', name:'Pure topology', lineage:'21st · Nodes', description:'Removing labels exposes the graph’s raw topology and directional structure.' },
+      { key:'ink-and-accent', name:'Ink and accent', lineage:'21st · Knowledge Graph', description:'Dark edges with brown labels establish a restrained two-level hierarchy.' },
+      { key:'drafting-lines', name:'Drafting notation', lineage:'21st · Interactive Workflow Blueprint', description:'Mixed dash patterns and boxed labels evoke an annotated systems drawing.' },
+    ],
+    example: [
+      { key:'scorecard-ledger', name:'Candidate scorecard', lineage:'21st · AI Planning', description:'Ruled ranking rows make each relation and its candidate set easy to compare.' },
+      { key:'ranked-rail', name:'Ranked trace rail', lineage:'21st · Agent Trace', description:'A strong vertical rail turns each lookup into a trace checkpoint.' },
+      { key:'comparison-columns', name:'Comparison columns', lineage:'21st · Reasoning Thread', description:'Wide paired columns emphasize relation context versus candidate ranking.' },
+      { key:'trace-lines', name:'Minimal trace lines', lineage:'21st · AI Reasoning', description:'Dashed separators and borderless nodes keep the ranking dense and analytical.' },
+      { key:'index-cards', name:'Candidate index cards', lineage:'21st · AI Agent Response', description:'Offset cards give every relationship lookup its own inspectable record.' },
+      { key:'dense-terminal', name:'Ranking terminal', lineage:'21st · AI Thinking and Tool Calls', description:'Monospaced terminal treatment makes selected fragments read like tool output.' },
+      { key:'pipeline-rows', name:'Retrieval pipeline', lineage:'21st · AI Agent Pipeline', description:'Strong stage bars turn the rankings into an ordered retrieval pipeline.' },
+      { key:'blueprint-matrix', name:'Ranking blueprint', lineage:'21st · Interactive Workflow Blueprint', description:'A dotted canvas and boxed rows make candidate selection feel spatial and constructed.' },
+      { key:'stacked-candidates', name:'Stacked candidates', lineage:'21st · Chain of Thought', description:'Vertical relation-and-option groups prioritize sequential reading over density.' },
+      { key:'folio-ranking', name:'Technical ranking folio', lineage:'21st · Agent Trace', description:'A formal double-rule folio frames the candidate catalog as research evidence.' },
+    ],
+    table: [
+      { key:'baseline', name:'Current structure', lineage:'Saved page baseline', description:'The existing bordered matrix and grouped tree labels remain unchanged.' },
+      { key:'bento-overview', name:'Architecture bento', lineage:'21st · Feature Overview Bento #27082', description:'Mixed-span cells turn the five stages into a hairline architectural lattice with varied emphasis.' },
+      { key:'roadmap-columns', name:'Stage roadmap columns', lineage:'21st · Quarterly Roadmap Columns #29450', description:'The process becomes five compact status columns with stage labels, summaries, and phase cues.' },
+      { key:'cards', name:'Process record cards', lineage:'21st · How We Do It / Process Overview #4579', description:'Bold process cards are compressed into individually scannable stage records.' },
+      { key:'ghost-accordion', name:'Ghost architecture accordion', lineage:'21st · Ghost Accordion #29230', description:'Borderless numbered rows and plus indicators make the architecture read like expandable documentation.' },
+      { key:'isometric-pipeline', name:'Isometric build path', lineage:'21st · Build Pipeline #36683', description:'Floating stage stations and offset bases translate the process into an isometric execution path.' },
+      { key:'deploy-status', name:'Deployment status protocol', lineage:'21st · Deployment Pipeline #29359', description:'Status nodes, connecting progress bars, and compact metadata recast the stages as a live run.' },
+      { key:'horizontal-timeline', name:'Horizontal architecture timeline', lineage:'21st · Timeline #28298', description:'Five stages sit on a continuous horizontal route with alternating labels and descriptions.' },
+      { key:'sankey-flow', name:'Semantic flow bands', lineage:'21st · ECharts Sankey Chart #31570', description:'Staggered nodes and broad connecting bands emphasize how meaning flows into executable SQL.' },
+      { key:'workflow-canvas', name:'Workflow canvas', lineage:'21st · Interactive Workflow Blueprint #43113', description:'A dotted canvas, connected node cards, and tool-like headers turn the table into an architecture map.' },
+      { key:'alternating-milestones', name:'Alternating milestones', lineage:'21st · Milestone Timeline Feature #29502', description:'A centered spine alternates stage cards left and right for a narrative process read.' },
+    ],
+  };
+  const labParams = new URLSearchParams(window.location.search);
+  const componentLabRegistry = window.SQLHarnessComponentLab;
+  const componentDefinition = componentLabRegistry.resolve(labParams.get('component'));
+  const componentKind = componentDefinition.id;
+  document.documentElement.classList.toggle('query-example-lab', componentKind === 'query-example');
+  document.documentElement.style.setProperty('--component-frame-width', `${componentDefinition.preview.width}px`);
+  document.documentElement.style.setProperty('--component-frame-height', `${componentDefinition.preview.height}px`);
+  document.title = componentDefinition.title;
+  const defaults = typeof window.SQLHARNESS_CAROUSEL_STYLE === 'object'
+    ? window.SQLHARNESS_CAROUSEL_STYLE
+    : { controls:window.SQLHARNESS_CAROUSEL_STYLE || 'utility', header:'signal' };
+  const draftStorageKey = `sqlharnessLabDraft:${componentKind}`;
+  let selected = componentLabRegistry.readSelection(componentDefinition, defaults);
+  try {
+    const draftSelection = JSON.parse(localStorage.getItem(draftStorageKey) || 'null');
+    if (draftSelection && typeof draftSelection === 'object') {
+      selected = { ...selected, ...draftSelection };
+    }
+  } catch (_error) {}
+  const requestedMode = labParams.get('mode');
+  let mode = requestedMode && componentDefinition.modes[requestedMode]
+    ? requestedMode
+    : componentDefinition.defaultMode;
+  const draftParamKey = `draft-${mode}`;
+  const requestedDraftStyle = labParams.get(draftParamKey);
+  if (requestedDraftStyle) {
+    selected = { ...selected, [mode]:requestedDraftStyle };
+    localStorage.setItem(draftStorageKey, JSON.stringify(selected));
+  }
+  const variantPools = Object.fromEntries(
+    Object.keys(componentDefinition.modes).map((area) => [area, [...(variants[area] || [])]]),
+  );
+  function resetCandidates() {
+    Object.keys(variantPools).forEach((area) => {
+      variants[area] = variantPools[area].filter((variant) => variant.key !== selected[area]).slice(0, 10);
+    });
+  }
+  resetCandidates();
+  const slotParamKey = `slot-${mode}`;
+  const modeDefinition = componentDefinition.modes[mode];
+  const slotStorageKey = modeDefinition.slotKey;
+  const initialSlot = Number(labParams.get(slotParamKey) || localStorage.getItem(slotStorageKey));
+  let index = Number.isInteger(initialSlot) && initialSlot > 0
+    ? Math.min(initialSlot - 1, variants[mode].length - 1)
+    : mode === 'table' || mode === 'workflow' ? 0 : Math.min(6, variants[mode].length - 1);
+  const preview = document.querySelector('[data-preview]');
+  const savedPreview = document.querySelector('[data-saved-preview]');
+  const workspace = document.querySelector('.workspace');
+  const savedStage = document.querySelector('[data-saved-stage]');
+  const labStage = document.querySelector('.lab__stage');
+  const lab = document.querySelector('.lab');
+  const publishButton = document.querySelector('[data-publish]');
+  publishButton.href = componentDefinition.publishHref;
+  const useButton = document.querySelector('[data-use]');
+  const keepButton = document.querySelector('[data-keep]');
+  const saveButton = document.querySelector('[data-save]');
+  const dots = document.querySelector('[data-dots]');
+  const savedStorageKey = modeDefinition.savedKey;
+  const seenStorageKey = modeDefinition.seenKey;
+  let savedVariants = new Set();
+  try { savedVariants = new Set(JSON.parse(localStorage.getItem(savedStorageKey) || '[]')); } catch (_error) {}
+  let seenVariants = new Set();
+  try { seenVariants = new Set(JSON.parse(localStorage.getItem(seenStorageKey) || '[]')); } catch (_error) {}
+  const explorationParams = labParams;
+  const savedParamKey = `saved-${mode}`;
+  const seenParamKey = `seen-${mode}`;
+  const labSession = modeDefinition.session;
+  const startsCollapsed = explorationParams.get('done') === labSession;
+  (explorationParams.get(savedParamKey) || '').split(',').filter(Boolean).forEach((key) => savedVariants.add(key));
+  (explorationParams.get(seenParamKey) || '').split(',').filter(Boolean).forEach((key) => seenVariants.add(key));
+
+  function syncExplorationState() {
+    if (savedVariants.size) localStorage.setItem(savedStorageKey, JSON.stringify([...savedVariants]));
+    else localStorage.removeItem(savedStorageKey);
+    if (seenVariants.size) localStorage.setItem(seenStorageKey, JSON.stringify([...seenVariants]));
+    else localStorage.removeItem(seenStorageKey);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('saved');
+    url.searchParams.delete('seen');
+    if (!startsCollapsed) url.searchParams.delete('done');
+    if (savedVariants.size) url.searchParams.set(savedParamKey, [...savedVariants].join(','));
+    else url.searchParams.delete(savedParamKey);
+    if (seenVariants.size) url.searchParams.set(seenParamKey, [...seenVariants].join(','));
+    else url.searchParams.delete(seenParamKey);
+    window.history.replaceState(null, '', url);
+  }
+  function clearExplorationState() {
+    savedVariants.clear();
+    seenVariants.clear();
+    localStorage.removeItem(savedStorageKey);
+    localStorage.removeItem(seenStorageKey);
+    localStorage.removeItem(slotStorageKey);
+    const url = new URL(window.location.href);
+    url.searchParams.delete(slotParamKey);
+    window.history.replaceState(null, '', url);
+    syncExplorationState();
+  }
+  if (!startsCollapsed) variants[mode].forEach((variant) => seenVariants.add(variant.key));
+  syncExplorationState();
+
+  function currentVariant() { return variants[mode][index]; }
+  function syncCurrentSlot() {
+    localStorage.setItem(slotStorageKey, String(index + 1));
+    const url = new URL(window.location.href);
+    url.searchParams.set(slotParamKey, String(index + 1));
+    window.history.replaceState(null, '', url);
+  }
+  function componentUrl(choice, highlight = '') {
+    return componentLabRegistry.previewUrl(componentDefinition, choice, highlight);
+  }
+  function renderSaved(highlight = mode) {
+    savedPreview.src = componentUrl(selected, highlight);
+  }
+  function collapseLab({ persist = true } = {}) {
+    renderSaved('');
+    if (persist) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('done', labSession);
+      window.history.replaceState(null, '', url);
+    }
+    workspace.classList.add('workspace--complete');
+    lab.setAttribute('aria-hidden', 'true');
+    lab.inert = true;
+    fitFrames();
+  }
+  function previewSelection() {
+    return { ...selected, [mode]:currentVariant().key };
+  }
+  function render() {
+    const candidate = currentVariant();
+    const choice = previewSelection();
+    const isSelected = selected[mode] === candidate.key;
+    const isSaved = savedVariants.has(candidate.key);
+    useButton.dataset.selected = String(isSelected);
+    useButton.textContent = isSelected ? 'Using this style' : 'Use this style';
+    saveButton.hidden = false;
+    saveButton.dataset.saved = String(isSaved);
+    saveButton.textContent = isSaved ? `Saved in slot ${index + 1}` : `Save slot ${index + 1}`;
+    preview.src = componentUrl(choice);
+    dots.replaceChildren(...variants[mode].map((variant, dotIndex) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'lab__dot';
+      const saved = savedVariants.has(variant.key);
+      dot.textContent = String(dotIndex + 1);
+      dot.dataset.saved = String(saved);
+      dot.title = `Slot ${dotIndex + 1}: ${variant.name}${saved ? ' · saved' : ''}`;
+      dot.setAttribute('aria-label', `Show slot ${dotIndex + 1}: ${variant.name}${saved ? ', saved' : ''}`);
+      dot.setAttribute('aria-current', String(dotIndex === index));
+      dot.addEventListener('click', () => { index = dotIndex; syncCurrentSlot(); render(); });
+      return dot;
+    }));
+  }
+  function show(nextIndex) {
+    index = (nextIndex + variants[mode].length) % variants[mode].length;
+    syncCurrentSlot();
+    render();
+  }
+  document.querySelectorAll('[data-previous]').forEach((button) => button.addEventListener('click', () => show(index - 1)));
+  document.querySelectorAll('[data-next]').forEach((button) => button.addEventListener('click', () => show(index + 1)));
+  document.querySelectorAll('[data-mode]').forEach((button) => button.addEventListener('click', () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('mode', button.dataset.mode);
+    window.location.href = url;
+  }));
+  useButton.addEventListener('click', () => {
+    selected = { ...selected, ...previewSelection() };
+    localStorage.setItem(draftStorageKey, JSON.stringify(selected));
+    const draftUrl = new URL(window.location.href);
+    draftUrl.searchParams.set(draftParamKey, selected[mode]);
+    window.history.replaceState(null, '', draftUrl);
+    clearExplorationState();
+    resetCandidates();
+    index = 0;
+    renderSaved('');
+    render();
+    collapseLab();
+  });
+  publishButton.addEventListener('click', () => {
+    componentLabRegistry.writeSelection(componentDefinition, selected);
+    localStorage.removeItem(draftStorageKey);
+    const url = new URL(window.location.href);
+    url.searchParams.delete(draftParamKey);
+    window.history.replaceState(null, '', url);
+  });
+  keepButton.addEventListener('click', () => {
+    localStorage.removeItem(draftStorageKey);
+    selected = componentLabRegistry.readSelection(componentDefinition, defaults);
+    const url = new URL(window.location.href);
+    url.searchParams.delete(draftParamKey);
+    window.history.replaceState(null, '', url);
+    clearExplorationState();
+    index = 0;
+    renderSaved('');
+    render();
+    collapseLab();
+  });
+  saveButton.addEventListener('click', () => {
+    const key = currentVariant().key;
+    if (savedVariants.has(key)) savedVariants.delete(key);
+    else savedVariants.add(key);
+    syncExplorationState();
+    render();
+  });
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') show(index - 1);
+    if (event.key === 'ArrowRight') show(index + 1);
+  });
+  function fitFrames() {
+    const frames = [
+      [savedStage, savedPreview],
+      [labStage, preview],
+    ];
+    const activeFrames = workspace.classList.contains('workspace--complete') ? frames.slice(0, 1) : frames;
+    const scale = Math.min(
+      1,
+      ...activeFrames.flatMap(([stage]) => [
+        (stage.clientWidth - 24) / componentDefinition.preview.width,
+        (stage.clientHeight - 18) / componentDefinition.preview.height,
+      ]),
+    );
+    const fittedScale = Math.max(.28, scale).toFixed(3);
+    activeFrames.forEach(([, frame]) => frame.style.setProperty('--frame-scale', fittedScale));
+  }
+  const frameObserver = new ResizeObserver(fitFrames);
+  [workspace, savedStage, labStage].forEach((element) => frameObserver.observe(element));
+  renderSaved();
+  if (!startsCollapsed) syncCurrentSlot();
+  render();
+  if (startsCollapsed) collapseLab({ persist:false });
+  else fitFrames();
+</script>
+</body>
+</html>

@@ -5,7 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="SQLHarness is a semantic NL-to-SQL compiler with a governed execution boundary." />
 <title>SQLHarness — Research system and execution harness</title>
-<link rel="stylesheet" href="analysis-plain.css?v=research-plain-164" />
+<script>
+  const componentLabParams = new URLSearchParams(window.location.search);
+  const componentLabTarget = componentLabParams.get('component-lab');
+  if (componentLabTarget === 'carousel' || componentLabTarget === 'stage-table' || componentLabTarget === 'query-example') {
+    document.documentElement.classList.add('component-lab');
+    document.documentElement.classList.add(`component-lab-${componentLabTarget}`);
+    const componentHighlight = componentLabParams.get('highlight');
+    if (componentHighlight === 'header' || componentHighlight === 'controls' || componentHighlight === 'shell' || componentHighlight === 'stage-table') {
+      document.documentElement.classList.add(`component-highlight-${componentHighlight}`);
+    }
+  }
+  if (componentLabTarget === 'workflow-comparison') {
+    document.documentElement.classList.add('workflow-lab-preview');
+  }
+  const workflowFragmentLabTargets = new Set([
+    'request-sources', 'intent-explanation', 'retrieval-explanation',
+    'assembly-explanation', 'authority-card', 'result-explanation',
+    'intent-edges', 'retrieval-example', 'masthead', 'overview-heading',
+    'overview-composition',
+  ]);
+  if (workflowFragmentLabTargets.has(componentLabTarget)) {
+    document.documentElement.classList.add('workflow-fragment-preview');
+  }
+</script>
+<link rel="stylesheet" href="analysis-plain.css?v=research-plain-183" />
   <style id="locked-workflow-palette">
     .intent-normalization-example .intent-diagram-node--request,
     .code-generation-example .code-generation-source {
@@ -97,20 +121,23 @@
     }
 
   </style>
-<link rel="stylesheet" href="analysis-satisfaction.css?v=1" />
-<link rel="stylesheet" href="analysis-satisfaction-v2.css?v=4" />
+<link rel="stylesheet" href="analysis-satisfaction.css?v=3" />
+<link rel="stylesheet" href="analysis-satisfaction-v2.css?v=29" />
+<link rel="stylesheet" href="workflow-fragment-labs.css?v=27" />
 </head>
 <body class="satisfaction-preview">
 <main id="top">
 <section id="overview">
 
-<div class="hero-title" role="heading" aria-level="1"><span class="project-name">SQLHarness</span><span class="headline-tagline">: Talk to your business data.</span></div>
+<div class="page-masthead">
+<div class="hero-title" role="heading" aria-level="1"><span class="project-name">SQLHarness</span><span class="headline-tagline">Talk to your business data.</span></div>
 <p class="byline">By <a href="https://andrewjorge.com/" rel="author">Andrew Jorge</a></p>
+</div>
 <nav class="reading-links" aria-label="On this page"><a href="#system">Architecture</a><a href="#workflow-comparison-title">Workflow</a><a href="#research">Findings</a></nav>
 <h2 data-editable-key="implementation-overview-heading">Overview</h2>
 <div class="hero-columns">
 <aside class="hero-aside" aria-label="Technical writeup">
-<div class="query-example" aria-label="Example business instruction translated into SQL and a natural-language answer">
+<div class="query-example" data-lab-id="query-example" aria-label="Example business instruction translated into SQL and a natural-language answer">
 <div class="query-caption query-caption--top" data-editable-key="hero-query-caption-top-v1">Example of English-to-SQL translation</div>
 <div class="query-stack">
 <div class="query-box query-box--input">
@@ -135,7 +162,6 @@ LIMIT 1;</code></pre>
 <div class="query-output query-output--response" data-editable-key="body:section-1.div-2.aside-1.div-1.div-1.div-5"><span class="query-output-label">System Output:</span><br>“The Northeast region has the most customers, totaling 3.”</div>
 </div>
 </div>
-<footer class="query-caption" data-editable-key="body:section-1.div-2.aside-1.div-1.footer-1">Example of English-to-SQL translation</footer>
 </div>
 </aside>
 <div class="hero-copy-column">
@@ -144,7 +170,7 @@ LIMIT 1;</code></pre>
 <p class="hero-copy" data-editable-key="project-objective-part-2-v1">Imagine if AI could help you mentally pick up right a task right where you left it. I built SQLHarness to help professionals automate the data retrieval part of that problem. If Claude Code can put together a working search bar for your website in less than 30 minutes, AI is clearly advanced enough to answer a simple question about your store data, right?</p>
 <p class="hero-copy" data-editable-key="project-purpose-v2">The purpose of this brief is to demonstrate the intuition behind SQLHarness’ proposed architecture:&nbsp;<em>intent normalization</em> and <em>code generation</em>. Every user input is broken into atomic semantic parts that make sense outside of the business context. Then it weaves those parts together into real SQL code, and runs it on your data to deliver a grounded answer to your original input task.</p>
 <ul class="technical-brief-link">
-<li><a href="share.html">Experimental results and technical writeup <span aria-hidden="true">→</span></a></li>
+<li><a href="share.html">Experimental results and technical writeup</a></li>
 </ul>
 </div>
 </div>
@@ -155,7 +181,7 @@ LIMIT 1;</code></pre>
 <h2>System Architecture</h2>
 <div class="system-columns">
 <div class="system-primary">
-<table class="stage-table">
+<table class="stage-table" data-lab-id="stage-table">
 <thead><tr><th class="stage-tree-head" aria-hidden="true"></th><th>Stage</th><th>Responsibility</th></tr></thead>
 <tbody>
 <tr><td class="stage-tree-cell stage-tree-cell--two" rowspan="2"><span class="stage-tree-label">Intent<br />normalization</span><span class="stage-tree-rail" aria-hidden="true"></span><span class="stage-tree-root" aria-hidden="true"></span></td><td>Business request</td><td>The user connects a database and describes the task in their own words. SQLHarness reads the database schema.</td></tr>
@@ -168,7 +194,8 @@ LIMIT 1;</code></pre>
 </tbody>
 </table>
 </div>
-<div class="system-details" data-system-carousel role="region" aria-roledescription="carousel" aria-label="System development notes">
+<div class="system-details-page">
+<div class="system-details" data-system-carousel data-lab-id="system-notes-carousel" role="region" aria-roledescription="carousel" aria-label="System development notes">
 <div class="system-details-viewport">
 <article class="system-details-slide" data-carousel-slide role="group" aria-roledescription="slide" aria-label="1 of 2: How the semantic model was developed">
 
@@ -201,19 +228,22 @@ LIMIT 1;</code></pre>
 </div>
 </div>
 </div>
+</div>
 <header class="workflow-comparison-heading">
 <h3 id="workflow-comparison-title" data-editable-key="workflow-comparison-title-v1">How SQLHarness processes a request</h3>
 </header>
 
 
-<section class="workflow-stage-list" id="workflow" aria-labelledby="workflow-comparison-title"><div class="workflow-column-headings"><span>Example from above</span><span>SQLHarness algorithm</span></div><section class="workflow-stage-row" data-stage="request" aria-labelledby="stage-title-request">
+<section class="workflow-stage-list" id="workflow" data-lab-id="workflow-comparison" aria-labelledby="workflow-comparison-title"><div class="workflow-column-headings"><span>SQLHarness algorithm</span><span>Example from above</span></div><section class="workflow-stage-row" data-stage="request" aria-labelledby="stage-title-request">
 <h4 class="workflow-stage-title" id="stage-title-request"><span>01</span> Business request</h4>
 <div class="workflow-stage-example intent-normalization-example"><div class="workflow-cell-label">Example</div>
-<button type="button" class="stage-focus-toggle sr-only" aria-pressed="false" aria-controls="explanation-request">Focus the business request explanation</button>
 <div class="example-intent-input" id="example-request" data-workflow-hover="request">
-<div class="intent-diagram-node intent-diagram-node--request" data-editable-key="intent-diagram-request-v5">“Which region has the most customers?”</div>
+<div class="example-request-nodes" aria-label="Business request and example data">
+<div class="intent-diagram-node intent-diagram-node--request example-request-node" data-editable-key="intent-diagram-request-v5">“Which region has the most customers?”</div>
+<span class="example-request-plus" aria-hidden="true">+</span>
+<div class="intent-diagram-node example-request-node example-request-node--data">5 customers across 3 regions</div>
+</div>
 <div class="example-data-context">
-<p>Example data: <strong>5 customers</strong> across <strong>3 regions</strong>.</p>
 <details class="example-data-details"><summary>View customers and regions</summary>
 <div class="example-data-tables"><table><caption>customers</caption><thead><tr><th scope="col">id</th><th scope="col">name</th><th scope="col">region_id</th></tr></thead><tbody><tr><td>1</td><td>Ada</td><td>1</td></tr><tr><td>2</td><td>Grace</td><td>1</td></tr><tr><td>3</td><td>Linus</td><td>2</td></tr><tr><td>4</td><td>Margaret</td><td>1</td></tr><tr><td>5</td><td>Edsger</td><td>3</td></tr></tbody></table><table><caption>regions</caption><thead><tr><th scope="col">id</th><th scope="col">name</th></tr></thead><tbody><tr><td>1</td><td>Northeast</td></tr><tr><td>2</td><td>West</td></tr><tr><td>3</td><td>South</td></tr></tbody></table></div>
 <p class="example-data-key">A customer’s <code>region_id</code> matches the <code>id</code> in <code>regions</code>.</p>
@@ -270,7 +300,6 @@ LIMIT 1;</code></pre>
 </div></div>
 <svg class="intent-output-connector" aria-hidden="true" focusable="false"><path class="intent-output-line"/><path class="intent-output-head"/><text class="intent-output-verb" text-anchor="middle">produces</text></svg>
 <div class="workflow-stage-example intent-normalization-example"><div class="intent-graph-output-label" id="intent-graph-output-label">Completed intent graph</div>
-<button type="button" class="stage-focus-toggle sr-only" aria-pressed="false" aria-controls="explanation-intent intent-graph-reference">Focus the intent graph explanation</button>
 <div class="example-intent-graph" id="example-intent" data-workflow-hover="intent" aria-describedby="intent-relationships intent-graph-output-label" aria-label="Intent graph for finding the region with the most customers">
 <svg class="example-intent-edges" viewBox="0 0 545 460" preserveAspectRatio="none" aria-hidden="true" focusable="false">
 <defs>
@@ -289,7 +318,7 @@ LIMIT 1;</code></pre>
 <g class="example-intent-edge-label" transform="translate(177 341)"><rect x="-32" y="-10" width="64" height="20"></rect><text>group by</text></g>
 <g class="example-intent-edge-label" transform="translate(367 341)"><rect x="-24" y="-10" width="48" height="20"></rect><text>theme</text></g>
 </svg>
-<div class="example-intent-node example-intent-node--output" data-layout-x="0.39364186368247334" data-layout-y="0.08403956800023614" style="transform:none" data-editable-key="intent-example-output-v7">
+<div class="example-intent-node example-intent-node--output" data-layout-x="0.34" data-layout-y="0.08403956800023614" style="transform:none" data-editable-key="intent-example-output-v8">
 <span>output format</span><strong>name</strong>
 </div>
 <div class="example-intent-node example-intent-node--argmax" data-layout-x="0.8650274942087572" data-layout-y="0.3306263652196159" style="transform:none" data-editable-key="intent-example-argmax-v6">
@@ -298,7 +327,7 @@ LIMIT 1;</code></pre>
 <div class="example-intent-node example-intent-node--count" data-layout-x="0.9391712514004966" data-layout-y="0.6736177305130274" style="transform:none" data-editable-key="intent-example-count-v6">
 <span>operation</span><strong>count</strong>
 </div>
-<div class="example-intent-node example-intent-node--region" data-layout-x="0" data-layout-y="0.5637987266559745" style="transform:none" data-editable-key="intent-example-region-v6">
+<div class="example-intent-node example-intent-node--region" data-layout-x="0.055" data-layout-y="0.5637987266559745" style="transform:none" data-editable-key="intent-example-region-v6">
 <span>data</span><strong>region</strong>
 </div>
 <div class="example-intent-node example-intent-node--customers" data-layout-x="0.6580175355423329" data-layout-y="1" style="transform:none" data-editable-key="intent-example-customers-v6">
@@ -337,7 +366,6 @@ LIMIT 1;</code></pre>
 <section class="workflow-stage-row" data-stage="retrieval" aria-labelledby="stage-title-retrieval">
 <h4 class="workflow-stage-title" id="stage-title-retrieval"><span>03</span> Fragment retrieval and ranking</h4>
 <div class="workflow-stage-example code-generation-example"><div class="workflow-cell-label">Example</div>
-<button type="button" class="stage-focus-toggle sr-only" aria-pressed="false" aria-controls="explanation-retrieval">Focus the fragment retrieval and ranking explanation</button>
 <section class="code-generation-step code-generation-step--retrieval" id="example-retrieval" data-workflow-hover="retrieval">
 <p class="ranking-caption">Illustrative candidate ranking</p>
 <div class="code-generation-fragment-map" aria-label="Selected SQL fragments grouped by relationships between intent graph nodes">
@@ -433,7 +461,6 @@ LIMIT 1;</code></pre>
 <section class="workflow-stage-row" data-stage="assembly" aria-labelledby="stage-title-assembly">
 <h4 class="workflow-stage-title" id="stage-title-assembly"><span>04</span> Query assembly</h4>
 <div class="workflow-stage-example code-generation-example"><div class="workflow-cell-label">Example</div>
-<button type="button" class="stage-focus-toggle sr-only" aria-pressed="false" aria-controls="explanation-assembly">Focus the query assembly explanation</button>
 <section class="code-generation-step code-generation-step--query" id="example-assembly" data-workflow-hover="assembly">
 <code class="code-generation-assembly-query" data-editable-key="code-generation-example-assembly-query-v2"><span>SELECT regions.name, COUNT(customers.id) AS customer_count</span><span class="code-generation-assembly-added">FROM customers JOIN regions ON customers.region_id = regions.id</span><span>GROUP BY regions.name</span><span>ORDER BY COUNT(customers.id) DESC</span><span>LIMIT 1</span></code>
 </section></div>
@@ -446,10 +473,14 @@ LIMIT 1;</code></pre>
 <section class="workflow-stage-row" data-stage="authority" aria-labelledby="stage-title-authority">
 <h4 class="workflow-stage-title" id="stage-title-authority"><span>05</span> Authority boundary</h4>
 <div class="workflow-stage-example code-generation-example"><div class="workflow-cell-label">Example</div>
-<button type="button" class="stage-focus-toggle sr-only" aria-pressed="false" aria-controls="explanation-authority">Focus the authority boundary explanation</button>
 <div class="code-generation-authority-band" id="example-authority" data-workflow-hover="authority">
 <section class="code-generation-step code-generation-step--authority">
-<strong data-editable-key="code-generation-example-authority-heading-v4">authority boundary</strong>
+<strong data-editable-key="code-generation-example-authority-heading-v5">Approved for execution</strong>
+<dl class="authority-run-checks" aria-label="Checks passed for this query">
+<div><dt>Statement</dt><dd>One <code>SELECT</code>; no write operation</dd></div>
+<div><dt>Schema</dt><dd><code>customers</code> + <code>regions</code>; referenced fields resolved</dd></div>
+<div><dt>Bounds</dt><dd><code>LIMIT 1</code>; 5 s deadline; 1,000-row ceiling</dd></div>
+</dl>
 </section>
 </div></div>
 <div class="workflow-stage-explanation workflow-pattern-group general-intent-workflow" id="explanation-authority"><div class="workflow-cell-label">How it works</div>
@@ -462,7 +493,6 @@ LIMIT 1;</code></pre>
 <section class="workflow-stage-row" data-stage="result" aria-labelledby="stage-title-result">
 <h4 class="workflow-stage-title" id="stage-title-result"><span>06</span> Returned result</h4>
 <div class="workflow-stage-example code-generation-example"><div class="workflow-cell-label">Example</div>
-<button type="button" class="stage-focus-toggle sr-only" aria-pressed="false" aria-controls="explanation-result">Focus the returned result explanation</button>
 <div class="code-generation-result" id="example-result" data-workflow-hover="result" data-editable-key="code-generation-example-result-v4">
 <span class="code-generation-result-label">Returned result</span>
 <code>{"columns":["name","customer_count"],"rows":[["Northeast",3]]}</code>
@@ -494,25 +524,231 @@ LIMIT 1;</code></pre>
 </div>
 <div class="sr-only" id="intent-relationships">Intent graph connections: region is returned as name; name is ordered by most; most measures count; count is grouped by region; count applies to customers.</div>
 </main>
-<button class="clear-workflow-selection" type="button" hidden>Clear focus</button>
-<div class="sr-only" id="comparison-status" role="status" aria-live="polite"></div>
 
+<script src="carousel-style.js?v=2"></script>
+<script src="component-lab-registry.js?v=5"></script>
 <script>
 const textEditingEnabled = false;
+const workflowComparison = document.querySelector('.workflow-stage-list');
+if (workflowComparison) {
+  const workflowParams = new URLSearchParams(window.location.search);
+  const availableWorkflowStyles = new Set([
+    'baseline', 'paired-rail', 'completion-path', 'process-cards',
+    'numbered-spine', 'process-pillars', 'split-comparison', 'revision-log',
+    'blueprint-grid', 'alternating-ledger', 'technical-folio',
+  ]);
+  const storedWorkflowStyle = window.localStorage.getItem('sqlharnessWorkflowComparisonStyle') || 'baseline';
+  const requestedWorkflowStyle = workflowParams.get('workflow-style') || storedWorkflowStyle;
+  workflowComparison.dataset.workflowStyle = availableWorkflowStyles.has(requestedWorkflowStyle)
+    ? requestedWorkflowStyle
+    : 'baseline';
+  if (componentLabTarget === 'workflow-comparison') {
+    const workflowSystem = document.querySelector('#system');
+    const workflowMain = document.querySelector('main');
+    document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+    document.body.style.setProperty('display', 'block', 'important');
+    document.body.style.setProperty('overflow', 'hidden', 'important');
+    workflowMain?.style.setProperty('display', 'block', 'important');
+    workflowMain?.style.setProperty('width', '100%', 'important');
+    workflowSystem?.style.setProperty('display', 'flex', 'important');
+    workflowSystem?.style.setProperty('width', '100%', 'important');
+    workflowSystem?.style.setProperty('min-height', '100vh', 'important');
+    workflowComparison.style.setProperty('display', 'grid', 'important');
+    workflowComparison.style.setProperty('visibility', 'visible', 'important');
+    workflowComparison.style.setProperty('width', '1320px', 'important');
+    workflowComparison.style.setProperty('min-height', '760px', 'important');
+    workflowComparison.style.setProperty('margin', '0 auto', 'important');
+    workflowComparison.style.setProperty('opacity', '1', 'important');
+  }
+}
+const workflowFragmentDefinitions = Object.values(window.SQLHarnessComponentLab?.definitions || {})
+  .filter((definition) => definition.targetSelector);
+workflowFragmentDefinitions.forEach((definition) => {
+  const root = document.querySelector(definition.targetSelector);
+  const mode = definition.defaultMode;
+  const modeDefinition = definition.modes[mode];
+  if (!root || !modeDefinition) return;
+  const fragmentParams = new URLSearchParams(window.location.search);
+  const storedStyle = window.localStorage.getItem(modeDefinition.selectionKey) || modeDefinition.defaultStyle;
+  const requestedStyle = fragmentParams.get(modeDefinition.styleParam) || storedStyle;
+  root.dataset.fragmentKind = mode;
+  root.dataset.fragmentStyle = requestedStyle;
+  if (componentLabTarget !== definition.id) return;
+  root.dataset.componentLabRoot = '';
+  root.style.setProperty('--fragment-lab-width', `${Math.max(360, definition.preview.width - 100)}px`);
+  document.body.append(root);
+  document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+  document.body.style.setProperty('overflow', 'hidden', 'important');
+  window.requestAnimationFrame(() => window.scrollTo(0, 0));
+});
+const overviewHeading = document.querySelector('#overview > h2');
+if (overviewHeading?.dataset.fragmentStyle) {
+  document.querySelectorAll('#system > h2, #workflow-comparison-title, #trace > h2, #research > h2')
+    .forEach((heading) => {
+      heading.dataset.fragmentKind = 'section-heading';
+      heading.dataset.fragmentStyle = overviewHeading.dataset.fragmentStyle;
+    });
+}
+const queryExample = document.querySelector('.query-example');
+if (queryExample) {
+  const queryExampleParams = new URLSearchParams(window.location.search);
+  const availableQueryExampleStyles = new Set([
+    'baseline', 'agent-spine', 'execution-trace', 'terminal-session',
+    'vertical-rail', 'process-timeline', 'workflow-blueprint',
+    'build-pipeline', 'stepper-record', 'planning-board', 'processing-stack',
+    'morph-stack', 'status-run', 'sankey-route', 'diagram-board',
+    'deployment-protocol', 'migration-progress', 'tool-inspector',
+    'checklist-run', 'hierarchy-stack', 'insight-grid',
+    'agent-transcript', 'waterfall-trace', 'cli-window', 'workflow-card',
+    'project-milestones', 'phase-overview', 'order-status',
+    'sync-status-list', 'pinned-process',
+  ]);
+  const storedQueryExampleStyle = window.localStorage.getItem('sqlharnessQueryExampleStyle') || 'baseline';
+  const requestedQueryExampleStyle = queryExampleParams.get('query-style') || storedQueryExampleStyle;
+  queryExample.dataset.queryStyle = availableQueryExampleStyles.has(requestedQueryExampleStyle)
+    ? requestedQueryExampleStyle
+    : 'baseline';
+}
+const stageTable = document.querySelector('.stage-table');
+if (stageTable) {
+  const stageTableQuery = new URLSearchParams(window.location.search);
+  const availableStageTableStyles = new Set([
+    'baseline', 'ledger', 'bands', 'cards', 'rail', 'numbered',
+    'minimal', 'inverted', 'blueprint', 'split-groups', 'index-cards',
+    'bento-overview', 'roadmap-columns', 'ghost-accordion',
+    'isometric-pipeline', 'deploy-status', 'horizontal-timeline',
+    'sankey-flow', 'workflow-canvas', 'alternating-milestones',
+  ]);
+  const storedStageTableStyle = window.localStorage.getItem('sqlharnessStageTableStyle') || 'baseline';
+  const requestedStageTableStyle = stageTableQuery.get('table-style') || storedStageTableStyle;
+  stageTable.dataset.tableStyle = availableStageTableStyles.has(requestedStageTableStyle)
+    ? requestedStageTableStyle
+    : 'baseline';
+}
 const systemCarousel = document.querySelector('[data-system-carousel]');
 
 if (systemCarousel) {
+  const systemCarouselControlMarkup = {
+    utility: `
+      <span class="system-details-status" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <div class="system-details-buttons">
+        <button type="button" data-carousel-previous aria-label="Show previous page">←</button>
+        <button type="button" data-carousel-next aria-label="Show next page">→</button>
+      </div>`,
+    chapters: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-chapter" type="button" data-carousel-slide-to="0"><span>01</span><strong>MODEL</strong></button>
+      <button class="system-details-chapter" type="button" data-carousel-slide-to="1"><span>02</span><strong>SQL FRAGMENTS</strong></button>`,
+    rail: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <div class="system-details-rail-label"><strong data-carousel-current>01</strong><span>/ 02</span></div>
+      <div class="system-details-rail" aria-label="Carousel pages">
+        <button type="button" data-carousel-slide-to="0" aria-label="Show model page"></button>
+        <button type="button" data-carousel-slide-to="1" aria-label="Show SQL fragments page"></button>
+      </div>
+      <div class="system-details-buttons">
+        <button type="button" data-carousel-previous aria-label="Show previous page">←</button>
+        <button type="button" data-carousel-next aria-label="Show next page">→</button>
+      </div>`,
+    folio: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-folio-arrow" type="button" data-carousel-previous aria-label="Show previous page">←</button>
+      <div class="system-details-folio-number" aria-hidden="true"><span data-carousel-current>01</span><i></i><span data-carousel-total>02</span></div>
+      <button class="system-details-folio-arrow" type="button" data-carousel-next aria-label="Show next page">→</button>`,
+    split: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-split-command" type="button" data-carousel-previous aria-label="Show previous page">←</button>
+      <div class="system-details-split-status" aria-hidden="true"><strong data-carousel-current>01</strong><span>OF</span><strong data-carousel-total>02</strong></div>
+      <button class="system-details-split-command" type="button" data-carousel-next aria-label="Show next page">→</button>`,
+    outline: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <div class="system-details-outline-pages">
+        <button type="button" data-carousel-previous aria-label="Show previous page">←</button>
+        <button type="button" data-carousel-slide-to="0" aria-label="Show model page">01</button>
+        <button type="button" data-carousel-slide-to="1" aria-label="Show SQL fragments page">02</button>
+        <button type="button" data-carousel-next aria-label="Show next page">→</button>
+      </div>`,
+    underline: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-underline-tab" type="button" data-carousel-slide-to="0"><span>01</span>MODEL</button>
+      <button class="system-details-underline-tab" type="button" data-carousel-slide-to="1"><span>02</span>SQL FRAGMENTS</button>`,
+    stepper: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-floating-control system-details-floating-control--previous" type="button" data-carousel-previous aria-label="Show previous page">←</button>
+      <button class="system-details-step" type="button" data-carousel-slide-to="0"><i></i><span>MODEL</span></button>
+      <button class="system-details-step" type="button" data-carousel-slide-to="1"><i></i><span>SQL FRAGMENTS</span></button>
+      <button class="system-details-floating-control system-details-floating-control--next" type="button" data-carousel-next aria-label="Show next page">→</button>`,
+    pill: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <div class="system-details-pill-track">
+        <button type="button" data-carousel-slide-to="0"><span>01</span>MODEL</button>
+        <button type="button" data-carousel-slide-to="1"><span>02</span>SQL FRAGMENTS</button>
+      </div>`,
+    brackets: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-bracket-command" type="button" data-carousel-previous aria-label="Show previous page">[ ← ]</button>
+      <div class="system-details-bracket-status" aria-hidden="true"><strong data-carousel-current>01</strong><span>/</span><strong data-carousel-total>02</strong></div>
+      <button class="system-details-bracket-command" type="button" data-carousel-next aria-label="Show next page">[ → ]</button>`,
+    stacked: `
+      <span class="system-details-status system-details-status--sr" data-carousel-status aria-live="polite" aria-atomic="true"></span>
+      <button class="system-details-stacked-tab" type="button" data-carousel-slide-to="0"><span>01</span><strong>MODEL</strong></button>
+      <button class="system-details-stacked-tab" type="button" data-carousel-slide-to="1"><span>02</span><strong>SQL FRAGMENTS</strong></button>`,
+  };
+  const storedCarouselStyle = window.SQLHARNESS_CAROUSEL_STYLE || {};
+  const carouselQuery = new URLSearchParams(window.location.search);
+  let browserCarouselStyle = {};
+  try {
+    browserCarouselStyle = JSON.parse(window.localStorage.getItem('sqlharnessCarouselStyle') || '{}');
+  } catch (_error) {
+    browserCarouselStyle = {};
+  }
+  const browserStyleIsObsolete = browserCarouselStyle.controls === 'chapters'
+    && browserCarouselStyle.header === 'overline';
+  const applicableBrowserCarouselStyle = browserStyleIsObsolete ? {} : browserCarouselStyle;
+  const requestedControlStyle = carouselQuery.get('controls')
+    || applicableBrowserCarouselStyle.controls
+    || (typeof storedCarouselStyle === 'string' ? storedCarouselStyle : storedCarouselStyle.controls);
+  const requestedHeaderStyle = carouselQuery.get('header')
+    || applicableBrowserCarouselStyle.header
+    || (typeof storedCarouselStyle === 'object' ? storedCarouselStyle.header : 'signal');
+  const requestedShellStyle = carouselQuery.get('shell')
+    || applicableBrowserCarouselStyle.shell
+    || (typeof storedCarouselStyle === 'object' ? storedCarouselStyle.shell : 'baseline');
+  const controlStyle = systemCarouselControlMarkup[requestedControlStyle] ? requestedControlStyle : 'utility';
+  const headerStyle = ['signal', 'indexed', 'bracket', 'overline', 'masthead', 'editorial-split', 'doc-band', 'index-plaque', 'stamped', 'corner-frame', 'iso-slab', 'folio-number', 'terminal', 'switchboard', 'centered-label'].includes(requestedHeaderStyle)
+    ? requestedHeaderStyle
+    : 'signal';
+  const shellStyle = ['baseline', 'separated-panels', 'focus-corners', 'folded-sheet', 'iso-offset', 'double-rule', 'side-rail', 'offset-outline', 'open-frame', 'split-shell', 'dossier-tab'].includes(requestedShellStyle)
+    ? requestedShellStyle
+    : 'baseline';
+  const controls = systemCarousel.querySelector('.system-details-controls');
+  systemCarousel.dataset.headerStyle = headerStyle;
+  systemCarousel.dataset.controlsStyle = controlStyle;
+  systemCarousel.dataset.shellStyle = shellStyle;
+  controls.dataset.controlsStyle = controlStyle;
+  controls.innerHTML = systemCarouselControlMarkup[controlStyle];
+
   const slides = [...systemCarousel.querySelectorAll('[data-carousel-slide]')];
   const previousButton = systemCarousel.querySelector('[data-carousel-previous]');
   const nextButton = systemCarousel.querySelector('[data-carousel-next]');
   const status = systemCarousel.querySelector('[data-carousel-status]');
+  const visualCurrent = systemCarousel.querySelector('[data-carousel-current]');
+  const visualTotal = systemCarousel.querySelector('[data-carousel-total]');
+  const directButtons = [...systemCarousel.querySelectorAll('[data-carousel-slide-to]')];
   let currentSlide = 0;
   let carouselIsAnimating = false;
 
   function updateSystemCarouselControls() {
     status.textContent = `${currentSlide + 1} / ${slides.length}`;
-    previousButton.disabled = carouselIsAnimating || currentSlide === 0;
-    nextButton.disabled = carouselIsAnimating || currentSlide === slides.length - 1;
+    if (visualCurrent) visualCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
+    if (visualTotal) visualTotal.textContent = String(slides.length).padStart(2, '0');
+    if (previousButton) previousButton.disabled = carouselIsAnimating || currentSlide === 0;
+    if (nextButton) nextButton.disabled = carouselIsAnimating || currentSlide === slides.length - 1;
+    directButtons.forEach((button) => {
+      const selected = Number(button.dataset.carouselSlideTo) === currentSlide;
+      button.setAttribute('aria-current', selected ? 'page' : 'false');
+      button.disabled = carouselIsAnimating;
+    });
   }
 
   async function showSystemCarouselSlide(index, { animate = true } = {}) {
@@ -570,8 +806,11 @@ if (systemCarousel) {
     }
   }
 
-  previousButton.addEventListener('click', () => showSystemCarouselSlide(currentSlide - 1));
-  nextButton.addEventListener('click', () => showSystemCarouselSlide(currentSlide + 1));
+  previousButton?.addEventListener('click', () => showSystemCarouselSlide(currentSlide - 1));
+  nextButton?.addEventListener('click', () => showSystemCarouselSlide(currentSlide + 1));
+  directButtons.forEach((button) => {
+    button.addEventListener('click', () => showSystemCarouselSlide(Number(button.dataset.carouselSlideTo)));
+  });
   slides.forEach((slide, slideIndex) => {
     const active = slideIndex === currentSlide;
     slide.hidden = !active;
@@ -621,8 +860,10 @@ if (systemCarousel) {
         const paths = [...svg.querySelectorAll('.example-intent-edge')];
         const labels = [...svg.querySelectorAll('.example-intent-edge-label')];
         const labelSides = [-1, -1, 1, 1, -1];
-        const labelPadding = { x: 7.5, y: 4.5 };
-        const labelGap = 9;
+        const labelClearanceBoosts = [4, 58, 8, 8, 8];
+        const labelPadding = { x: 6, y: 3 };
+        const labelGap = 15;
+        const labelObstacleGap = 12;
         const arrowTipGap = 7;
 
         const pointOnNode = (rect, toward) => {
@@ -678,14 +919,18 @@ if (systemCarousel) {
               x: toRect.left + toRect.width / 2,
               y: toRect.top + toRect.height / 2,
             };
-            const start = pointOnNode(fromRect, toCenter);
+            const sourceEdge = pointOnNode(fromRect, toCenter);
             const nodeEdge = pointOnNode(toRect, fromCenter);
-            const edgeDx = nodeEdge.x - start.x;
-            const edgeDy = nodeEdge.y - start.y;
+            const edgeDx = nodeEdge.x - sourceEdge.x;
+            const edgeDy = nodeEdge.y - sourceEdge.y;
             const edgeLength = Math.hypot(edgeDx, edgeDy) || 1;
+            const start = {
+              x: sourceEdge.x - (edgeDx / edgeLength) * 3,
+              y: sourceEdge.y - (edgeDy / edgeLength) * 3,
+            };
             const end = {
-              x: nodeEdge.x - (edgeDx / edgeLength) * arrowTipGap,
-              y: nodeEdge.y - (edgeDy / edgeLength) * arrowTipGap,
+              x: nodeEdge.x - (edgeDx / edgeLength) * Math.min(2, arrowTipGap),
+              y: nodeEdge.y - (edgeDy / edgeLength) * Math.min(2, arrowTipGap),
             };
             paths[index].setAttribute('d', `M ${start.x} ${start.y} L ${end.x} ${end.y}`);
 
@@ -709,7 +954,8 @@ if (systemCarousel) {
             const clearance =
               Math.abs(normalX) * halfWidth +
               Math.abs(normalY) * halfHeight +
-              labelGap;
+              labelGap +
+              (labelClearanceBoosts[index] || 0);
             const progressCandidates = [0.5, 0.4, 0.6, 0.3, 0.7, 0.2, 0.8];
             const extraClearanceCandidates = [0, 12, 24, 36, 54, 78, 108];
             const sideCandidates = [side, -side];
@@ -737,7 +983,7 @@ if (systemCarousel) {
                     candidateBox.left + candidateBox.width <= graphRect.width &&
                     candidateBox.top + candidateBox.height <= graphRect.height;
                   const isClear = obstacles.every(
-                    (obstacle) => !intersects(candidateBox, obstacle, 7.5)
+                    (obstacle) => !intersects(candidateBox, obstacle, labelObstacleGap)
                   );
 
                   if (fitsGraph && isClear) {
@@ -794,7 +1040,8 @@ if (systemCarousel) {
     })();
   </script>
 
-  <script src="assets/analysis-satisfaction-v2.js?v=4"></script>
+  <script src="page-convergence.js?v=9"></script>
+  <script src="assets/analysis-satisfaction-v2.js?v=16"></script>
 
 </body>
 </html>

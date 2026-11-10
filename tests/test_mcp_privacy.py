@@ -18,7 +18,7 @@ def test_synthetic_workflow_without_network_or_data_writes(tmp_path,monkeypatch)
     async def run():
         async with Client(create_server(root,max_rows=2)) as client:
             schema=await client.call_tool('inspect_schema',{'db_id':'shop'})
-            assert {t['name'] for t in schema.structured_content['tables']}=={'customers','orders'}
+            assert {t['name'] for t in schema.structured_content['tables']}=={'customers','orders','regions'}
             good=await client.call_tool('execute_readonly_sql',{'db_id':'shop','sql':"SELECT SUM(amount_usd) AS total FROM orders WHERE status = 'paid'"})
             assert good.structured_content['execution']['rows']==[[1220.0]]
             for sql in ['DROP TABLE orders','DELETE FROM orders','SELECT * FROM orders; DELETE FROM orders', "ATTACH DATABASE '/tmp/forbidden.sqlite' AS other", 'PRAGMA user_version']:

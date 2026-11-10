@@ -1,0 +1,1549 @@
+/* Selector-based workflow fragment labs. Baseline leaves the production component untouched. */
+html.workflow-fragment-preview,
+html.workflow-fragment-preview body {
+  width:100%;
+  min-width:0;
+  min-height:100%;
+  margin:0;
+  overflow:hidden;
+  background:#b9aaaa;
+}
+
+html.workflow-fragment-preview body > :not([data-component-lab-root]):not(script) {
+  display:none !important;
+}
+
+html.workflow-fragment-preview [data-component-lab-root] {
+  position:absolute !important;
+  top:50% !important;
+  left:50% !important;
+  display:block !important;
+  width:min(var(--fragment-lab-width,660px),calc(100% - 72px)) !important;
+  max-width:none !important;
+  min-width:0 !important;
+  height:auto !important;
+  max-height:calc(100% - 72px) !important;
+  margin:0 !important;
+  padding:28px !important;
+  overflow:visible !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:translate(-50%,-50%) !important;
+  background:#c8bbbb;
+}
+
+html.workflow-fragment-preview svg[data-component-lab-root] {
+  height:min(620px,calc(100% - 72px)) !important;
+  padding:18px !important;
+}
+
+/* Page masthead — grounded in 21st Editorial Hero, Centered Nav Header,
+   Minimal Centered Hero, Project Index, and Table of Contents patterns. */
+[data-fragment-kind="masthead"] {
+  position:relative;
+  color:#202124;
+}
+
+[data-fragment-kind="masthead"] .hero-title {
+  max-width:none;
+}
+
+[data-fragment-kind="masthead"][data-fragment-style="editorial-split"] {
+  display:grid;
+  grid-template-columns:minmax(150px,.38fr) minmax(0,1fr);
+  gap:18px 64px;
+  align-items:end;
+  padding:24px 0;
+  border-top:1px solid #8a756b;
+}
+[data-fragment-kind="masthead"][data-fragment-style="editorial-split"] .hero-title { display:contents; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-split"] .project-name { align-self:end; font:600 12px/1.2 "IBM Plex Mono",monospace; letter-spacing:.09em; text-transform:uppercase; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-split"] .headline-tagline { grid-column:2; grid-row:1 / span 2; font:200 clamp(38px,5vw,64px)/.98 "Maitree",Georgia,serif; letter-spacing:-.035em; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-split"] .byline { grid-column:1; margin:0; }
+
+[data-fragment-kind="masthead"][data-fragment-style="centered-publication"] { display:flex; min-height:220px; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:28px; text-align:center; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-publication"] .hero-title { display:flex; flex-direction:column; align-items:center; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-publication"] .project-name { margin-bottom:18px; padding:5px 10px; border:1px solid #8a756b; border-radius:999px; font:600 10px/1 "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-publication"] .headline-tagline { max-width:820px; font-size:clamp(42px,5.4vw,68px); line-height:1; letter-spacing:-.04em; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-publication"] .byline { margin:0; }
+
+[data-fragment-kind="masthead"][data-fragment-style="three-zone-header"] { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:38px; align-items:center; padding:22px 0; border-bottom:1px solid #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="three-zone-header"] .hero-title { display:contents; }
+[data-fragment-kind="masthead"][data-fragment-style="three-zone-header"] .project-name { font-size:24px; font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="three-zone-header"] .headline-tagline { justify-self:center; font-size:30px; text-align:center; }
+[data-fragment-kind="masthead"][data-fragment-style="three-zone-header"] .byline { margin:0; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="folio-index"] { display:grid; grid-template-columns:150px minmax(0,1fr); gap:14px 34px; align-items:end; padding:24px 0; border-bottom:1px solid #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="folio-index"]::before { content:"01"; grid-row:1 / span 2; color:#685044; font:200 104px/.75 "Maitree",Georgia,serif; }
+[data-fragment-kind="masthead"][data-fragment-style="folio-index"] .hero-title { display:block; font-size:clamp(38px,5vw,60px); line-height:1; }
+[data-fragment-kind="masthead"][data-fragment-style="folio-index"] .project-name { display:block; margin-bottom:8px; font:600 11px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+[data-fragment-kind="masthead"][data-fragment-style="folio-index"] .byline { margin:0 0 2px; }
+
+[data-fragment-kind="masthead"][data-fragment-style="ruled-journal"] { display:flex; min-height:150px; align-items:center; justify-content:space-between; gap:36px; padding:24px 0; border-top:4px double #685044; border-bottom:4px double #685044; }
+[data-fragment-kind="masthead"][data-fragment-style="ruled-journal"] .hero-title { display:block; font-size:clamp(34px,4.6vw,58px); }
+[data-fragment-kind="masthead"][data-fragment-style="ruled-journal"] .project-name { font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="ruled-journal"] .byline { flex:0 0 auto; margin:0; }
+
+[data-fragment-kind="masthead"][data-fragment-style="asymmetric-dossier"] { display:grid; grid-template-columns:.32fr .68fr; gap:40px; align-items:start; padding:28px 0 16px; border-top:1px solid #685044; }
+[data-fragment-kind="masthead"][data-fragment-style="asymmetric-dossier"] .hero-title { display:flex; grid-column:2; flex-direction:column; font-size:clamp(40px,5.2vw,66px); line-height:.98; }
+[data-fragment-kind="masthead"][data-fragment-style="asymmetric-dossier"] .project-name { margin-bottom:12px; font:600 11px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+[data-fragment-kind="masthead"][data-fragment-style="asymmetric-dossier"] .byline { grid-column:1; grid-row:1; margin:0; padding-top:5px; }
+
+[data-fragment-kind="masthead"][data-fragment-style="inverted-band"] { display:flex; min-height:168px; align-items:center; justify-content:space-between; gap:42px; padding:30px 36px; color:#fffaf6; background:#685044; }
+[data-fragment-kind="masthead"][data-fragment-style="inverted-band"] .hero-title { display:block; color:inherit; font-size:clamp(38px,4.8vw,60px); }
+[data-fragment-kind="masthead"][data-fragment-style="inverted-band"] :is(.project-name,.headline-tagline,.byline,.byline a) { color:inherit; }
+[data-fragment-kind="masthead"][data-fragment-style="inverted-band"] .byline { flex:0 0 auto; margin:0; }
+
+[data-fragment-kind="masthead"][data-fragment-style="typographic-stack"] { display:flex; flex-direction:column; align-items:flex-start; gap:9px; padding:22px 0 24px; }
+[data-fragment-kind="masthead"][data-fragment-style="typographic-stack"] .hero-title { display:flex; flex-direction:column; line-height:.95; }
+[data-fragment-kind="masthead"][data-fragment-style="typographic-stack"] .project-name { font-size:clamp(58px,7vw,86px); font-weight:700; letter-spacing:-.055em; }
+[data-fragment-kind="masthead"][data-fragment-style="typographic-stack"] .headline-tagline { margin-top:8px; font-size:clamp(28px,3.6vw,44px); letter-spacing:-.03em; }
+[data-fragment-kind="masthead"][data-fragment-style="typographic-stack"] .byline { margin:0; padding-top:12px; border-top:1px solid #8a756b; }
+
+[data-fragment-kind="masthead"][data-fragment-style="toc-register"] { display:grid; grid-template-columns:74px minmax(0,1fr) auto; gap:22px; align-items:center; padding:24px 0; border-top:1px solid #8a756b; border-bottom:1px solid #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="toc-register"]::before { content:"I"; display:grid; width:52px; height:52px; place-items:center; border:1px solid #685044; color:#685044; font:600 16px/1 "IBM Plex Mono",monospace; }
+[data-fragment-kind="masthead"][data-fragment-style="toc-register"] .hero-title { display:block; font-size:clamp(32px,4.2vw,52px); }
+[data-fragment-kind="masthead"][data-fragment-style="toc-register"] .project-name::after { content:" / "; color:#685044; }
+[data-fragment-kind="masthead"][data-fragment-style="toc-register"] .byline { margin:0; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="signal-marker"] { display:grid; grid-template-columns:12px minmax(0,1fr) auto; gap:20px; align-items:center; min-height:140px; padding:22px 0; }
+[data-fragment-kind="masthead"][data-fragment-style="signal-marker"]::before { content:""; width:12px; height:12px; border-radius:50%; background:#685044; box-shadow:0 0 0 8px rgba(104,80,68,.13); }
+[data-fragment-kind="masthead"][data-fragment-style="signal-marker"] .hero-title { display:block; padding-left:22px; border-left:1px solid #8a756b; font-size:clamp(36px,4.6vw,58px); }
+[data-fragment-kind="masthead"][data-fragment-style="signal-marker"] .project-name { font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="signal-marker"] .byline { margin:0; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="report-rail"] {
+  display:grid;
+  grid-template-columns:64px minmax(0,1fr) auto;
+  gap:26px;
+  align-items:center;
+  min-height:190px;
+  padding:26px 0;
+  border-top:1px solid #8a756b;
+  border-bottom:1px solid #8a756b;
+}
+[data-fragment-kind="masthead"][data-fragment-style="report-rail"]::before {
+  content:"";
+  align-self:stretch;
+  border-right:1px solid #685044;
+  background:repeating-linear-gradient(to bottom,#685044 0 2px,transparent 2px 14px);
+  background-position:right center;
+  background-size:22px 100%;
+  background-repeat:no-repeat;
+}
+[data-fragment-kind="masthead"][data-fragment-style="report-rail"] .hero-title { display:flex; flex-direction:column; font-size:clamp(40px,5.2vw,66px); line-height:.98; }
+[data-fragment-kind="masthead"][data-fragment-style="report-rail"] .project-name { margin-bottom:12px; font:600 10px/1 "IBM Plex Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+[data-fragment-kind="masthead"][data-fragment-style="report-rail"] .byline { margin:0; align-self:end; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="metadata-path"] {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px 32px;
+  align-items:end;
+  padding:24px 0;
+  border-bottom:1px solid #8a756b;
+}
+[data-fragment-kind="masthead"][data-fragment-style="metadata-path"]::before { content:"Research / Systems / SQLHarness"; grid-column:1 / -1; color:#685044; font:600 10px/1 "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+[data-fragment-kind="masthead"][data-fragment-style="metadata-path"] .hero-title { display:block; font-size:clamp(38px,4.8vw,60px); line-height:1; }
+[data-fragment-kind="masthead"][data-fragment-style="metadata-path"] .project-name { font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="metadata-path"] .byline { margin:0 0 4px; padding:5px 9px; border:1px solid #8a756b; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="centered-kicker"] { display:flex; min-height:220px; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:30px; text-align:center; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-kicker"]::before { content:"SEMANTIC NL-TO-SQL RESEARCH SYSTEM"; padding:5px 9px; border:1px solid #8a756b; color:#685044; font:600 9px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-kicker"] .hero-title { display:block; max-width:900px; font-size:clamp(42px,5.4vw,68px); line-height:.98; letter-spacing:-.04em; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-kicker"] .project-name { font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="centered-kicker"] .byline { margin:0; }
+
+[data-fragment-kind="masthead"][data-fragment-style="condensed-header"] { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:28px; align-items:center; min-height:82px; padding:14px 0; border-top:1px solid #8a756b; border-bottom:1px solid #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="condensed-header"] .hero-title { display:contents; }
+[data-fragment-kind="masthead"][data-fragment-style="condensed-header"] .project-name { font:700 20px/1 "Maitree",Georgia,serif; }
+[data-fragment-kind="masthead"][data-fragment-style="condensed-header"] .headline-tagline { justify-self:center; font-size:24px; line-height:1.1; text-align:center; }
+[data-fragment-kind="masthead"][data-fragment-style="condensed-header"] .byline { margin:0; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="editorial-index-row"] { display:grid; grid-template-columns:64px minmax(150px,.35fr) minmax(0,1fr) auto; gap:24px; align-items:center; min-height:150px; padding:22px 0; border-top:1px solid #8a756b; border-bottom:1px solid #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-index-row"]::before { content:"01"; color:#685044; font:500 14px/1 "IBM Plex Mono",monospace; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-index-row"] .hero-title { display:contents; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-index-row"] .project-name { font-size:28px; font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-index-row"] .headline-tagline { font-size:38px; line-height:1; }
+[data-fragment-kind="masthead"][data-fragment-style="editorial-index-row"] .byline { margin:0; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="brutalist-title-block"] { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:end; padding:28px 30px; border:2px solid #685044; background:#cabebe; box-shadow:10px 10px 0 #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="brutalist-title-block"] .hero-title { display:flex; flex-direction:column; line-height:.9; }
+[data-fragment-kind="masthead"][data-fragment-style="brutalist-title-block"] .project-name { font:700 clamp(54px,7vw,86px)/.88 "IBM Plex Sans",sans-serif; letter-spacing:-.045em; text-transform:uppercase; text-shadow:6px 6px 0 #cabebe,7px 7px 0 #685044; }
+[data-fragment-kind="masthead"][data-fragment-style="brutalist-title-block"] .headline-tagline { margin-top:18px; font:400 26px/1.05 "IBM Plex Mono",monospace; letter-spacing:-.04em; }
+[data-fragment-kind="masthead"][data-fragment-style="brutalist-title-block"] .byline { margin:0 0 2px; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="reading-progress"] { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px 34px; align-items:end; padding:30px 0 20px; border-top:4px solid #c8bbbb; }
+[data-fragment-kind="masthead"][data-fragment-style="reading-progress"]::before { content:""; position:absolute; top:-4px; left:0; width:72%; height:4px; background:#685044; }
+[data-fragment-kind="masthead"][data-fragment-style="reading-progress"]::after { content:"READING BRIEF  /  01"; grid-column:1 / -1; grid-row:1; color:#685044; font:600 9px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; }
+[data-fragment-kind="masthead"][data-fragment-style="reading-progress"] .hero-title { grid-column:1; grid-row:2; display:block; font-size:clamp(40px,5vw,64px); line-height:1; }
+[data-fragment-kind="masthead"][data-fragment-style="reading-progress"] .byline { grid-column:2; grid-row:2; margin:0 0 4px; white-space:nowrap; }
+
+[data-fragment-kind="masthead"][data-fragment-style="citation-margin"] { display:grid; grid-template-columns:180px minmax(0,1fr); gap:36px; align-items:stretch; min-height:190px; padding:0; border-top:1px solid #8a756b; border-bottom:1px solid #8a756b; }
+[data-fragment-kind="masthead"][data-fragment-style="citation-margin"]::before { content:"TECHNICAL BRIEF\A NOVEMBER 2026\A SYSTEMS / DATA"; white-space:pre; padding:26px 24px; border-right:1px solid #8a756b; color:#685044; font:600 9px/2 "IBM Plex Mono",monospace; letter-spacing:.08em; }
+[data-fragment-kind="masthead"][data-fragment-style="citation-margin"] .hero-title { display:flex; align-self:center; flex-direction:column; padding:24px 32px 8px 0; font-size:clamp(40px,5vw,64px); line-height:.98; }
+[data-fragment-kind="masthead"][data-fragment-style="citation-margin"] .project-name { margin-bottom:10px; font-weight:700; }
+[data-fragment-kind="masthead"][data-fragment-style="citation-margin"] .byline { grid-column:2; margin:-42px 0 24px; align-self:end; }
+
+[data-fragment-kind="masthead"][data-fragment-style="type-remix"] { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:0; align-items:stretch; min-height:190px; border:1px solid #685044; }
+[data-fragment-kind="masthead"][data-fragment-style="type-remix"] .hero-title { display:contents; }
+[data-fragment-kind="masthead"][data-fragment-style="type-remix"] .project-name { display:flex; align-items:center; padding:28px; color:#fffaf6; background:#685044; font:700 clamp(46px,6vw,76px)/.9 "IBM Plex Sans",sans-serif; letter-spacing:-.06em; }
+[data-fragment-kind="masthead"][data-fragment-style="type-remix"] .headline-tagline { display:flex; align-items:center; padding:28px 34px; font:200 clamp(34px,4.4vw,54px)/.98 "Maitree",Georgia,serif; }
+[data-fragment-kind="masthead"][data-fragment-style="type-remix"] .byline { position:absolute; right:18px; bottom:10px; margin:0; }
+
+/* Overview section heading — grounded in 21st separator, editorial index,
+   header-section, pattern-text, and typography primitives. */
+[data-fragment-kind="section-heading"] {
+  position:relative;
+  box-sizing:border-box;
+  width:100%;
+  color:#202124;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="hairline-separator"] { display:grid; grid-template-columns:auto minmax(80px,1fr); gap:24px; align-items:center; margin:0; padding:46px 0 20px; font-size:28px; }
+[data-fragment-kind="section-heading"][data-fragment-style="hairline-separator"]::after { content:""; border-top:1px solid #685044; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="indexed-editorial"] { display:grid; grid-template-columns:58px minmax(0,1fr); gap:22px; align-items:center; margin:0; padding:42px 0 18px; border-bottom:1px solid #8a756b; font-size:34px; }
+[data-fragment-kind="section-heading"][data-fragment-style="indexed-editorial"]::before { content:"01"; color:#685044; font:600 11px/1 "IBM Plex Mono",monospace; letter-spacing:.08em; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="centered-kicker-rule"] { display:flex; margin:0; flex-direction:column; align-items:center; gap:14px; padding:44px 0 20px; font-size:38px; text-align:center; }
+[data-fragment-kind="section-heading"][data-fragment-style="centered-kicker-rule"]::before { content:"SECTION 01  /  INTRODUCTION"; color:#685044; font:600 9px/1 "IBM Plex Mono",monospace; letter-spacing:.11em; }
+[data-fragment-kind="section-heading"][data-fragment-style="centered-kicker-rule"]::after { content:""; width:72px; border-top:2px solid #685044; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="margin-register"] { margin:0; padding:48px 0 20px 34px; border-left:8px solid #685044; font-size:34px; }
+[data-fragment-kind="section-heading"][data-fragment-style="margin-register"]::before { content:"01 /"; display:block; margin-bottom:10px; color:#685044; font:600 10px/1 "IBM Plex Mono",monospace; letter-spacing:.08em; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="solid-label"] { display:inline-block; width:auto; margin:42px 0 18px; padding:10px 18px 11px; color:#fffaf6; background:#685044; font:600 16px/1 "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="double-rule-folio"] { margin:0; padding:30px 0 22px; border-top:4px double #685044; border-bottom:4px double #685044; font-size:36px; text-align:center; }
+[data-fragment-kind="section-heading"][data-fragment-style="double-rule-folio"]::before { content:"I"; margin-right:22px; color:#685044; font:600 13px/1 "IBM Plex Mono",monospace; vertical-align:middle; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="brutalist-offset"] { display:inline-block; width:auto; margin:42px 0 24px; padding:14px 22px; border:2px solid #685044; background:#cab8b8; box-shadow:7px 7px 0 #8a756b; font:700 30px/1 "IBM Plex Sans",sans-serif; letter-spacing:-.04em; text-transform:uppercase; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="pattern-shadow"] { display:inline-block; width:auto; margin:38px 0 20px; padding:8px 0; font:700 30px/.95 "IBM Plex Sans",sans-serif; letter-spacing:-.045em; text-transform:uppercase; text-shadow:4px 4px 0 #cab8b8,5px 5px 0 #685044; }
+
+/* The selected Overview treatment is the shared page-section heading system. */
+.workflow-comparison-heading:has(> [data-fragment-kind="section-heading"]) {
+  justify-self:stretch;
+  text-align:left;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="corner-caption"] { margin:38px 0 18px; padding:24px 34px; border:1px solid #8a756b; font-size:34px; }
+[data-fragment-kind="section-heading"][data-fragment-style="corner-caption"]::before,
+[data-fragment-kind="section-heading"][data-fragment-style="corner-caption"]::after { content:""; position:absolute; width:24px; height:24px; }
+[data-fragment-kind="section-heading"][data-fragment-style="corner-caption"]::before { top:10px; left:10px; border-top:3px solid #685044; border-left:3px solid #685044; }
+[data-fragment-kind="section-heading"][data-fragment-style="corner-caption"]::after { right:10px; bottom:10px; border-right:3px solid #685044; border-bottom:3px solid #685044; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="display-scale"] { margin:0; padding:28px 0 8px; font:200 clamp(64px,9vw,112px)/.9 "Maitree",Georgia,serif; letter-spacing:-.065em; }
+[data-fragment-kind="section-heading"][data-fragment-style="display-scale"]::after { content:""; display:block; width:100%; margin-top:22px; border-top:1px solid #8a756b; }
+
+/* Overview heading batch 2 — grounded in freshly retrieved 21st editorial,
+   divider, contents-navigation, slit-type, and typography components. */
+[data-fragment-kind="section-heading"][data-fragment-style="eyebrow-split"] {
+  display:grid;
+  grid-template-columns:minmax(150px,.32fr) minmax(0,1fr);
+  gap:42px;
+  align-items:end;
+  margin:0;
+  padding:34px 0 22px;
+  border-bottom:1px solid #8a756b;
+  font:300 54px/.95 "Maitree",Georgia,serif;
+  letter-spacing:-.045em;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="eyebrow-split"]::before {
+  content:"SECTION 01";
+  align-self:start;
+  width:max-content;
+  padding:7px 10px;
+  border:1px solid #685044;
+  font:600 9px/1 "IBM Plex Mono",monospace;
+  letter-spacing:.1em;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="right-editorial"] {
+  display:grid;
+  grid-template-columns:minmax(150px,.42fr) minmax(0,1fr);
+  gap:48px;
+  align-items:start;
+  margin:0;
+  padding:40px 0 20px;
+  font:300 52px/.96 "Maitree",Georgia,serif;
+  letter-spacing:-.05em;
+  text-align:right;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="right-editorial"]::before {
+  content:"INTRODUCTION / 01";
+  padding-top:8px;
+  color:#685044;
+  font:600 9px/1.4 "IBM Plex Mono",monospace;
+  letter-spacing:.1em;
+  text-align:left;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="divider-caption"] {
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin:0;
+  padding:44px 0 20px;
+  font:500 24px/1 "IBM Plex Sans",sans-serif;
+  white-space:nowrap;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="divider-caption"]::before,
+[data-fragment-kind="section-heading"][data-fragment-style="divider-caption"]::after {
+  content:"";
+  flex:1;
+  border-top:1px solid #685044;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="divider-caption"]::before { flex:.16; }
+
+[data-fragment-kind="section-heading"][data-fragment-style="toc-register"] {
+  margin:32px 0 18px;
+  padding:14px 0 14px 38px;
+  border-left:1px solid #8a756b;
+  font:500 36px/1 "IBM Plex Sans",sans-serif;
+  letter-spacing:-.035em;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="toc-register"]::before {
+  content:"";
+  position:absolute;
+  top:14px;
+  bottom:14px;
+  left:-3px;
+  width:5px;
+  background:#685044;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="toc-register"]::after {
+  content:"01  OVERVIEW";
+  display:block;
+  margin-top:10px;
+  color:#685044;
+  font:600 9px/1 "IBM Plex Mono",monospace;
+  letter-spacing:.12em;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="slit-display"] {
+  display:inline-block;
+  width:auto;
+  margin:26px 0 16px;
+  padding:14px 2px 10px;
+  font:800 62px/.78 "IBM Plex Sans",sans-serif;
+  letter-spacing:-.07em;
+  text-transform:uppercase;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="slit-display"]::after {
+  content:"";
+  position:absolute;
+  right:-8px;
+  bottom:20px;
+  left:-8px;
+  height:7px;
+  background:#b9aaaa;
+  border-top:1px solid #685044;
+  border-bottom:1px solid #685044;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="paper-ink-stack"] {
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  margin:0;
+  padding:34px 0 18px;
+  font:300 58px/.92 "Maitree",Georgia,serif;
+  letter-spacing:-.055em;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="paper-ink-stack"]::before {
+  content:"SECTION IV — PROJECT OVERVIEW";
+  color:#685044;
+  font:600 9px/1 "IBM Plex Mono",monospace;
+  letter-spacing:.12em;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="rule-ledger"] {
+  display:grid;
+  grid-template-columns:70px minmax(0,1fr) auto;
+  gap:18px;
+  align-items:end;
+  margin:0;
+  padding:38px 0 13px;
+  border-bottom:2px solid #685044;
+  font:500 32px/1 "IBM Plex Sans",sans-serif;
+  letter-spacing:-.03em;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="rule-ledger"]::before {
+  content:"01";
+  color:#685044;
+  font:600 11px/1 "IBM Plex Mono",monospace;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="rule-ledger"]::after {
+  content:"SQLHARNESS / BRIEF";
+  color:#685044;
+  font:600 8px/1 "IBM Plex Mono",monospace;
+  letter-spacing:.1em;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="hairline-destinations"] {
+  display:grid;
+  grid-template-columns:minmax(0,.55fr) minmax(220px,1fr);
+  gap:40px;
+  align-items:end;
+  margin:0;
+  padding:34px 0 18px;
+  font:400 42px/1 "Maitree",Georgia,serif;
+  letter-spacing:-.04em;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="hairline-destinations"]::after {
+  content:"01   02   03";
+  padding:0 0 8px;
+  border-top:1px solid #8a756b;
+  border-bottom:1px solid #8a756b;
+  color:#685044;
+  font:600 9px/28px "IBM Plex Mono",monospace;
+  letter-spacing:.2em;
+  text-align:right;
+}
+
+[data-fragment-kind="section-heading"][data-fragment-style="nested-chapter"] {
+  margin:28px 0 14px 78px;
+  padding:18px 0 18px 30px;
+  border-left:1px solid #8a756b;
+  font:500 38px/1 "IBM Plex Sans",sans-serif;
+  letter-spacing:-.04em;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="nested-chapter"]::before {
+  content:"";
+  position:absolute;
+  top:50%;
+  right:100%;
+  width:78px;
+  border-top:1px solid #8a756b;
+}
+[data-fragment-kind="section-heading"][data-fragment-style="nested-chapter"]::after {
+  content:"CHAPTER 01";
+  display:block;
+  margin-top:9px;
+  color:#685044;
+  font:600 9px/1 "IBM Plex Mono",monospace;
+  letter-spacing:.12em;
+}
+
+@media (max-width:760px) {
+  [data-fragment-kind="masthead"][data-fragment-style]:not([data-fragment-style="baseline"]) { display:flex; flex-direction:column; align-items:flex-start; gap:16px; }
+  [data-fragment-kind="masthead"][data-fragment-style]:not([data-fragment-style="baseline"]) .hero-title { display:flex; flex-direction:column; }
+  [data-fragment-kind="masthead"][data-fragment-style]:not([data-fragment-style="baseline"]) .byline { margin:0; }
+  [data-fragment-kind="section-heading"][data-fragment-style="pattern-shadow"] { font-size:26px; }
+}
+
+/* Overview composition — outer layout only. The prose, links, and translation
+   artifact retain their existing internal typography and component styling. */
+[data-fragment-kind="overview-layout"] {
+  position:relative;
+  box-sizing:border-box;
+  width:100%;
+}
+
+html.workflow-fragment-preview [data-component-lab-root][data-fragment-kind="overview-layout"] {
+  display:grid !important;
+}
+
+[data-fragment-kind="overview-layout"][data-fragment-style="editorial-balance"] {
+  grid-template-columns:minmax(0,1.25fr) minmax(320px,.85fr);
+  gap:72px;
+  align-items:start;
+  padding:86px 0;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="editorial-balance"] > .hero-copy-column { grid-column:1; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="editorial-balance"] > .hero-aside { grid-column:2; grid-row:1; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="article-sidebar"] {
+  grid-template-columns:minmax(0,1fr) 340px;
+  gap:54px;
+  align-items:start;
+  padding:76px 0;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="article-sidebar"] > .hero-copy-column { grid-column:1; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="article-sidebar"] > .hero-aside { grid-column:2; grid-row:1; width:100%; padding-left:34px; border-left:1px solid #8a756b; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="divided-diptych"] {
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  align-items:stretch;
+  padding:0;
+  border-top:1px solid #8a756b;
+  border-bottom:1px solid #8a756b;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="divided-diptych"] > .hero-copy-column { grid-column:1; grid-row:1; padding:64px 52px 64px 0; }
+[data-fragment-kind="overview-layout"][data-fragment-style="divided-diptych"] > .hero-aside { grid-column:2; grid-row:1; width:100%; padding:64px 0 64px 52px; border-left:1px solid #8a756b; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="reverse-editorial"] {
+  grid-template-columns:minmax(320px,.88fr) minmax(0,1.12fr);
+  gap:80px;
+  align-items:start;
+  padding:84px 0;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="reverse-editorial"] > .hero-aside { grid-column:1; grid-row:1; justify-self:start; }
+[data-fragment-kind="overview-layout"][data-fragment-style="reverse-editorial"] > .hero-copy-column { grid-column:2; grid-row:1; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="collage-overlap"] {
+  grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);
+  gap:0;
+  align-items:center;
+  margin:70px 0;
+  padding:58px 48px;
+  background:#c8bbbb;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="collage-overlap"] > .hero-copy-column { grid-column:1; grid-row:1; padding-right:88px; }
+[data-fragment-kind="overview-layout"][data-fragment-style="collage-overlap"] > .hero-aside { z-index:1; grid-column:2; grid-row:1; width:calc(100% + 42px); margin-left:-42px; transform:translateY(34px); }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="stacked-exhibit"] {
+  grid-template-columns:minmax(0,1fr);
+  gap:54px;
+  padding:72px 0;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="stacked-exhibit"] > .hero-copy-column { grid-column:1; grid-row:1; width:min(760px,100%); }
+[data-fragment-kind="overview-layout"][data-fragment-style="stacked-exhibit"] > .hero-aside { grid-column:1; grid-row:2; justify-self:end; width:min(520px,100%); }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="offset-register"] {
+  grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);
+  gap:72px;
+  align-items:start;
+  padding:58px 0 110px;
+  border-top:1px solid #8a756b;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="offset-register"] > .hero-copy-column { grid-column:1; grid-row:1; transform:translateY(74px); }
+[data-fragment-kind="overview-layout"][data-fragment-style="offset-register"] > .hero-aside { grid-column:2; grid-row:1; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="framed-diptych"] {
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  align-items:stretch;
+  margin:70px 0;
+  padding:36px;
+  border:4px double #685044;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="framed-diptych"] > .hero-copy-column { grid-column:1; grid-row:1; padding:34px 48px 34px 18px; }
+[data-fragment-kind="overview-layout"][data-fragment-style="framed-diptych"] > .hero-aside { grid-column:2; grid-row:1; width:100%; padding:34px 18px 34px 48px; border-left:1px solid #8a756b; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="project-folio"] {
+  grid-template-columns:340px minmax(0,1fr);
+  gap:78px;
+  align-items:center;
+  padding:72px 0 64px;
+  border-top:1px solid #685044;
+  border-bottom:1px solid #685044;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="project-folio"]::before { content:"FEATURE 01"; position:absolute; top:18px; left:0; color:#685044; font:600 9px/1 "IBM Plex Mono",monospace; letter-spacing:.12em; }
+[data-fragment-kind="overview-layout"][data-fragment-style="project-folio"] > .hero-copy-column { grid-column:1; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="project-folio"] > .hero-aside { grid-column:2; grid-row:1; justify-self:end; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] {
+  grid-template-columns:1fr 1fr;
+  gap:46px;
+  align-items:start;
+  padding:76px 0;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] > .hero-copy-column,
+[data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] > .hero-aside {
+  min-height:100%;
+  padding:36px;
+  border:1px solid #685044;
+  background:#cabebe;
+  box-shadow:8px 8px 0 #8a756b;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] > .hero-copy-column { grid-column:1; grid-row:1; transform:translateY(28px); }
+[data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] > .hero-aside { grid-column:2; grid-row:1; width:100%; }
+
+/* Overview composition batch 2 — fresh 21st layout references, still outer-only. */
+[data-fragment-kind="overview-layout"][data-fragment-style="staggered-spans"] {
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:24px;
+  align-items:start;
+  padding:70px 0 106px;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="staggered-spans"] > .hero-copy-column { grid-column:1 / span 7; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="staggered-spans"] > .hero-aside { grid-column:8 / span 5; grid-row:1; width:100%; transform:translateY(62px); }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="hairline-lattice"] {
+  grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);
+  gap:1px;
+  margin:68px 0;
+  padding:1px;
+  border:1px solid #8a756b;
+  background:#8a756b;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="hairline-lattice"] > .hero-copy-column,
+[data-fragment-kind="overview-layout"][data-fragment-style="hairline-lattice"] > .hero-aside { padding:44px; background:#b9aaaa; }
+[data-fragment-kind="overview-layout"][data-fragment-style="hairline-lattice"] > .hero-copy-column { grid-column:1; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="hairline-lattice"] > .hero-aside { grid-column:2; grid-row:1; width:100%; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="sticky-evidence"] {
+  grid-template-columns:minmax(0,1fr) 380px;
+  gap:88px;
+  align-items:start;
+  padding:70px 0 120px;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="sticky-evidence"] > .hero-copy-column { grid-column:1; grid-row:1; max-width:660px; }
+[data-fragment-kind="overview-layout"][data-fragment-style="sticky-evidence"] > .hero-aside { grid-column:2; grid-row:1; width:100%; align-self:start; padding-top:24px; border-top:4px double #685044; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="context-rail"] {
+  grid-template-columns:minmax(0,1fr) 390px;
+  gap:64px;
+  align-items:start;
+  margin:64px 0;
+  padding:46px 40px 46px 92px;
+  border:1px solid #8a756b;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="context-rail"]::before {
+  content:"01\A02\A03";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:54px;
+  padding-top:34px;
+  border-right:1px solid #8a756b;
+  color:#685044;
+  font:600 9px/3.2 "IBM Plex Mono",monospace;
+  text-align:center;
+  white-space:pre;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="context-rail"] > .hero-copy-column { grid-column:1; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="context-rail"] > .hero-aside { grid-column:2; grid-row:1; width:100%; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="featured-plus"] {
+  grid-template-columns:minmax(0,1fr) minmax(280px,.55fr);
+  gap:42px 58px;
+  align-items:start;
+  padding:66px 0;
+  border-top:1px solid #8a756b;
+  border-bottom:1px solid #8a756b;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="featured-plus"] > .hero-copy-column { grid-column:1 / -1; grid-row:1; width:min(760px,100%); }
+[data-fragment-kind="overview-layout"][data-fragment-style="featured-plus"] > .hero-aside { grid-column:2; grid-row:2; width:100%; justify-self:end; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="drawer-stack"] {
+  grid-template-columns:minmax(0,1fr) minmax(360px,.82fr);
+  gap:0;
+  align-items:center;
+  min-height:780px;
+  padding:72px 44px;
+  perspective:1200px;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="drawer-stack"] > .hero-copy-column,
+[data-fragment-kind="overview-layout"][data-fragment-style="drawer-stack"] > .hero-aside { padding:42px; border:1px solid #685044; background:#cabebe; }
+[data-fragment-kind="overview-layout"][data-fragment-style="drawer-stack"] > .hero-copy-column { z-index:1; grid-column:1; grid-row:1; transform:translateX(12px) rotateY(1.4deg); box-shadow:-10px 12px 0 rgba(104,80,68,.22); }
+[data-fragment-kind="overview-layout"][data-fragment-style="drawer-stack"] > .hero-aside { z-index:2; grid-column:2; grid-row:1; width:calc(100% + 12px); margin-left:-12px; transform:translateY(44px) rotateY(-1.4deg); box-shadow:10px 12px 0 #8a756b; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="workspace-inset"] {
+  grid-template-columns:minmax(0,1fr) 390px;
+  gap:30px;
+  align-items:start;
+  margin:64px 0;
+  padding:28px 28px 28px 76px;
+  border:1px solid #685044;
+  background:#cabebe;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="workspace-inset"]::before { content:"OVERVIEW\A01"; position:absolute; top:0; bottom:0; left:0; width:48px; padding-top:24px; color:#fffaf6; background:#685044; font:600 8px/2 "IBM Plex Mono",monospace; letter-spacing:.08em; text-align:center; white-space:pre; }
+[data-fragment-kind="overview-layout"][data-fragment-style="workspace-inset"] > .hero-copy-column { grid-column:1; grid-row:1; padding:24px; background:#b9aaaa; }
+[data-fragment-kind="overview-layout"][data-fragment-style="workspace-inset"] > .hero-aside { grid-column:2; grid-row:1; width:100%; padding:24px; background:#b9aaaa; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="blog-register"] {
+  grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);
+  gap:34px;
+  align-items:start;
+  padding:72px 0;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="blog-register"]::before { content:"READING  /  EVIDENCE"; position:absolute; top:45px; left:0; color:#685044; font:600 8px/1 "IBM Plex Mono",monospace; letter-spacing:.12em; }
+[data-fragment-kind="overview-layout"][data-fragment-style="blog-register"] > .hero-copy-column,
+[data-fragment-kind="overview-layout"][data-fragment-style="blog-register"] > .hero-aside { padding-top:24px; border-top:1px solid #685044; }
+[data-fragment-kind="overview-layout"][data-fragment-style="blog-register"] > .hero-copy-column { grid-column:1; grid-row:1; }
+[data-fragment-kind="overview-layout"][data-fragment-style="blog-register"] > .hero-aside { grid-column:2; grid-row:1; width:100%; }
+
+[data-fragment-kind="overview-layout"][data-fragment-style="tilted-columns"] {
+  grid-template-columns:minmax(0,1fr) minmax(340px,.82fr);
+  gap:64px;
+  align-items:start;
+  padding:92px 28px 110px;
+  perspective:1000px;
+}
+[data-fragment-kind="overview-layout"][data-fragment-style="tilted-columns"] > .hero-copy-column { grid-column:1; grid-row:1; transform:translateY(28px) rotate(-.7deg); transform-origin:top right; }
+[data-fragment-kind="overview-layout"][data-fragment-style="tilted-columns"] > .hero-aside { grid-column:2; grid-row:1; width:100%; transform:translateY(-18px) rotate(.7deg); transform-origin:top left; }
+
+/* Reuse the approved paired-page composition on the architecture and findings sections. */
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-columns {
+  grid-template-columns:minmax(0,1fr) minmax(430px,.86fr);
+  gap:0;
+  align-items:center;
+  perspective:1200px;
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary {
+  position:relative;
+  z-index:1;
+  grid-column:1;
+  grid-row:1;
+  min-height:610px;
+  padding:84px 38px 54px;
+  border:1px solid #685044;
+  background:#cabebe;
+  box-shadow:-10px 12px 0 rgba(104,80,68,.22);
+  transform:translateX(12px) rotateY(1.4deg);
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary > .stage-table {
+  width:calc(100% - 42px);
+  margin-right:0;
+  margin-left:42px;
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page {
+  position:relative;
+  z-index:2;
+  grid-column:2;
+  grid-row:1;
+  width:calc(100% + 12px);
+  margin:44px 0 0 -12px;
+  padding:24px;
+  border:1px solid #685044;
+  background:#cabebe;
+  box-shadow:10px 12px 0 #8a756b;
+  transform:rotateY(-1.4deg);
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page > .system-details {
+  width:100%;
+  max-width:none;
+  margin:0;
+  box-shadow:none;
+  transform:none;
+}
+body.satisfaction-preview .system-details-floating-control {
+  color:#fffaf6;
+  background:#685044;
+  box-shadow:0 0 20px rgba(104,80,68,.34);
+}
+body.satisfaction-preview .system-details-floating-control:hover:not(:disabled) {
+  background:#7a563f;
+  box-shadow:0 0 25px rgba(104,80,68,.48);
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns {
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:0;
+  align-items:stretch;
+  perspective:1200px;
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace,
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+  padding:42px;
+  border:1px solid #685044;
+  background:#cabebe;
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace {
+  position:relative;
+  z-index:1;
+  grid-column:1;
+  grid-row:1;
+  box-shadow:-10px 12px 0 rgba(104,80,68,.22);
+  transform:translateX(12px) rotateY(1.4deg);
+}
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+  position:relative;
+  z-index:2;
+  grid-column:2;
+  grid-row:1;
+  width:calc(100% + 12px);
+  margin-left:-12px;
+  box-shadow:10px 12px 0 #8a756b;
+  transform:translateY(34px) rotateY(-1.4deg);
+}
+
+@media (max-width:1360px) {
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-columns {
+    grid-template-columns:1fr;
+    gap:28px;
+    perspective:none;
+  }
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary,
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page {
+    grid-column:1;
+    width:100%;
+    margin:0;
+    transform:none;
+  }
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary { grid-row:1; }
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page { grid-row:2; }
+}
+
+@media (max-width:900px) {
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns {
+    grid-template-columns:1fr;
+    gap:28px;
+    perspective:none;
+  }
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace,
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+    grid-column:1;
+    width:100%;
+    margin:0;
+    transform:none;
+  }
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace { grid-row:1; }
+  html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research { grid-row:2; }
+}
+
+/* Scroll-linked paired-page entrance, adapted from the supplied center-seeking motion reference. */
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track {
+  --sticky-stage-content-height:0px;
+  --sticky-scroll-distance:70vh;
+  position:relative;
+  grid-column:1 / -1;
+  width:100%;
+  min-height:calc(var(--sticky-stage-content-height) + var(--sticky-scroll-distance));
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--overview {
+  --sticky-scroll-distance:78vh;
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--system {
+  --sticky-scroll-distance:82vh;
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--workflow {
+  --sticky-scroll-distance:120vh;
+  margin-bottom:400px;
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--closing {
+  --sticky-scroll-distance:68vh;
+  margin-bottom:220px;
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-content {
+  position:sticky;
+  top:clamp(16px, 3vh, 30px);
+  z-index:2;
+  width:100%;
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--system > .scroll-sticky-content {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(430px,.86fr);
+  gap:0;
+  align-items:center;
+  perspective:1200px;
+}
+
+html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--workflow #workflow {
+  margin-bottom:0;
+}
+
+@media (max-width:1360px), (prefers-reduced-motion:reduce) {
+  html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track {
+    min-height:0;
+  }
+
+  html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--workflow {
+    margin-bottom:400px;
+  }
+
+  html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--closing {
+    margin-bottom:0;
+  }
+
+  html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-content {
+    position:relative;
+    top:auto;
+  }
+}
+
+@media (max-width:1360px) {
+  html.sticky-scroll-stages-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .scroll-sticky-track--system > .scroll-sticky-content {
+    grid-template-columns:1fr;
+    gap:28px;
+    perspective:none;
+  }
+}
+
+html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"],
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-columns,
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns {
+  --page-convergence:0;
+}
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #overview > h2 {
+  --page-convergence:0;
+  opacity:calc(.08 + (var(--page-convergence) * .92));
+  transform:translateX(calc(-88px + (var(--page-convergence) * 88px))) translateY(calc(34px - (var(--page-convergence) * 34px)));
+  will-change:transform,opacity;
+}
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #system > h2 {
+  --page-convergence:0;
+  opacity:calc(.08 + (var(--page-convergence) * .92));
+  transform:translateX(calc(-180px + (var(--page-convergence) * 180px))) translateY(calc(34px - (var(--page-convergence) * 34px)));
+  will-change:transform,opacity;
+}
+html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-copy-column {
+  opacity:calc(.12 + (var(--page-convergence) * .88));
+  transform:translateX(calc(-88px + (var(--page-convergence) * 100px))) rotateY(1.4deg);
+  will-change:transform,opacity;
+}
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary,
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace {
+  opacity:calc(.04 + (var(--page-convergence) * .96));
+  transform:translateX(calc(-180px + (var(--page-convergence) * 192px))) rotateY(1.4deg);
+  will-change:transform,opacity;
+}
+html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-aside {
+  opacity:calc(.12 + (var(--page-convergence) * .88));
+  transform:translateX(calc(88px - (var(--page-convergence) * 88px))) translateY(44px) rotateY(-1.4deg);
+  will-change:transform,opacity;
+}
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page {
+  opacity:calc(.04 + (var(--page-convergence) * .96));
+  transform:translateX(calc(180px - (var(--page-convergence) * 180px))) rotateY(-1.4deg);
+  will-change:transform,opacity;
+}
+html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+  opacity:calc(.04 + (var(--page-convergence) * .96));
+  transform:translateX(calc(180px - (var(--page-convergence) * 180px))) translateY(34px) rotateY(-1.4deg);
+  will-change:transform,opacity;
+}
+
+@media (max-width:1360px) {
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page {
+    opacity:1;
+    transform:none;
+  }
+}
+
+@media (max-width:900px) {
+  html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-copy-column,
+  html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-aside,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+    opacity:1;
+    transform:none;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-copy-column,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace {
+    opacity:1;
+    transform:translateX(12px) rotateY(1.4deg);
+  }
+  html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-aside {
+    opacity:1;
+    transform:translateY(44px) rotateY(-1.4deg);
+  }
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page {
+    opacity:1;
+    transform:rotateY(-1.4deg);
+  }
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+    opacity:1;
+    transform:translateY(34px) rotateY(-1.4deg);
+  }
+}
+
+@media (max-width:1360px) and (prefers-reduced-motion:reduce) {
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-primary,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .system-details-page {
+    transform:none;
+  }
+}
+
+@media (max-width:900px) and (prefers-reduced-motion:reduce) {
+  html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-copy-column,
+  html.page-convergence-enabled .hero-columns[data-fragment-style="drawer-stack"] > .hero-aside,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #trace,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .closing-columns > #research {
+    transform:none;
+  }
+}
+
+/* The workflow carousel reveals as one object; its internal carousel motion remains independent. */
+html.page-convergence-enabled:not(.component-lab):not(.workflow-lab-preview) body.satisfaction-preview #workflow {
+  --workflow-reveal:0;
+  opacity:calc(.04 + (var(--workflow-reveal) * .96));
+  transform:translateY(calc(72px - (var(--workflow-reveal) * 72px)));
+  will-change:transform,opacity;
+}
+
+/* Read the general algorithm first, then its concrete example. */
+@media (min-width:761px) {
+  body.satisfaction-preview .workflow-stage-carousel .workflow-stage-row > .workflow-stage-explanation {
+    grid-column:1;
+    grid-row:2;
+  }
+
+  body.satisfaction-preview .workflow-stage-carousel .workflow-stage-row > .workflow-stage-example {
+    grid-column:2;
+    grid-row:2;
+  }
+}
+html.page-convergence-enabled:not(.component-lab):not(.workflow-lab-preview) body.satisfaction-preview .workflow-comparison-heading {
+  --workflow-reveal:0;
+  opacity:calc(.08 + (var(--workflow-reveal) * .92));
+  transform:translateX(calc(-120px + (var(--workflow-reveal) * 120px))) translateY(calc(34px - (var(--workflow-reveal) * 34px)));
+  will-change:transform,opacity;
+}
+
+/* Keep the later workflow stages in the same two container families established by retrieval. */
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview :is(#example-assembly, #example-authority) {
+  width:100%;
+  margin:0;
+  padding:14px;
+  border:1px solid #8a756b;
+  border-radius:0;
+  color:#202124;
+  background:#d2c5c5;
+  box-shadow:6px 7px 0 rgba(104,80,68,.2);
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #example-authority {
+  display:flex;
+  min-height:108px;
+  align-items:center;
+  justify-content:center;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #example-authority .code-generation-step--authority {
+  display:block;
+  width:100%;
+  min-height:0;
+  padding:0;
+  border:0 !important;
+  border-radius:0;
+  color:#202124;
+  background:transparent;
+  text-align:left;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #example-authority .code-generation-step--authority > strong {
+  display:block;
+  margin:0 0 9px;
+  font-family:"IBM Plex Sans",Arial,sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .authority-run-checks {
+  display:grid;
+  gap:0;
+  margin:0;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .authority-run-checks > div {
+  display:grid;
+  grid-template-columns:76px minmax(0,1fr);
+  gap:12px;
+  padding:7px 0;
+  border-top:1px solid rgba(104,80,68,.28);
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .authority-run-checks :is(dt,dd) {
+  margin:0;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .authority-run-checks dt {
+  color:#685044;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .authority-run-checks dd {
+  font-family:"IBM Plex Sans",Arial,sans-serif;
+  font-size:12px;
+  line-height:1.35;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview .authority-run-checks code {
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.92em;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #example-result {
+  width:100%;
+  margin:0;
+  padding:14px;
+  border:1px solid #8a756b;
+  border-radius:0;
+  color:#202124;
+  background:#d2c5c5;
+  box-shadow:6px 7px 0 rgba(104,80,68,.2);
+  text-align:left;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview :is(
+  #explanation-assembly .fragment-workflow-step--assembly,
+  #explanation-authority .fragment-workflow-step--authority,
+  #explanation-result .fragment-workflow-result
+) {
+  width:100%;
+  margin:0;
+  padding:14px 16px;
+  border:1px solid #685044 !important;
+  border-radius:0;
+  color:#e9eeff;
+  background:#7a563f !important;
+  box-shadow:6px 7px 0 rgba(104,80,68,.24) !important;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview :is(
+  #explanation-assembly .fragment-workflow-step--assembly,
+  #explanation-authority .fragment-workflow-step--authority,
+  #explanation-result .fragment-workflow-result
+) :is(strong,p,a) {
+  color:inherit !important;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview :is(
+  #explanation-assembly .fragment-workflow-step--assembly,
+  #explanation-authority .fragment-workflow-step--authority,
+  #explanation-result .fragment-workflow-result
+) > strong {
+  margin:0;
+  padding:0;
+  background:transparent;
+}
+
+html:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #explanation-result .fragment-workflow-result {
+  display:block;
+  min-height:0;
+  text-align:left;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-lab-preview) body.satisfaction-preview #workflow {
+    opacity:1;
+    transform:none;
+  }
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #overview > h2,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-fragment-preview) body.satisfaction-preview #system > h2,
+  html.page-convergence-enabled:not(.component-lab):not(.workflow-lab-preview) body.satisfaction-preview .workflow-comparison-heading {
+    opacity:1;
+    transform:none;
+  }
+}
+
+@media (max-width:900px) {
+  [data-fragment-kind="overview-layout"][data-fragment-style]:not([data-fragment-style="baseline"]) {
+    grid-template-columns:minmax(0,1fr);
+    gap:40px;
+    margin:0;
+    padding:56px 0;
+  }
+  [data-fragment-kind="overview-layout"][data-fragment-style]:not([data-fragment-style="baseline"]) > .hero-copy-column,
+  [data-fragment-kind="overview-layout"][data-fragment-style]:not([data-fragment-style="baseline"]) > .hero-aside {
+    grid-column:1;
+    width:100%;
+    margin:0;
+    padding:0;
+    border-left:0;
+    transform:none;
+  }
+  [data-fragment-kind="overview-layout"][data-fragment-style]:not([data-fragment-style="baseline"]) > .hero-copy-column { grid-row:1; }
+  [data-fragment-kind="overview-layout"][data-fragment-style]:not([data-fragment-style="baseline"]) > .hero-aside { grid-row:2; justify-self:start; }
+  [data-fragment-kind="overview-layout"][data-fragment-style="reverse-editorial"] > .hero-aside { grid-row:1; }
+  [data-fragment-kind="overview-layout"][data-fragment-style="reverse-editorial"] > .hero-copy-column { grid-row:2; }
+  [data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] > .hero-copy-column,
+  [data-fragment-kind="overview-layout"][data-fragment-style="split-card-stage"] > .hero-aside { padding:28px; }
+}
+
+/* Request-source composition — grounded in 21st Input Bar, AI Sources, and Workflow Blueprint. */
+[data-fragment-kind="request"][data-fragment-style="source-equation"] .general-workflow-inputs {
+  gap:0;
+  padding:12px;
+  border:1px solid #8a756b;
+}
+[data-fragment-kind="request"][data-fragment-style="source-equation"] .general-workflow-inputs div {
+  border:1px solid #685044;
+  border-radius:0;
+  background:#d2c5c5;
+  color:#252222;
+}
+[data-fragment-kind="request"][data-fragment-style="source-equation"] .general-workflow-inputs span { padding:0 12px; }
+
+[data-fragment-kind="request"][data-fragment-style="blueprint-flow"] .general-workflow-inputs {
+  padding:26px;
+  border:1px solid #8a756b;
+  background-image:radial-gradient(circle,rgba(104,80,68,.3) 1px,transparent 1.4px);
+  background-size:14px 14px;
+}
+[data-fragment-kind="request"][data-fragment-style="blueprint-flow"] .general-workflow-inputs div {
+  border:1px solid #685044;
+  border-radius:0;
+  background:#d2c5c5;
+  color:#252222;
+  box-shadow:4px 4px 0 rgba(104,80,68,.22);
+}
+
+[data-fragment-kind="request"][data-fragment-style="source-chips"] .general-workflow-inputs {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+}
+[data-fragment-kind="request"][data-fragment-style="source-chips"] .general-workflow-inputs div {
+  flex:0 1 auto;
+  padding:11px 18px;
+  border:1px solid #685044;
+  border-radius:999px;
+  background:#fffaf6;
+  color:#252222;
+}
+[data-fragment-kind="request"][data-fragment-style="source-chips"] .general-workflow-inputs span { color:#685044; }
+
+[data-fragment-kind="request"][data-fragment-style="stacked-merge"] .general-workflow-inputs {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  counter-reset:source-step;
+}
+[data-fragment-kind="request"][data-fragment-style="stacked-merge"] .general-workflow-inputs div {
+  position:relative;
+  padding:14px 18px 14px 52px;
+  border:1px solid #8a756b;
+  border-radius:0;
+  background:#d2c5c5;
+  color:#252222;
+  counter-increment:source-step;
+}
+[data-fragment-kind="request"][data-fragment-style="stacked-merge"] .general-workflow-inputs div::before {
+  content:counter(source-step,decimal-leading-zero);
+  position:absolute;
+  left:15px;
+  color:#685044;
+  font:600 10px/1 "IBM Plex Mono",monospace;
+}
+[data-fragment-kind="request"][data-fragment-style="stacked-merge"] .general-workflow-inputs span { display:none; }
+
+[data-fragment-kind="request"][data-fragment-style="editorial-equation"] .general-workflow-inputs {
+  grid-template-columns:1fr 34px 1fr 34px 1.25fr;
+  padding:0;
+  border-top:2px solid #685044;
+  border-bottom:1px solid #8a756b;
+}
+[data-fragment-kind="request"][data-fragment-style="editorial-equation"] .general-workflow-inputs div {
+  min-height:76px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#252222;
+  font-family:"Maitree",Georgia,serif;
+}
+
+[data-fragment-kind="request"][data-fragment-style="terminal-inputs"] .general-workflow-inputs {
+  padding:18px;
+  border:1px solid #8a756b;
+  color:#d9cbc4;
+  background:#332a26;
+}
+[data-fragment-kind="request"][data-fragment-style="terminal-inputs"] .general-workflow-inputs div {
+  border:1px dashed #8a756b;
+  border-radius:0;
+  color:#f7f2ee;
+  background:#4e3b32;
+  font-family:"IBM Plex Mono",monospace;
+}
+
+[data-fragment-kind="request"][data-fragment-style="linked-rail"] .general-workflow-inputs {
+  position:relative;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  padding:22px 12px;
+}
+[data-fragment-kind="request"][data-fragment-style="linked-rail"] .general-workflow-inputs::before {
+  content:"";
+  position:absolute;
+  top:50%;
+  right:12%;
+  left:12%;
+  border-top:2px solid #8a756b;
+}
+[data-fragment-kind="request"][data-fragment-style="linked-rail"] .general-workflow-inputs div {
+  position:relative;
+  z-index:1;
+  border:4px solid #c8bbbb;
+  border-radius:0;
+  outline:1px solid #685044;
+  background:#d2c5c5;
+  color:#252222;
+}
+[data-fragment-kind="request"][data-fragment-style="linked-rail"] .general-workflow-inputs span { display:none; }
+
+[data-fragment-kind="request"][data-fragment-style="matrix-inputs"] .general-workflow-inputs {
+  gap:1px;
+  padding:1px;
+  border:0;
+  background:#8a756b;
+}
+[data-fragment-kind="request"][data-fragment-style="matrix-inputs"] .general-workflow-inputs div {
+  min-height:84px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:0;
+  background:#d2c5c5;
+  color:#252222;
+}
+[data-fragment-kind="request"][data-fragment-style="matrix-inputs"] .general-workflow-inputs span { display:none; }
+
+[data-fragment-kind="request"][data-fragment-style="isometric-blocks"] .general-workflow-inputs { gap:18px; padding:22px; }
+[data-fragment-kind="request"][data-fragment-style="isometric-blocks"] .general-workflow-inputs div {
+  border:1px solid #685044;
+  border-radius:0;
+  color:#252222;
+  background:#d2c5c5;
+  box-shadow:7px 7px 0 #8a756b;
+  transform:translate(-3px,-3px);
+}
+
+[data-fragment-kind="request"][data-fragment-style="minimal-connectors"] .general-workflow-inputs {
+  padding:0;
+  border:0;
+}
+[data-fragment-kind="request"][data-fragment-style="minimal-connectors"] .general-workflow-inputs div {
+  padding:15px 4px;
+  border:0;
+  border-top:1px solid #685044;
+  border-radius:0;
+  color:#252222;
+  background:transparent;
+}
+[data-fragment-kind="request"][data-fragment-style="minimal-connectors"] .general-workflow-inputs span { color:#685044; }
+
+/* Explanation and status panels — grounded in How It Works, Chain of Thought, Agent Trace, and Approval Card. */
+[data-fragment-kind="panel"][data-fragment-style]:not([data-fragment-style="baseline"]) {
+  color:#252222;
+  background:transparent;
+}
+[data-fragment-kind="panel"][data-fragment-style="timeline-rail"] {
+  padding-left:52px !important;
+  border-left:2px solid #685044;
+  counter-reset:panel-step;
+}
+[data-fragment-kind="panel"][data-fragment-style="timeline-rail"] :is(.general-workflow-state,.fragment-workflow-step) {
+  position:relative;
+  border:1px solid #8a756b;
+  border-radius:0;
+  background:#d2c5c5;
+  color:#252222;
+  counter-increment:panel-step;
+}
+[data-fragment-kind="panel"][data-fragment-style="timeline-rail"] :is(.general-workflow-state,.fragment-workflow-step)::before {
+  content:counter(panel-step,decimal-leading-zero);
+  position:absolute;
+  top:16px;
+  left:-45px;
+  display:grid;
+  width:26px;
+  height:26px;
+  place-items:center;
+  border-radius:50%;
+  color:#fffaf6;
+  background:#685044;
+  font:600 8px/1 "IBM Plex Mono",monospace;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="stacked-cards"] :is(.general-workflow-state,.fragment-workflow-step) {
+  border:1px solid #685044;
+  border-radius:0;
+  color:#252222;
+  background:#d2c5c5;
+  box-shadow:7px 7px 0 rgba(104,80,68,.24);
+}
+[data-fragment-kind="panel"][data-fragment-style="stacked-cards"] :is(.general-workflow-state,.fragment-workflow-step):nth-of-type(2n) { transform:translateX(12px); }
+
+[data-fragment-kind="panel"][data-fragment-style="chain-thread"] :is(.general-workflow-state,.fragment-workflow-step) {
+  position:relative;
+  margin-left:28px;
+  border:0;
+  border-radius:0;
+  border-bottom:1px solid #8a756b;
+  color:#252222;
+  background:transparent;
+}
+[data-fragment-kind="panel"][data-fragment-style="chain-thread"] :is(.general-workflow-state,.fragment-workflow-step)::before {
+  content:"";
+  position:absolute;
+  top:18px;
+  left:-28px;
+  width:10px;
+  height:10px;
+  border:2px solid #c8bbbb;
+  border-radius:50%;
+  background:#685044;
+  box-shadow:0 0 0 1px #685044;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="indexed-ledger"] :is(.general-workflow-state,.fragment-workflow-step) {
+  display:grid;
+  grid-template-columns:minmax(150px,.42fr) minmax(0,1fr);
+  gap:20px;
+  padding:16px 0;
+  border:0;
+  border-top:1px solid #8a756b;
+  border-radius:0;
+  color:#252222;
+  background:transparent;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="approval-frame"] {
+  padding:18px !important;
+  border:1px solid #685044;
+  box-shadow:inset 0 7px 0 #685044;
+  background:#d2c5c5;
+}
+[data-fragment-kind="panel"][data-fragment-style="approval-frame"] :is(.general-workflow-state,.fragment-workflow-step) {
+  border:0;
+  border-radius:0;
+  color:#252222;
+  background:transparent;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="step-deck"] :is(.general-workflow-state,.fragment-workflow-step) {
+  border:1px solid #8a756b;
+  border-left:10px solid #685044;
+  border-radius:0;
+  color:#252222;
+  background:#d2c5c5;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="technical-sheet"] {
+  padding:24px !important;
+  border:4px double #685044;
+  background:#d2c5c5;
+}
+[data-fragment-kind="panel"][data-fragment-style="technical-sheet"] :is(.general-workflow-state,.fragment-workflow-step) {
+  border:0;
+  border-radius:0;
+  border-bottom:1px solid #8a756b;
+  color:#252222;
+  background:transparent;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="command-trace"] {
+  padding:18px !important;
+  color:#f7f2ee;
+  background:#332a26;
+  font-family:"IBM Plex Mono",monospace;
+}
+[data-fragment-kind="panel"][data-fragment-style="command-trace"] :is(.general-workflow-state,.fragment-workflow-step) {
+  border:0;
+  border-radius:0;
+  border-bottom:1px dashed #8a756b;
+  color:#f7f2ee;
+  background:#4e3b32;
+}
+[data-fragment-kind="panel"][data-fragment-style="command-trace"] :is(strong,p,a,code,span) { color:inherit !important; }
+
+[data-fragment-kind="panel"][data-fragment-style="split-outline"] :is(.general-workflow-state,.fragment-workflow-step) {
+  border:1px solid #685044;
+  border-radius:0;
+  color:#252222;
+  background:transparent;
+}
+[data-fragment-kind="panel"][data-fragment-style="split-outline"] :is(.general-workflow-state,.fragment-workflow-step) strong {
+  display:block;
+  margin:-12px -12px 10px;
+  padding:11px 12px;
+  color:#f7f2ee !important;
+  background:#685044;
+}
+
+[data-fragment-kind="panel"][data-fragment-style="status-list"] :is(.general-workflow-state,.fragment-workflow-step) {
+  position:relative;
+  padding-left:46px;
+  border:0;
+  border-bottom:1px solid #8a756b;
+  border-radius:0;
+  color:#252222;
+  background:transparent;
+}
+[data-fragment-kind="panel"][data-fragment-style="status-list"] :is(.general-workflow-state,.fragment-workflow-step)::before {
+  content:"✓";
+  position:absolute;
+  top:14px;
+  left:12px;
+  color:#685044;
+  font:700 13px/1 "IBM Plex Mono",monospace;
+}
+
+/* The authority lab selects the card itself, and the result lab has its own result primitive. */
+[data-fragment-kind="panel"].fragment-workflow-step:not([data-fragment-style="baseline"]) {
+  width:100%;
+  padding:18px;
+  border-radius:0;
+  color:#252222;
+  background:#d2c5c5;
+}
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="timeline-rail"] { padding-left:54px; border:1px solid #8a756b; border-left:3px solid #685044; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="timeline-rail"]::before { content:"01"; position:absolute; left:16px; color:#685044; font:600 9px/1 "IBM Plex Mono",monospace; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="stacked-cards"] { border:1px solid #685044; box-shadow:8px 8px 0 #8a756b; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="chain-thread"] { border:0; border-bottom:1px solid #685044; background:transparent; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="indexed-ledger"] { display:grid; grid-template-columns:.45fr 1fr; gap:18px; border-top:2px solid #685044; border-bottom:1px solid #8a756b; background:transparent; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="approval-frame"] { border:1px solid #685044; box-shadow:inset 0 7px 0 #685044; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="step-deck"] { border:1px solid #8a756b; border-left:10px solid #685044; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="technical-sheet"] { border:4px double #685044; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="command-trace"] { color:#f7f2ee; border:1px solid #8a756b; background:#332a26; font-family:"IBM Plex Mono",monospace; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="command-trace"] :is(strong,p,a) { color:inherit !important; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="split-outline"] { border:1px solid #685044; background:transparent; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="split-outline"] > strong { margin:-18px -18px 14px; padding:12px 18px; color:#fffaf6 !important; background:#685044; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="status-list"] { padding-left:54px; border:0; border-bottom:1px solid #8a756b; background:transparent; }
+[data-fragment-kind="panel"].fragment-workflow-step[data-fragment-style="status-list"]::before { content:"✓"; position:absolute; left:18px; color:#685044; font:700 14px/1 "IBM Plex Mono",monospace; }
+
+[data-fragment-kind="panel"] .fragment-workflow-result {
+  width:100%;
+  max-width:none;
+  border-radius:0;
+}
+
+/* Intent edge treatment — grounded in Knowledge Graph, Sankey, Status Edge, and Branches. */
+[data-fragment-kind="edges"][data-fragment-style="fine-gray"] { color:#4f535c; }
+[data-fragment-kind="edges"][data-fragment-style="fine-gray"] .example-intent-edge { stroke-width:.8; }
+[data-fragment-kind="edges"][data-fragment-style="violet-relations"] { color:#573886; }
+[data-fragment-kind="edges"][data-fragment-style="violet-relations"] .example-intent-edge { stroke-width:1.8; }
+[data-fragment-kind="edges"][data-fragment-style="labeled-capsules"] .example-intent-edge-label rect { fill:#fffaf6; stroke:#685044; stroke-width:1; rx:9px; }
+[data-fragment-kind="edges"][data-fragment-style="labeled-capsules"] .example-intent-edge-label text { fill:#685044; font-weight:700; }
+[data-fragment-kind="edges"][data-fragment-style="dashed-map"] .example-intent-edge { stroke:#685044; stroke-width:1.4; stroke-dasharray:7 5; }
+[data-fragment-kind="edges"][data-fragment-style="heavy-route"] .example-intent-edge { stroke:#685044; stroke-width:2.8; }
+[data-fragment-kind="edges"][data-fragment-style="heavy-route"] .example-intent-edge-label rect { fill:#685044; }
+[data-fragment-kind="edges"][data-fragment-style="heavy-route"] .example-intent-edge-label text { fill:#fffaf6; }
+[data-fragment-kind="edges"][data-fragment-style="soft-bands"] .example-intent-edge { stroke:#8a756b; stroke-width:6; opacity:.35; }
+[data-fragment-kind="edges"][data-fragment-style="soft-bands"] .example-intent-edge-label rect { fill:#d2c5c5; }
+[data-fragment-kind="edges"][data-fragment-style="status-route"] .example-intent-edge { stroke:#685044; stroke-width:1.8; stroke-dasharray:2 4; }
+[data-fragment-kind="edges"][data-fragment-style="status-route"] .example-intent-edge-label text { fill:#685044; font-family:"IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
+[data-fragment-kind="edges"][data-fragment-style="hidden-labels"] .example-intent-edge-label { display:none; }
+[data-fragment-kind="edges"][data-fragment-style="hidden-labels"] .example-intent-edge { stroke:#685044; stroke-width:1.5; }
+[data-fragment-kind="edges"][data-fragment-style="ink-and-accent"] .example-intent-edge { stroke:#252222; stroke-width:1.1; }
+[data-fragment-kind="edges"][data-fragment-style="ink-and-accent"] .example-intent-edge-label text { fill:#685044; font-weight:700; }
+[data-fragment-kind="edges"][data-fragment-style="drafting-lines"] .example-intent-edge { stroke:#685044; stroke-width:.9; stroke-dasharray:12 2 2 2; }
+[data-fragment-kind="edges"][data-fragment-style="drafting-lines"] .example-intent-edge-label rect { fill:#c8bbbb; stroke:#8a756b; stroke-width:.6; }
+
+/* Candidate ranking example — grounded in Agent Trace, AI Planning, and Reasoning Thread. */
+[data-fragment-kind="example"][data-fragment-style="scorecard-ledger"] .code-generation-fragment-row { padding:14px 0; border-top:1px solid #8a756b; }
+[data-fragment-kind="example"][data-fragment-style="scorecard-ledger"] .code-generation-fragment-node { border-radius:0; border-color:#685044; background:#d2c5c5; }
+[data-fragment-kind="example"][data-fragment-style="ranked-rail"] .code-generation-fragment-map { padding-left:28px; border-left:3px solid #685044; }
+[data-fragment-kind="example"][data-fragment-style="ranked-rail"] .code-generation-fragment-row { position:relative; }
+[data-fragment-kind="example"][data-fragment-style="ranked-rail"] .code-generation-fragment-row::before { content:""; position:absolute; top:50%; left:-35px; width:12px; height:12px; border-radius:50%; background:#685044; }
+[data-fragment-kind="example"][data-fragment-style="comparison-columns"] .code-generation-fragment-row { grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:28px; padding:12px; border:1px solid #8a756b; }
+[data-fragment-kind="example"][data-fragment-style="trace-lines"] .code-generation-fragment-row { padding:13px 0; border-bottom:1px dashed #8a756b; }
+[data-fragment-kind="example"][data-fragment-style="trace-lines"] .code-generation-fragment-node { border:0; border-radius:0; background:transparent; }
+[data-fragment-kind="example"][data-fragment-style="index-cards"] .code-generation-fragment-row { margin-bottom:10px; padding:14px; border:1px solid #685044; background:#d2c5c5; box-shadow:4px 4px 0 rgba(104,80,68,.2); }
+[data-fragment-kind="example"][data-fragment-style="dense-terminal"] { padding:20px !important; color:#f7f2ee; background:#332a26 !important; }
+[data-fragment-kind="example"][data-fragment-style="dense-terminal"] .code-generation-fragment-row { border-bottom:1px dashed #8a756b; }
+[data-fragment-kind="example"][data-fragment-style="dense-terminal"] :is(.code-generation-fragment-node,.code-generation-fragment-match) { color:#f7f2ee; border:0; border-radius:0; background:transparent; font-family:"IBM Plex Mono",monospace; }
+[data-fragment-kind="example"][data-fragment-style="pipeline-rows"] .code-generation-fragment-row { position:relative; padding:14px 14px 14px 26px; border-left:8px solid #685044; background:#d2c5c5; }
+[data-fragment-kind="example"][data-fragment-style="blueprint-matrix"] { padding:24px !important; border:1px solid #8a756b; background-image:radial-gradient(circle,rgba(104,80,68,.28) 1px,transparent 1.4px) !important; background-size:14px 14px !important; }
+[data-fragment-kind="example"][data-fragment-style="blueprint-matrix"] .code-generation-fragment-row { padding:12px; border:1px solid #685044; background:#d2c5c5; }
+[data-fragment-kind="example"][data-fragment-style="stacked-candidates"] .code-generation-fragment-row { display:flex; flex-direction:column; align-items:stretch; gap:10px; margin-bottom:14px; padding:14px; border:1px solid #8a756b; background:#d2c5c5; }
+[data-fragment-kind="example"][data-fragment-style="folio-ranking"] { padding:28px !important; border:4px double #685044; background:#d2c5c5 !important; }
+[data-fragment-kind="example"][data-fragment-style="folio-ranking"] .code-generation-fragment-row { padding:14px 0; border-bottom:1px solid #8a756b; }

@@ -1,6 +1,6 @@
 # SQLHarness
 
-**[MCP quick start and privacy contract](docs/mcp.md)** — use your existing AI chat with synthetic sample data or an explicitly selected local database. No model credentials or server-side model calls.
+**[MCP quick start and privacy contract](docs/mcp.md)** — run the full intent-graph, relationship-retrieval, query-assembly, and governed execution workflow through your existing AI client. Synthetic samples or explicitly selected local databases; no separate model API key.
 
 SQLHarness tests whether an explicit semantic pipeline can move the accuracy-cost frontier for natural-language-to-SQL generation.
 

@@ -89,6 +89,24 @@ def validate_readonly_sql(
         elif column_key not in all_columns and column_key not in output_aliases:
             errors.append(f"unknown_column: {column_name}")
 
+    if not errors:
+        # Resolve each column in its actual SELECT/CTE scope rather than accepting
+        # an unqualified name merely because it exists in some unrelated table.
+        from sqlglot.optimizer.qualify import qualify
+        from sqlglot.errors import OptimizeError
+
+        try:
+            qualify(
+                expression.copy(),
+                dialect=dialect,
+                schema={table: {column: "UNKNOWN" for column in columns} for table, columns in schema.items()},
+                identify=False,
+                quote_identifiers=False,
+                validate_qualify_columns=True,
+            )
+        except OptimizeError as error:
+            errors.append(f"invalid_column_scope: {error}")
+
     normalized = expression.sql(dialect=dialect, pretty=False)
     return ValidationResult(
         valid=not errors,
